@@ -1,12 +1,14 @@
 "use client";
 
 import { BBVA } from "@/lib/bbva-colors";
-import type { EmpleadoResult } from "@/lib/types";
+import type { EmpleadoResult, AvailabilityStatus } from "@/lib/types";
 
 interface CandidateCardProps {
   candidate: EmpleadoResult;
   rank: number;
   onViewGraph: (id: string) => void;
+  isSelected?: boolean;
+  onSelect?: (id: string) => void;
 }
 
 const NIVEL_CONFIG: Record<string, { color: string; label: string }> = {
@@ -15,6 +17,46 @@ const NIVEL_CONFIG: Record<string, { color: string; label: string }> = {
   Senior: { color: BBVA.lime,    label: "Senior" },
   Staff:  { color: BBVA.mandarin,label: "Staff" },
 };
+
+const AVAILABILITY_CONFIG: Record<AvailabilityStatus, { color: string; icon: string; label: string; bg: string }> = {
+  disponible:      { color: BBVA.lime,       icon: "●",  label: "Disponible",       bg: `${BBVA.lime}15`       },
+  parcial:         { color: BBVA.canary,     icon: "◐",  label: "50% disponible",   bg: `${BBVA.canary}15`     },
+  asignado:        { color: "#ff5c5c",       icon: "✕",  label: "100% asignado",    bg: "rgba(255,92,92,0.12)" },
+  vacaciones:      { color: BBVA.ice,        icon: "○",  label: "Vacaciones",       bg: `${BBVA.ice}15`        },
+  maternidad:      { color: BBVA.purple,     icon: "♡",  label: "Maternidad",       bg: `${BBVA.purple}15`     },
+  licencia:        { color: BBVA.mandarin,   icon: "○",  label: "Licencia",         bg: `${BBVA.mandarin}15`   },
+  descanso_medico: { color: "#ff5c5c",       icon: "✚",  label: "Descanso médico",  bg: "rgba(255,92,92,0.12)" },
+};
+
+function AvailabilityBadge({ candidate }: { candidate: EmpleadoResult }) {
+  if (!candidate.disponibilidad) return null;
+  const cfg = AVAILABILITY_CONFIG[candidate.disponibilidad];
+  if (!cfg) return null;
+
+  let subtitle: string | null = null;
+  if ((candidate.disponibilidad === "parcial" || candidate.disponibilidad === "asignado") && candidate.proyecto_asignado) {
+    subtitle = candidate.proyecto_asignado;
+  } else if (candidate.disponibilidad_hasta) {
+    subtitle = `hasta ${candidate.disponibilidad_hasta}`;
+  }
+
+  return (
+    <div
+      className="flex items-center gap-1.5 px-2 py-1 rounded-lg flex-wrap"
+      style={{ background: cfg.bg, border: `1px solid ${cfg.color}30` }}
+    >
+      <span style={{ color: cfg.color, fontSize: 10, lineHeight: 1 }}>{cfg.icon}</span>
+      <span className="font-mono text-[10px] font-bold" style={{ color: cfg.color }}>
+        {cfg.label}
+      </span>
+      {subtitle && (
+        <span className="font-mono text-[10px]" style={{ color: cfg.color + "88" }}>
+          · {subtitle}
+        </span>
+      )}
+    </div>
+  );
+}
 
 const SKILL_COLORS = [BBVA.lime, BBVA.ice, BBVA.sereneBlue, BBVA.purple, BBVA.canary];
 
@@ -62,7 +104,7 @@ function ScoreRing({ score }: { score: number }) {
   );
 }
 
-export default function CandidateCard({ candidate, rank, onViewGraph }: CandidateCardProps) {
+export default function CandidateCard({ candidate, rank, onViewGraph, isSelected = false, onSelect }: CandidateCardProps) {
   const nivel  = NIVEL_CONFIG[candidate.nivel] ?? { color: BBVA.grey3, label: candidate.nivel };
   const initials = candidate.nombre.split(" ").map(n => n[0]).slice(0, 2).join("");
 
@@ -70,17 +112,23 @@ export default function CandidateCard({ candidate, rank, onViewGraph }: Candidat
     <article
       className="group relative rounded-2xl p-5 transition-all duration-300 cursor-default overflow-hidden scanline"
       style={{
-        background: "rgba(10,22,40,0.75)",
-        border: "1px solid rgba(133,200,255,0.10)",
+        background: isSelected ? "rgba(16,32,56,0.88)" : "rgba(10,22,40,0.75)",
+        border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid rgba(133,200,255,0.10)",
         backdropFilter: "blur(12px)",
+        boxShadow: isSelected ? `0 0 35px ${BBVA.lime}14` : "none",
+        transition: "all 0.25s cubic-bezier(0.22,1,0.36,1)",
       }}
       onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.28)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 0 30px rgba(0,19,145,0.2)";
+        if (!isSelected) {
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.28)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 30px rgba(0,19,145,0.2)";
+        }
       }}
       onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.10)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        if (!isSelected) {
+          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.10)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        }
       }}
     >
       {/* Left accent bar */}
@@ -91,11 +139,40 @@ export default function CandidateCard({ candidate, rank, onViewGraph }: Candidat
 
       {/* Rank badge */}
       <div
-        className="absolute top-3 right-14 font-mono text-[10px] px-1.5 py-0.5 rounded"
-        style={{ background: "rgba(133,200,255,0.06)", color: "#3d4f6e", border: "1px solid rgba(133,200,255,0.08)" }}
+        className="absolute top-3 font-mono text-[10px] px-1.5 py-0.5 rounded"
+        style={{
+          right: onSelect ? "2.75rem" : "0.75rem",
+          background: "rgba(133,200,255,0.06)",
+          color: "#3d4f6e",
+          border: "1px solid rgba(133,200,255,0.08)",
+        }}
       >
         #{String(rank).padStart(2, "0")}
       </div>
+
+      {/* Select toggle */}
+      {onSelect && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onSelect(candidate.id); }}
+          title={isSelected ? "Quitar del equipo" : "Agregar al equipo"}
+          className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
+          style={{
+            background: isSelected ? `${BBVA.lime}22` : "rgba(133,200,255,0.06)",
+            border: `1.5px solid ${isSelected ? BBVA.lime + "aa" : "rgba(133,200,255,0.18)"}`,
+            cursor: "pointer",
+          }}
+        >
+          {isSelected ? (
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 5L4 7L8 3" stroke={BBVA.lime} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          ) : (
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <path d="M4 1V7M1 4H7" stroke="rgba(133,200,255,0.4)" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          )}
+        </button>
+      )}
 
       {/* Header row */}
       <div className="flex items-start gap-3 mb-4">
@@ -123,7 +200,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph }: Candidat
           <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>
             {candidate.rol}
           </p>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="flex items-center gap-2 mt-1 flex-wrap">
             <span
               className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"
               style={{
@@ -139,6 +216,11 @@ export default function CandidateCard({ candidate, rank, onViewGraph }: Candidat
               {candidate.squad}
             </span>
           </div>
+          {candidate.disponibilidad && (
+            <div className="mt-1.5">
+              <AvailabilityBadge candidate={candidate} />
+            </div>
+          )}
         </div>
 
         {/* Score ring */}
