@@ -95,8 +95,28 @@ function CandidateRow({
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{candidate.nombre}</p>
-        <p className="text-[11px] truncate" style={{ color: "#6b7fa3" }}>{candidate.rol} · {candidate.squad}</p>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <p className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{candidate.nombre}</p>
+          {candidate.registro && (
+            <span
+              className="hidden sm:inline-flex font-mono text-[9px] font-bold px-1.5 py-0.5 rounded"
+              style={{
+                background: candidate.tipo_contrato === "externo" ? `${BBVA.mandarin}15` : `${BBVA.sereneBlue}15`,
+                color: candidate.tipo_contrato === "externo" ? BBVA.mandarin : BBVA.sereneBlue,
+                border: `1px solid ${candidate.tipo_contrato === "externo" ? BBVA.mandarin : BBVA.sereneBlue}40`,
+              }}
+              title={candidate.tipo_contrato === "externo" ? `Externo · ${candidate.consultora ?? ""}` : "Interno BBVA"}
+            >
+              {candidate.registro}
+            </span>
+          )}
+        </div>
+        <p className="text-[11px] truncate" style={{ color: "#6b7fa3" }}>
+          {candidate.rol_bbva && (
+            <span className="font-mono font-bold mr-1" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
+          )}
+          {candidate.rol} · {candidate.squad}
+        </p>
       </div>
 
       {/* Trust compact — hidden on small screens to avoid overflow */}

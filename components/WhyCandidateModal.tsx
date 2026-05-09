@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { BBVA } from "@/lib/bbva-colors";
 import { explainMatchScore, type ExplainContext, type ScoreFactor } from "@/lib/scoreExplain";
 import type { EmpleadoResult } from "@/lib/types";
+import StaffingRecommendationPanel from "./StaffingRecommendationPanel";
 
 interface WhyCandidateModalProps {
   candidate: EmpleadoResult | null;
@@ -218,6 +219,15 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
               {explanation.factors.map((f, i) => (
                 <FactorRow key={f.label} factor={f} index={i} />
               ))}
+
+              {/* Staffing recommendation (FTE + historical context + external feedback) */}
+              <div className="pt-4 mt-4 border-t" style={{ borderColor: "rgba(133,200,255,0.08)" }}>
+                <StaffingRecommendationPanel
+                  candidate={candidate}
+                  projectName={context?.projectName}
+                  projectDomain={context?.projectDomain}
+                />
+              </div>
             </div>
 
             {/* Footer */}

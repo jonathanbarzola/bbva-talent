@@ -218,6 +218,31 @@ export default function CandidateProfilePage({ params }: { params: Promise<{ id:
                 >
                   {candidate.nivel}
                 </span>
+                {candidate.rol_bbva && (
+                  <span
+                    className="font-mono text-[10px] font-bold px-2 py-0.5 rounded"
+                    style={{ background: `${BBVA.sereneBlue}15`, color: BBVA.sereneBlue, border: `1px solid ${BBVA.sereneBlue}40` }}
+                    title="Rol oficial BBVA"
+                  >
+                    {candidate.rol_bbva}
+                  </span>
+                )}
+                {candidate.registro && (
+                  <span
+                    className="font-mono text-[10px] font-bold px-2 py-0.5 rounded"
+                    style={{
+                      background: candidate.tipo_contrato === "externo" ? `${BBVA.mandarin}15` : `${BBVA.sereneBlue}10`,
+                      color: candidate.tipo_contrato === "externo" ? BBVA.mandarin : BBVA.sereneBlue,
+                      border: `1px solid ${candidate.tipo_contrato === "externo" ? BBVA.mandarin : BBVA.sereneBlue}40`,
+                    }}
+                    title={candidate.tipo_contrato === "externo" ? `Externo · ${candidate.consultora ?? ""}` : "Interno BBVA"}
+                  >
+                    {candidate.registro}
+                    {candidate.tipo_contrato === "externo" && candidate.consultora && (
+                      <span className="ml-1" style={{ opacity: 0.7 }}>· {candidate.consultora}</span>
+                    )}
+                  </span>
+                )}
                 <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>{candidate.squad}</span>
                 {avail && (
                   <span

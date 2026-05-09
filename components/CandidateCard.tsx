@@ -31,6 +31,24 @@ const AVAILABILITY_CONFIG: Record<AvailabilityStatus, { color: string; icon: str
   descanso_medico: { color: "#ff5c5c",       icon: "✚",  label: "Descanso médico",  bg: "rgba(255,92,92,0.12)" },
 };
 
+function ContractBadge({ candidate }: { candidate: EmpleadoResult }) {
+  if (!candidate.registro) return null;
+  const isExternal = candidate.tipo_contrato === "externo";
+  const color = isExternal ? BBVA.mandarin : BBVA.sereneBlue;
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-mono text-[9px] font-bold"
+      style={{ background: `${color}15`, color, border: `1px solid ${color}40` }}
+      title={isExternal ? `Externo · ${candidate.consultora ?? "Consultora"}` : "Interno BBVA"}
+    >
+      {candidate.registro}
+      {isExternal && candidate.consultora && (
+        <span style={{ opacity: 0.7 }}>· {candidate.consultora}</span>
+      )}
+    </span>
+  );
+}
+
 function AvailabilityBadge({ candidate }: { candidate: EmpleadoResult }) {
   if (!candidate.disponibilidad) return null;
   const cfg = AVAILABILITY_CONFIG[candidate.disponibilidad];
@@ -173,10 +191,19 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-sm leading-tight mb-0.5 truncate" style={{ color: "#e8eeff" }}>
-            {candidate.nombre}
-          </h3>
-          <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>{candidate.rol}</p>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>
+              {candidate.nombre}
+            </h3>
+            {candidate.registro && <ContractBadge candidate={candidate} />}
+          </div>
+          <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>
+            {candidate.rol_bbva && (
+              <span className="font-mono" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
+            )}
+            {candidate.rol_bbva && " · "}
+            {candidate.rol}
+          </p>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
             <span
               className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"

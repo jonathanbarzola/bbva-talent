@@ -88,6 +88,44 @@ export type AvailabilityStatus =
   | "licencia"
   | "descanso_medico";
 
+// ── Tipo de contrato BBVA ──────────────────────────────────────────────────
+// Internos: P-registro (P043769) → empleados directos del banco
+// Externos: XP-registro (XP43769) → vienen de fábricas/consultoras
+//   (Indra, Neoris, Bluetab, Everis, Capgemini, Globant, Accenture)
+
+export type TipoContrato = "interno" | "externo";
+
+export type RolBBVA = "Analyst" | "Associate" | "Expert" | "Lead";
+// Mapping con nivel actual:
+//   Analyst   ≈ Junior
+//   Associate ≈ Mid (Semi Senior)
+//   Expert    ≈ Senior
+//   Lead      ≈ Staff / Principal
+
+export interface StaffingRecord {
+  /** Período fiscal: "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2" */
+  quarter: string;
+  proyecto_codigo: string;
+  proyecto_nombre: string;
+  /** FTE 0..1 — fracción del tiempo del Q dedicado a este proyecto */
+  fte: number;
+  /** Squad/dominio del proyecto */
+  dominio?: string;
+}
+
+export interface ExternalFeedback {
+  /** Manager o tech lead que dio el feedback */
+  manager_nombre: string;
+  /** Proyecto en el cual se trabajó con este externo */
+  proyecto_codigo: string;
+  proyecto_nombre: string;
+  /** Período del feedback */
+  quarter: string;
+  /** Rating 1-5 — 5 = excelente, 1 = no contratar de nuevo */
+  rating: 1 | 2 | 3 | 4 | 5;
+  comentario: string;
+}
+
 export interface EmpleadoResult {
   id: string;
   nombre: string;
@@ -115,6 +153,19 @@ export interface EmpleadoResult {
   es_mentor: boolean;
   disponible_networking: boolean;
   networking_tags?: string[];
+  // ── BBVA contract & staffing data ──
+  /** Tipo de contrato: interno (P-registro) o externo (XP-registro de consultora) */
+  tipo_contrato?: TipoContrato;
+  /** Registro BBVA: P043769 (interno) o XP43769 (externo) */
+  registro?: string;
+  /** Consultora de origen — solo aplica para externos (Indra, Neoris, Bluetab, etc.) */
+  consultora?: string;
+  /** Rol oficial en la nomenclatura BBVA (Analyst/Associate/Expert/Lead) */
+  rol_bbva?: RolBBVA;
+  /** Histórico de staffing — últimos 4 quarters con FTE asignado por proyecto */
+  staffing_historico?: StaffingRecord[];
+  /** Feedback de jefes anteriores — solo aplica para externos */
+  feedback_externo?: ExternalFeedback[];
 }
 
 // ── Search ────────────────────────────────────────────────────────────────

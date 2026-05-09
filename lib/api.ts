@@ -7,7 +7,27 @@ import {
   MOCK_SDA_PROJECTS, getMockNetworkingProfiles, MOCK_USER_WALLET,
   CANDIDATE_POOL,
 } from "./mock-data";
+import { enrichEmpleado } from "./staffing-mock";
 import type { EmpleadoResult } from "./types";
+
+// ── Enrich layer ──────────────────────────────────────────────────────────
+// All employee responses get extended with BBVA-specific staffing data
+// (tipo_contrato, registro, consultora, rol_bbva, staffing_historico,
+// feedback_externo). Keeps mock-data.ts untouched while we add new fields.
+
+function enrichSearchResult(r: SearchResponse): SearchResponse {
+  return { ...r, candidatos: r.candidatos.map(enrichEmpleado) };
+}
+
+function enrichTeamComposition(r: TeamCompositionResponse): TeamCompositionResponse {
+  return {
+    ...r,
+    roles: r.roles.map(role => ({
+      ...role,
+      candidates: role.candidates.map(enrichEmpleado),
+    })),
+  };
+}
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
 // Default to mock mode unless explicitly disabled (e.g. when a real backend is wired up).
@@ -21,7 +41,7 @@ const delay = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
 export async function searchTalent(query: string, limit = 10): Promise<SearchResponse> {
   if (IS_MOCK) {
     await delay(600);
-    return { ...MOCK_SEARCH_RESULT, query };
+    return enrichSearchResult({ ...MOCK_SEARCH_RESULT, query });
   }
   const res = await fetch(`${API_BASE}/search`, {
     method: "POST",
@@ -32,7 +52,7 @@ export async function searchTalent(query: string, limit = 10): Promise<SearchRes
     const error = await res.json().catch(() => ({ detail: "Error desconocido" }));
     throw new Error(error.detail ?? "Error en la búsqueda");
   }
-  return res.json();
+  return enrichSearchResult(await res.json());
 }
 
 // ── Single employee profile ───────────────────────────────────────────────
@@ -40,16 +60,17 @@ export async function searchTalent(query: string, limit = 10): Promise<SearchRes
 export async function getEmployeeById(employeeId: string): Promise<EmpleadoResult | null> {
   if (IS_MOCK) {
     await delay(150);
-    return CANDIDATE_POOL[employeeId] ?? null;
+    const emp = CANDIDATE_POOL[employeeId];
+    return emp ? enrichEmpleado(emp) : null;
   }
   const res = await fetch(`${API_BASE}/employees/${employeeId}`);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error("No se pudo cargar el perfil del empleado");
-  return res.json();
+  return enrichEmpleado(await res.json());
 }
 
 export function listAllEmployees(): EmpleadoResult[] {
-  return Object.values(CANDIDATE_POOL);
+  return Object.values(CANDIDATE_POOL).map(enrichEmpleado);
 }
 
 // ── Graph ─────────────────────────────────────────────────────────────────
@@ -71,10 +92,10 @@ export async function getProjectRecommendations(
 ): Promise<TeamCompositionResponse> {
   if (IS_MOCK) {
     await delay(700);
-    return getMockTeamComposition({
+    return enrichTeamComposition(getMockTeamComposition({
       project_name: `[${project.codigo}] ${project.nombre}`,
       roles: project.roles,
-    });
+    }));
   }
   const res = await fetch(`${API_BASE}/team/compose`, {
     method: "POST",
@@ -88,7 +109,7 @@ export async function getProjectRecommendations(
     const error = await res.json().catch(() => ({ detail: "Error desconocido" }));
     throw new Error(error.detail ?? "Error al obtener recomendaciones");
   }
-  return res.json();
+  return enrichTeamComposition(await res.json());
 }
 
 // ── Team composition (free-form, kept for custom requirements) ────────────
@@ -96,7 +117,7 @@ export async function getProjectRecommendations(
 export async function composeTeam(request: { project_name: string; roles: { role: string; quantity: number }[] }): Promise<TeamCompositionResponse> {
   if (IS_MOCK) {
     await delay(700);
-    return getMockTeamComposition(request);
+    return enrichTeamComposition(getMockTeamComposition(request));
   }
   const res = await fetch(`${API_BASE}/team/compose`, {
     method: "POST",
