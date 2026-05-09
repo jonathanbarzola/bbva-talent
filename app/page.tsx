@@ -172,6 +172,18 @@ function HomeView({
             Networking
           </button>
           <Link
+            href="/dashboard"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all duration-150 hover:opacity-80"
+            style={{ background: `${BBVA.lime}10`, border: `1px solid ${BBVA.lime}30`, color: BBVA.lime }}
+          >
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+              <rect x="1" y="1" width="3.5" height="9" rx="0.5" stroke="currentColor" strokeWidth="1.2"/>
+              <rect x="6" y="1" width="3.5" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.2"/>
+              <rect x="6" y="7" width="3.5" height="3" rx="0.5" stroke="currentColor" strokeWidth="1.2"/>
+            </svg>
+            <span className="hidden sm:inline">Dashboard</span>
+          </Link>
+          <Link
             href="/about"
             className="hidden sm:flex px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all duration-150 hover:opacity-80"
             style={{ background: "rgba(150,148,255,0.06)", border: "1px solid rgba(150,148,255,0.18)", color: BBVA.purple }}
