@@ -425,7 +425,7 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
                   <div className="text-center">
                     <p className="font-bold text-sm mb-1" style={{ color: "#e8eeff" }}>No hay candidatos para comparar</p>
                     <p className="font-mono text-xs" style={{ color: "#3d4f6e" }}>
-                      Seleccioná al menos 2 candidatos desde resultados o equipo recomendado
+                      Selecciona al menos 2 candidatos desde resultados o equipo recomendado
                     </p>
                   </div>
                 </div>

@@ -67,7 +67,7 @@ export default function RoiCalculator() {
             ¿Cuánto ahorra tu unidad al año?
           </h3>
           <p className="font-mono text-xs mb-5 leading-relaxed" style={{ color: "#6b7fa3" }}>
-            Movés el slider con cuántos equipos arma tu unidad por año. Calculamos en vivo basándonos
+            Mueve el slider con cuántos equipos arma tu unidad por año. Calculamos en vivo basándonos
             en {HOURS_MANUAL}h promedio por equipo manualmente vs {HOURS_WITH_TALENT * 60} min con BBVA Talent.
           </p>
 
@@ -161,7 +161,7 @@ export default function RoiCalculator() {
       </div>
 
       <p className="relative z-10 font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "#3d4f6e" }}>
-        ⓘ Estimación basada en tiempos promedio observados en pilotos internos. Costo hora del manager según tarifario interno BBVA Argentina 2026.
+        ⓘ Estimación basada en tiempos promedio observados en pilotos internos. Costo hora del manager según tarifario interno BBVA 2026.
       </p>
     </section>
   );

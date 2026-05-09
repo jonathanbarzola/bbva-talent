@@ -30,7 +30,7 @@ npm install && npm run dev
 
 Abrí [http://localhost:3000](http://localhost:3000). Si es tu primera visita, automáticamente arranca un **tour guiado de 3 pasos**.
 
-**Camino más rápido para ver todo el valor**: click en `▶ Probá un caso real · SDA-53021 FX Tracker` desde el home → la app pre-carga el caso completo y te lleva directo al equipo recomendado con Gap Analysis y Team Balance ya calculados.
+**Camino más rápido para ver todo el valor**: click en `▶ Prueba un caso real · SDA-53021 FX Tracker` desde el home → la app pre-carga el caso completo y te lleva directo al equipo recomendado con Gap Analysis y Team Balance ya calculados.
 
 ---
 
@@ -42,15 +42,15 @@ Abrí [http://localhost:3000](http://localhost:3000). Si es tu primera visita, a
 - Coverage score y total de skills calculados en tiempo real
 
 ### 🤖 Refinamiento conversacional (mock LLM)
-Asistente conversacional simulado que entiende español rioplatense con voseo:
+Asistente conversacional simulado que entiende español neutro latinoamericano (también acepta voseo argentino):
 
 | Comando del usuario | Lo que hace |
 |---|---|
 | `que tengan Kafka` | Filtra por skill requerida |
 | `sin nadie de vacaciones` | Excluye disponibilidad |
 | `solo Senior y Staff` | Restringe nivel |
-| `quitá los de Pagos` | Excluye squad |
-| `volvé al equipo original` | Limpia todos los filtros |
+| `quita los de Pagos` | Excluye squad |
+| `vuelve al equipo original` | Limpia todos los filtros |
 
 El parser corre localmente sobre diccionarios de aliases — sin LLM real, pero indistinguible para el usuario en demo.
 
@@ -242,7 +242,7 @@ npm install
 ### 1. Home (`/`)
 - Tour guiado automático en primera visita (persiste en `localStorage`)
 - 3 cards de métricas con count-up animado
-- CTA principal "Project Composer" + atajo "Probá un caso real"
+- CTA principal "Project Composer" + atajo "Prueba un caso real"
 - Búsqueda libre 1-a-1 (flujo secundario)
 - Networking & Mentores
 - Casos de éxito narrativos
@@ -456,7 +456,7 @@ Todos los tipos están en `lib/types.ts`. Los mocks viven en `lib/mock-data.ts`.
 ### Sprint 2 — Diferenciadores wow ✅
 - ImpactMetrics con count-up animado
 - GapAnalysis automático con 6 reglas heurísticas
-- RefinementChat conversacional en español rioplatense
+- RefinementChat conversacional en español latinoamericano
 
 ### Sprint 3 — Innovación + viabilidad ✅
 - WhyCandidateModal con desglose del score (GDPR Art. 22)

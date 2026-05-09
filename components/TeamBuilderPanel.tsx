@@ -114,7 +114,7 @@ export default function TeamBuilderPanel({ selected, onRemove, onClear, onCompar
           <button
             onClick={onCompare}
             disabled={!canCompare}
-            title={canCompare ? "Comparar candidatos lado a lado" : "Seleccioná al menos 2 candidatos"}
+            title={canCompare ? "Comparar candidatos lado a lado" : "Selecciona al menos 2 candidatos"}
             className="px-5 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-300"
             style={{
               background: "linear-gradient(135deg, #001391, #0020cc)",

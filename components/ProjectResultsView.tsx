@@ -305,7 +305,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
           >
             <span style={{ color: BBVA.sereneBlue, fontSize: 13 }}>ⓘ</span>
             <p className="font-mono text-[11px]" style={{ color: "#6b7fa3" }}>
-              Marcá 2 o más candidatos con el checkbox para compararlos lado a lado.
+              Marca 2 o más candidatos con el checkbox para compararlos lado a lado.
             </p>
           </div>
         )}
@@ -453,7 +453,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
               <button
                 onClick={() => setComparisonOpen(true)}
                 disabled={selectedIds.length < 2}
-                title={selectedIds.length < 2 ? "Seleccioná al menos 2" : "Comparar candidatos"}
+                title={selectedIds.length < 2 ? "Selecciona al menos 2" : "Comparar candidatos"}
                 className="px-5 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all"
                 style={{
                   background: "linear-gradient(135deg, #001391, #0020cc)",

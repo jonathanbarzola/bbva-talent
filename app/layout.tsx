@@ -17,7 +17,7 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: "BBVA Talent — Knowledge Graph",
-  description: "Descubrí el talento oculto usando grafos de conocimiento e IA Generativa.",
+  description: "Descubre el talento oculto usando grafos de conocimiento e IA Generativa.",
 };
 
 export default function RootLayout({

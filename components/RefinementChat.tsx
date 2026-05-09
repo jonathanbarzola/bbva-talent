@@ -34,7 +34,7 @@ const SUGGESTIONS = [
   "Que tengan Python",
   "Sin nadie de vacaciones",
   "Solo Senior y Staff",
-  "Quitá los de Pagos",
+  "Quita los de Pagos",
   "Que sepan Kafka",
   "Sin asignados",
 ];
@@ -43,7 +43,7 @@ const SYSTEM_INTRO: ChatMessage = {
   id: "intro",
   author: "bot",
   kind: "info",
-  text: "Hola, soy el asistente de refinamiento. Decime cómo querés ajustar el equipo y filtro al instante. Probá: \"que tengan Kafka\" o \"sin nadie de vacaciones\".",
+  text: "Hola, soy el asistente de refinamiento. Dime cómo quieres ajustar el equipo y filtro al instante. Prueba: \"que tengan Kafka\" o \"sin nadie de vacaciones\".",
 };
 
 function makeId(prefix: string) {
@@ -169,7 +169,7 @@ export default function RefinementChat({
         id: makeId("b"),
         author: "bot",
         kind: "info",
-        text: `Ok, quité el filtro "${value}" (${labelForKind(kind)}).`,
+        text: `Listo, quité el filtro "${value}" (${labelForKind(kind)}).`,
       },
     ]);
   };
@@ -219,7 +219,7 @@ export default function RefinementChat({
               ✦
             </div>
             <div>
-              <p className="font-black text-sm" style={{ color: "#e8eeff" }}>Refiná tu equipo</p>
+              <p className="font-black text-sm" style={{ color: "#e8eeff" }}>Refina tu equipo</p>
               <p className="font-mono text-[10px]" style={{ color: BBVA.purple, opacity: 0.85 }}>Asistente conversacional · mock</p>
             </div>
           </div>

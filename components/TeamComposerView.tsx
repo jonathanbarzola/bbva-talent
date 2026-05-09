@@ -110,15 +110,15 @@ export default function TeamComposerView({ onSearch, onBack }: Props) {
             <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
               <polygon points="4,0 8,7 0,7" stroke={BBVA.purple} strokeWidth="1" fill="none"/>
             </svg>
-            Seleccioná tu proyecto · La IA arma el equipo
+            Selecciona tu proyecto · La IA arma el equipo
           </div>
 
           <h2 className="font-black leading-none mb-1" style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)" }}>
-            <span className="text-gradient">Buscá</span>
+            <span className="text-gradient">Busca</span>
             <span style={{ color: "#e8eeff" }}> tu Proyecto</span>
           </h2>
           <p className="text-sm mb-6 leading-relaxed" style={{ color: "#4d6080" }}>
-            Buscá por código SDA o nombre. Los roles ya están mapeados.
+            Busca por código SDA o nombre. Los roles ya están mapeados.
           </p>
 
           {/* Search */}
@@ -164,7 +164,7 @@ export default function TeamComposerView({ onSearch, onBack }: Props) {
                     Sin coincidencias para &ldquo;{query}&rdquo;
                   </p>
                   <p className="font-mono text-[11px] leading-relaxed max-w-xs" style={{ color: "#6b7fa3" }}>
-                    Probá con otro código (SDA-530…), nombre o dominio (Pagos, Riesgos, IA, Compliance).
+                    Prueba con otro código (SDA-530…), nombre o dominio (Pagos, Riesgos, IA, Compliance).
                   </p>
                 </div>
                 <button
@@ -254,7 +254,7 @@ export default function TeamComposerView({ onSearch, onBack }: Props) {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-bold text-sm mb-1" style={{ color: "#3d4f6e" }}>Seleccioná un proyecto</p>
+                  <p className="font-bold text-sm mb-1" style={{ color: "#3d4f6e" }}>Selecciona un proyecto</p>
                   <p className="font-mono text-xs leading-relaxed" style={{ color: "#1e2d44" }}>Los roles y candidatos recomendados aparecerán acá</p>
                 </div>
               </div>

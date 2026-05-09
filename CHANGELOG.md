@@ -101,7 +101,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · pr
   5. Trust Score promedio
   6. Skills implícitas en el nombre del proyecto
 - `GapAnalysisPanel` con cards expandibles por severidad + recomendación
-- `lib/mockChatRefinement.ts` — parser conversacional español rioplatense
+- `lib/mockChatRefinement.ts` — parser conversacional español latinoamericano
   - 5 tipos de filtros (excludeSquads, excludeAvailability, requireSkills, excludeLevels, requireLevels)
   - Diccionarios de aliases: SQUAD, SKILL, LEVEL, AVAILABILITY
   - `applyToTeam()` que recomputa coverage/total_skills/gaps en tiempo real
@@ -127,7 +127,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · pr
   - Tooltip auto-posicionado vía `getBoundingClientRect()`
   - Navegación con flechas y Esc
   - Persiste en `localStorage` (key `bbva-talent:onboarding-seen-v1`)
-- Demo-mode: botón "▶ Probá un caso real · SDA-53021 FX Tracker" en home
+- Demo-mode: botón "▶ Prueba un caso real · SDA-53021 FX Tracker" en home
 - `CandidateComparison` modal full-screen
   - Grid 2-4 columnas con candidatos lado a lado
   - **Skills compartidas** highlighted (intersección de skill sets)

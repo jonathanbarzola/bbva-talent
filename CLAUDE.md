@@ -19,7 +19,7 @@ Frontend-only Next.js 16 + React 19 + Tailwind 4 + Framer Motion + react-force-g
 1. **No instalar `jsPDF`** — el export usa `window.print()` con CSS `@media print`. Decisión deliberada para mantener stack minimal.
 2. **Mock es default** — `IS_MOCK !== "false"` en `lib/api.ts`. Cuando el backend real exista, será un cambio explícito de env, no del código.
 3. **Theme Neural Cosmos** — colores en `lib/bbva-colors.ts` y CSS vars en `app/globals.css`. **No introducir nuevos colores ad-hoc** — usar los existentes o agregar a la paleta primero.
-4. **Spanish rioplatense con voseo** en todo el copy de UI: "buscá", "quitá", "agregá", "dale", etc. Y en respuestas al usuario también.
+4. **Español latinoamericano neutro (tuteo)** en todo el copy de UI: "busca", "quita", "agrega", "selecciona", etc. NO usar voseo argentino ("buscá", "quitá", "vos", "tenés", "dale", "hermano"). El parser conversacional sí acepta voseo en input del usuario por compatibilidad, pero todas las respuestas y la UI son en español neutro.
 5. **State machine en `app/page.tsx`** — 7 vistas. No agregar router-based navigation salvo para rutas standalone como `/candidate/[id]` o `/about`.
 6. **Componentes pesados con `next/dynamic`** + `{ ssr: false }` (graph, particles, animations).
 7. **TypeScript strict** — `npx tsc --noEmit` debe pasar limpio (excepto el error preexistente de `jest.config.ts`).
@@ -116,7 +116,7 @@ Deep-links útiles:
 ## Cosas que SÍ pueden cambiar (sin permiso)
 
 - Estilos / colores dentro del theme actual
-- Microcopy en español (manteniendo voseo)
+- Microcopy en español neutro latinoamericano (tuteo)
 - Estructura interna de un componente (sin cambiar su API pública)
 - Bug fixes
 - Tests adicionales

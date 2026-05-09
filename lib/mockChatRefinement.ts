@@ -138,7 +138,7 @@ function escapeRegex(s: string): string {
 export function parseCommand(text: string): ParseAction {
   const cleanText = text.trim();
   if (!cleanText) {
-    return { type: "unknown", explain: "Decime algo concreto, hermano." };
+    return { type: "unknown", explain: "Dime algo concreto para poder ayudarte." };
   }
 
   // Reset
@@ -151,7 +151,7 @@ export function parseCommand(text: string): ParseAction {
     return {
       type: "info",
       explain:
-        'Probá pedidos como: "quitá los que están en Pagos", "que tengan Kafka", "sin nadie de vacaciones", "excluí Juniors", o "volvé al equipo original".',
+        'Prueba pedidos como: "quita los que están en Pagos", "que tengan Kafka", "sin nadie de vacaciones", "excluye Juniors", o "vuelve al equipo original".',
     };
   }
 
@@ -172,7 +172,7 @@ export function parseCommand(text: string): ParseAction {
   }
 
   if (availability.length > 0) {
-    // "sin gente de vacaciones" / "quitá los asignados" → exclude
+    // "sin gente de vacaciones" / "quita los asignados" → exclude
     // "que estén disponibles" → require disponible (but we model this as "exclude all OTHER states")
     if (availability.includes("disponible") && !isRemoval) {
       // Require disponible = exclude every OTHER status
@@ -192,7 +192,7 @@ export function parseCommand(text: string): ParseAction {
       // Mejor decisión: requerir las otras = no implementado. Devolvemos info.
       return {
         type: "info",
-        explain: `"Sin ${skills.join(", ")}" todavía no lo soporto — sí puedo "que tengan ${skills.join(", ")}" o filtrar por squad/disponibilidad/seniority.`,
+        explain: `"Sin ${skills.join(", ")}" todavía no está soportado — sí puedo "que tengan ${skills.join(", ")}" o filtrar por squad/disponibilidad/seniority.`,
       };
     }
     patch.requireSkills = skills;
@@ -217,7 +217,7 @@ export function parseCommand(text: string): ParseAction {
     return {
       type: "unknown",
       explain:
-        'No detecté ninguna entidad conocida. Probá con squad (Pagos, Riesgos, IA), skill (Python, Kafka, AWS), nivel (Senior, Junior) o disponibilidad (vacaciones, asignados).',
+        'No detecté ninguna entidad conocida. Prueba con squad (Pagos, Riesgos, IA), skill (Python, Kafka, AWS), nivel (Senior, Junior) o disponibilidad (vacaciones, asignados).',
     };
   }
 
@@ -286,7 +286,7 @@ export function summarizeImpact(before: RoleMatch[], after: RoleMatch[]): string
   const removed = beforeCount - afterCount;
 
   if (removed === 0) return "Ningún candidato cambió — no había nadie que matchee el filtro.";
-  if (afterCount === 0) return `⚠ Todos los candidatos quedaron fuera (${removed}). Probá un filtro menos restrictivo.`;
+  if (afterCount === 0) return `⚠ Todos los candidatos quedaron fuera (${removed}). Prueba un filtro menos restrictivo.`;
 
   const beforeCov = recomputeCoverage(before);
   const afterCov = recomputeCoverage(after);

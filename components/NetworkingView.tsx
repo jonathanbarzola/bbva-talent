@@ -168,7 +168,7 @@ export default function NetworkingView({ onBack }: Props) {
         setTimeout(() => setToast(null), 3000);
       }
     } catch {
-      setToast("Error al conectar. Intentá de nuevo.");
+      setToast("Error al conectar. Intenta de nuevo.");
       setTimeout(() => setToast(null), 3000);
     } finally {
       setConnecting(null);
@@ -196,7 +196,7 @@ export default function NetworkingView({ onBack }: Props) {
           <div>
             <h1 className="font-bold text-base" style={{ color: "#e8eeff" }}>Networking & Mentoría</h1>
             <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
-              Conectá con talento BBVA
+              Conecta con talento BBVA
             </p>
           </div>
         </div>

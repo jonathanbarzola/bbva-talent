@@ -59,7 +59,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             Algo se rompió
           </h2>
           <p className="font-mono text-xs leading-relaxed mb-5" style={{ color: "#8099b8" }}>
-            Ocurrió un error inesperado en la aplicación. Podés intentar volver al inicio o recargar la página.
+            Ocurrió un error inesperado en la aplicación. Puedes intentar volver al inicio o recargar la página.
           </p>
 
           {this.state.error && (

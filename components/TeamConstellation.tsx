@@ -183,7 +183,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
             <Stat label="Colaboraciones previas" value={collabPairs.toString()} color={BBVA.sereneBlue} />
             <div className="flex-1 min-w-0" />
             <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
-              Tip: arrastrá los nodos para reorganizar · scroll para zoom · click para inspeccionar
+              Tip: arrastra los nodos para reorganizar · scroll para zoom · click para inspeccionar
             </p>
           </div>
 
@@ -267,7 +267,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
                   style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.20)" }}
                 >
                   <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#fca5a5" }}>
-                    ⚠ Sin colaboraciones previas entre miembros — esperá tiempo de gel-up.
+                    ⚠ Sin colaboraciones previas entre miembros — espera tiempo de gel-up.
                   </p>
                 </div>
               )}

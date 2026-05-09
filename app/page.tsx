@@ -29,20 +29,20 @@ const DEMO_PROJECT_CODE = "SDA-53021"; // FX Tracker · Pagos Digitales
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     targetId: "onboarding-step-1",
-    title: "Empezá por tu proyecto",
-    body: "Elegí cualquiera de los 30 proyectos SDA del banco. Cada uno ya tiene roles definidos — nosotros buscamos las personas.",
+    title: "Empieza por tu proyecto",
+    body: "Elige cualquiera de los 30 proyectos SDA del banco. Cada uno ya tiene roles definidos — nosotros buscamos las personas.",
     placement: "bottom",
   },
   {
     targetId: "onboarding-step-2",
-    title: "¿Sin tiempo? Probá una demo en vivo",
+    title: "¿Sin tiempo? Prueba una demo en vivo",
     body: "Con un click cargamos el caso real del proyecto FX Tracker (Pagos) y vas directo a ver el equipo recomendado. Cero fricción.",
     placement: "top",
   },
   {
     targetId: "onboarding-step-3",
     title: "Recomendaciones explicables",
-    body: "Cada candidato viene con Trust Score, EDI, B-Tokens y disponibilidad real. Hacé click en 360° para ver su red de colaboradores.",
+    body: "Cada candidato viene con Trust Score, EDI, B-Tokens y disponibilidad real. Haz click en 360° para ver su red de colaboradores.",
     placement: "top",
   },
 ];
@@ -207,7 +207,7 @@ function HomeView({
           className="font-black leading-tight mb-4 animate-fade-up"
           style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.5rem)", animationDelay: "0.1s" }}
         >
-          <span style={{ color: "#e8eeff" }}>Armá el equipo</span>
+          <span style={{ color: "#e8eeff" }}>Arma el equipo</span>
           <br />
           <span className="text-gradient">ideal para cada</span>
           <br />
@@ -218,7 +218,7 @@ function HomeView({
           className="text-base sm:text-lg leading-relaxed mb-7 max-w-lg animate-fade-up"
           style={{ color: "#4d6080", animationDelay: "0.15s" }}
         >
-          Seleccioná un proyecto y la IA recomienda el equipo perfecto analizando
+          Selecciona un proyecto y la IA recomienda el equipo perfecto analizando
           habilidades, disponibilidad, Trust Score y colaboraciones previas.
         </p>
 
@@ -271,7 +271,7 @@ function HomeView({
                   </span>
                 </div>
                 <p className="font-mono text-sm leading-snug" style={{ color: BBVA.purple + "cc" }}>
-                  Seleccioná un proyecto SDA · La IA recomienda el equipo ideal
+                  Selecciona un proyecto SDA · La IA recomienda el equipo ideal
                   basándose en skills, disponibilidad y Trust Score
                 </p>
               </div>
@@ -324,7 +324,7 @@ function HomeView({
           }}
         >
           <span style={{ fontSize: 13 }}>▶</span>
-          <span>Probá un caso real</span>
+          <span>Prueba un caso real</span>
           <span className="font-mono text-[10px] px-1.5 py-0.5 rounded" style={{ background: `${BBVA.lime}18`, color: BBVA.lime, opacity: 0.9 }}>
             SDA-53021 · FX Tracker
           </span>
@@ -335,7 +335,7 @@ function HomeView({
         <div className="flex items-center gap-4 w-full max-w-2xl mt-8 mb-6 animate-fade-up" style={{ animationDelay: "0.28s" }}>
           <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
           <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#1e2d44" }}>
-            o si buscás algo puntual
+            o si buscas algo puntual
           </span>
           <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
         </div>
@@ -383,7 +383,7 @@ function HomeView({
                     value={query}
                     onChange={e => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Buscá un mentor, perfil o skill..."
+                    placeholder="Busca un mentor, perfil o skill..."
                     className="flex-1 bg-transparent outline-none text-sm font-mono placeholder:opacity-30"
                     style={{ color: "#e8eeff" }}
                   />
@@ -435,7 +435,7 @@ function HomeView({
             </div>
             <div className="min-w-0">
               <p className="font-bold text-sm leading-tight" style={{ color: "#e8eeff" }}>Networking & Mentores</p>
-              <p className="font-mono text-[11px] mt-0.5" style={{ color: "#3d4f6e" }}>Conectá con referentes internos · B-Tokens</p>
+              <p className="font-mono text-[11px] mt-0.5" style={{ color: "#3d4f6e" }}>Conecta con referentes internos · B-Tokens</p>
             </div>
             <svg className="ml-auto flex-shrink-0 group-hover:translate-x-0.5 transition-transform" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M5 11L9 7L5 3" stroke="#3d4f6e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
