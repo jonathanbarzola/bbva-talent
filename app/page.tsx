@@ -82,6 +82,29 @@ const INITIAL: AppState = {
   error: null,
 };
 
+// ── View persistence across separate routes ─────────────────────────────
+// Networking is a state in this page's internal state machine, but Candidate
+// Profile / About / Dashboard live on separate Next.js routes. When the user
+// goes from /networking-state → /candidate/[id] → back, the state machine
+// resets to "home" because this component remounts with INITIAL.
+//
+// Fix: persist the current view in sessionStorage when it's a STABLE view
+// (no transient data dependencies — only "home" and "networking" qualify).
+// Read it synchronously in the useState initializer so there's no flash.
+
+const VIEW_STORAGE_KEY = "bbva-talent:last-view";
+const RESTORABLE_VIEWS: AppView[] = ["home", "networking"];
+
+function readPersistedView(): AppView | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const v = window.sessionStorage.getItem(VIEW_STORAGE_KEY) as AppView | null;
+    return v && RESTORABLE_VIEWS.includes(v) ? v : null;
+  } catch {
+    return null;
+  }
+}
+
 const MENTOR_SUGGESTIONS = [
   "Mentor en data science e IA",
   "Referente cloud AWS para networking",
@@ -498,8 +521,26 @@ function ErrorToast({ message, onDismiss }: { message: string; onDismiss: () => 
 // ── Root page ─────────────────────────────────────────────────────────────────
 
 export default function Page() {
-  const [state, setState] = useState<AppState>(INITIAL);
+  // Initialize state synchronously: if the user came back from another
+  // route (e.g. /candidate/[id]) and they were on "networking" before,
+  // restore that view so the back button feels right.
+  const [state, setState] = useState<AppState>(() => {
+    const restored = readPersistedView();
+    if (restored && restored !== "home") {
+      return { ...INITIAL, view: restored };
+    }
+    return INITIAL;
+  });
   const [tourOpen, setTourOpen] = useState(false);
+
+  // Persist the current view whenever it changes — but only for stable
+  // views that don't depend on transient state we'd lose.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (RESTORABLE_VIEWS.includes(state.view)) {
+      try { window.sessionStorage.setItem(VIEW_STORAGE_KEY, state.view); } catch { /* ignore */ }
+    }
+  }, [state.view]);
 
   const go = useCallback((patch: Partial<AppState>) => {
     setState(prev => ({ ...prev, ...patch }));
