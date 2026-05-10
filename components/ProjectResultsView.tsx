@@ -112,9 +112,7 @@ function CandidateRow({
           )}
         </div>
         <p className="text-[11px] truncate" style={{ color: "var(--theme-text-muted)" }}>
-          {candidate.rol_bbva && (
-            <span className="font-mono font-bold mr-1" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
-          )}
+          <span className="font-mono font-bold mr-1" style={{ color: BBVA.sereneBlue }}>{candidate.nivel}</span>
           {candidate.rol} · {candidate.squad}
         </p>
       </div>

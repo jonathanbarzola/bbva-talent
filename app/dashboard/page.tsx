@@ -20,6 +20,7 @@ import {
 } from "@/components/WorkforceCharts";
 import { SiloRiskCard } from "@/components/SiloRiskCard";
 import ThemeToggle from "@/components/ThemeToggle";
+import CurrentUserSelector from "@/components/CurrentUserSelector";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -66,6 +67,7 @@ export default function DashboardPage() {
           <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
             BBVA Engineering · {kpis.totalWorkforce.toLocaleString("es")} colaboradores
           </span>
+          <CurrentUserSelector compact />
           <ThemeToggle />
         </div>
       </header>

@@ -33,7 +33,7 @@ interface ChatMessage {
 const SUGGESTIONS = [
   "Que tengan Python",
   "Sin nadie de vacaciones",
-  "Solo Senior y Staff",
+  "Solo Experts",
   "Quita los de Pagos",
   "Que sepan Kafka",
   "Sin asignados",

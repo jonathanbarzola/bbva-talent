@@ -15,7 +15,7 @@ function wallet(balance: number, historial: BTokenTransaction[]) {
 const RAW: Omit<EmpleadoResult, "trust_score">[] = [
   {
     id: "emp_001", nombre: "Valentina Ríos", email: "v.rios@bbva.com",
-    rol: "Senior Backend Engineer", squad: "Pagos Digitales", nivel: "Senior",
+    rol: "Senior Backend Engineer", squad: "Pagos Digitales", nivel: "Expert",
     ubicacion: "Buenos Aires", años_empresa: 7,
     bio: "Especialista en arquitecturas de microservicios para procesamiento de pagos en tiempo real. Certificada en AWS y experta en PSD2/Open Banking.",
     score: 0.94, disponibilidad: "disponible",
@@ -58,7 +58,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_002", nombre: "Matías Fernández", email: "m.fernandez@bbva.com",
-    rol: "ML Engineer", squad: "Data & AI", nivel: "Senior",
+    rol: "ML Engineer", squad: "Data & AI", nivel: "Expert",
     ubicacion: "Buenos Aires", años_empresa: 5,
     bio: "Especialista en modelos de ML para detección de fraude y scoring crediticio. Certif. Google Cloud Professional ML Engineer.",
     score: 0.93, disponibilidad: "parcial", proyecto_asignado: "FraudeAI",
@@ -99,7 +99,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_003", nombre: "Camila Orozco", email: "c.orozco@bbva.com",
-    rol: "Full-Stack Engineer", squad: "Experiencia Digital", nivel: "Mid",
+    rol: "Full-Stack Engineer", squad: "Experiencia Digital", nivel: "Associate",
     ubicacion: "Buenos Aires", años_empresa: 3,
     bio: "Desarrolla productos end-to-end con React, TypeScript y Node.js. Especialista en micro-frontends.",
     score: 0.82, disponibilidad: "disponible",
@@ -135,7 +135,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_004", nombre: "Rodrigo Montoya", email: "r.montoya@bbva.com",
-    rol: "Cloud & DevOps Architect", squad: "Platform Engineering", nivel: "Staff",
+    rol: "Cloud & DevOps Architect", squad: "Platform Engineering", nivel: "Expert",
     ubicacion: "Madrid", años_empresa: 9,
     bio: "Arquitecto de plataforma cloud con foco en Kubernetes, GitOps y CI/CD para sistemas financieros de alta disponibilidad.",
     score: 0.90, disponibilidad: "asignado", proyecto_asignado: "BBVA Platform",
@@ -175,7 +175,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_006", nombre: "Sebastián Molina", email: "s.molina@bbva.com",
-    rol: "Security Engineer", squad: "Ciberseguridad", nivel: "Senior",
+    rol: "Security Engineer", squad: "Ciberseguridad", nivel: "Expert",
     ubicacion: "Madrid", años_empresa: 11,
     bio: "Especialista en seguridad de APIs financieras, OAuth2, mTLS y normativas PCI-DSS. Lidera el programa de bug bounty interno.",
     score: 0.81, disponibilidad: "disponible",
@@ -214,7 +214,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_007", nombre: "Isabela Carrasco", email: "i.carrasco@bbva.com",
-    rol: "Product Engineer", squad: "Open Banking", nivel: "Mid",
+    rol: "Product Engineer", squad: "Open Banking", nivel: "Associate",
     ubicacion: "Lima", años_empresa: 4,
     bio: "Trabaja en la intersección de producto y tecnología. Especialista en integraciones con APIs de terceros bajo el estándar PSD2 y Open Finance.",
     score: 0.87, disponibilidad: "disponible",
@@ -253,7 +253,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_009", nombre: "Andrea Palacios", email: "a.palacios@bbva.com",
-    rol: "Backend Engineer", squad: "Créditos & Riesgos", nivel: "Mid",
+    rol: "Backend Engineer", squad: "Créditos & Riesgos", nivel: "Associate",
     ubicacion: "Bogotá", años_empresa: 3,
     bio: "Especialista en sistemas de scoring crediticio y motores de decisión en tiempo real. Trabaja con Python, FastAPI y arquitecturas orientadas a eventos.",
     score: 0.73, disponibilidad: "disponible",
@@ -290,7 +290,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_010", nombre: "Lucía Vargas", email: "l.vargas@bbva.com",
-    rol: "Senior Data Engineer", squad: "Data Platform", nivel: "Senior",
+    rol: "Senior Data Engineer", squad: "Data Platform", nivel: "Expert",
     ubicacion: "Bogotá", años_empresa: 6,
     bio: "Construye pipelines de datos a escala con Kafka, Spark y Airflow. Arquitecturas de datos para analítica en tiempo real.",
     score: 0.88, disponibilidad: "disponible",
@@ -328,7 +328,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_011", nombre: "Carlos Méndez", email: "c.mendez@bbva.com",
-    rol: "Solutions Architect", squad: "Enterprise Architecture", nivel: "Staff",
+    rol: "Solutions Architect", squad: "Enterprise Architecture", nivel: "Expert",
     ubicacion: "Ciudad de México", años_empresa: 12,
     bio: "Arquitecto de soluciones con 12 años en banca. Arquitecturas hexagonales, DDD y estrategias de migración cloud.",
     score: 0.86, disponibilidad: "descanso_medico", disponibilidad_hasta: "2026-04-30",
@@ -367,7 +367,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_012", nombre: "Sofía Herrera", email: "s.herrera@bbva.com",
-    rol: "Agile Coach / Scrum Master", squad: "Agile Center of Excellence", nivel: "Senior",
+    rol: "Agile Coach / Scrum Master", squad: "Agile Center of Excellence", nivel: "Expert",
     ubicacion: "Lima", años_empresa: 8,
     bio: "Certificada SAFe y CSM. Lidera transformaciones ágiles en múltiples squads. Especialista en OKRs y Team Topologies.",
     score: 0.89, disponibilidad: "maternidad", disponibilidad_hasta: "2026-07-15",
@@ -403,7 +403,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_013", nombre: "Paula Jiménez", email: "p.jimenez@bbva.com",
-    rol: "ML Engineer", squad: "Data & AI", nivel: "Mid",
+    rol: "ML Engineer", squad: "Data & AI", nivel: "Associate",
     ubicacion: "Lima", años_empresa: 2,
     bio: "ML Engineer con foco en NLP y modelos de lenguaje para personalización de productos financieros.",
     score: 0.84, disponibilidad: "disponible",
@@ -439,7 +439,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_014", nombre: "Diego Restrepo", email: "d.restrepo@bbva.com",
-    rol: "DevOps Engineer", squad: "Platform Engineering", nivel: "Mid",
+    rol: "DevOps Engineer", squad: "Platform Engineering", nivel: "Associate",
     ubicacion: "Bogotá", años_empresa: 3,
     bio: "Especialista en CI/CD, observabilidad y automatización de infraestructura para entornos financieros en AWS y GCP.",
     score: 0.83, disponibilidad: "parcial", proyecto_asignado: "API Marketplace",
@@ -475,7 +475,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_015", nombre: "Ana Durán", email: "a.duran@bbva.com",
-    rol: "DevOps Engineer", squad: "Platform Engineering", nivel: "Junior",
+    rol: "DevOps Engineer", squad: "Platform Engineering", nivel: "Analyst",
     ubicacion: "Madrid", años_empresa: 1,
     bio: "Automatiza despliegues y mantiene pipelines de integración continua. Experiencia en entornos regulados del sector financiero.",
     score: 0.76, disponibilidad: "disponible",
@@ -510,7 +510,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_016", nombre: "Felipe Castro", email: "f.castro@bbva.com",
-    rol: "Scrum Master", squad: "Pagos Digitales", nivel: "Mid",
+    rol: "Scrum Master", squad: "Pagos Digitales", nivel: "Associate",
     ubicacion: "Buenos Aires", años_empresa: 5,
     bio: "Scrum Master certificado CSM y CSPO. Facilita equipos de producto en squads de pagos e innovación.",
     score: 0.81, disponibilidad: "vacaciones", disponibilidad_hasta: "2026-05-20",
@@ -545,7 +545,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_017", nombre: "Mariana Costa", email: "m.costa@bbva.com",
-    rol: "Solutions Architect", squad: "Architecture Guild", nivel: "Senior",
+    rol: "Solutions Architect", squad: "Architecture Guild", nivel: "Expert",
     ubicacion: "Lima", años_empresa: 7,
     bio: "Diseña arquitecturas cloud-native para productos de banca digital. Especializada en API-first y event-driven systems.",
     score: 0.84, disponibilidad: "disponible",
@@ -581,7 +581,7 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
 
   {
     id: "emp_018", nombre: "Tomás Vega", email: "t.vega@bbva.com",
-    rol: "Frontend Engineer", squad: "Experiencia Digital", nivel: "Senior",
+    rol: "Frontend Engineer", squad: "Experiencia Digital", nivel: "Expert",
     ubicacion: "Buenos Aires", años_empresa: 6,
     bio: "Desarrolla interfaces de alta performance para productos bancarios. Experto en accesibilidad, design systems y React.",
     score: 0.85, disponibilidad: "asignado", proyecto_asignado: "BBVA Connect",
@@ -654,7 +654,7 @@ export const MOCK_SEARCH_RESULT: SearchResponse = {
 export const MOCK_GRAPH: Record<string, GraphResponse> = {
   emp_001: {
     nodes: [
-      { id: "emp_emp_001",    label: "Valentina Ríos",       type: "empleado",    properties: { rol: "Senior Backend Engineer", squad: "Pagos Digitales", nivel: "Senior", ubicacion: "Buenos Aires" } },
+      { id: "emp_emp_001",    label: "Valentina Ríos",       type: "empleado",    properties: { rol: "Senior Backend Engineer", squad: "Pagos Digitales", nivel: "Expert", ubicacion: "Buenos Aires" } },
       { id: "skill_Python",   label: "Python",                type: "habilidad",   properties: { categoria: "Lenguaje" } },
       { id: "skill_FastAPI",  label: "FastAPI",               type: "habilidad",   properties: { categoria: "Framework" } },
       { id: "skill_PSD2",     label: "PSD2",                  type: "habilidad",   properties: { categoria: "Regulación" } },
@@ -683,7 +683,7 @@ export const MOCK_GRAPH: Record<string, GraphResponse> = {
   },
   emp_007: {
     nodes: [
-      { id: "emp_emp_007",       label: "Isabela Carrasco",  type: "empleado",    properties: { rol: "Product Engineer", squad: "Open Banking", nivel: "Mid", ubicacion: "Lima" } },
+      { id: "emp_emp_007",       label: "Isabela Carrasco",  type: "empleado",    properties: { rol: "Product Engineer", squad: "Open Banking", nivel: "Associate", ubicacion: "Lima" } },
       { id: "skill_PSD2",        label: "PSD2",              type: "habilidad",   properties: { categoria: "Regulación" } },
       { id: "skill_OpenBanking", label: "Open Banking",      type: "habilidad",   properties: { categoria: "Dominio" } },
       { id: "skill_OAuth2",      label: "OAuth2",            type: "habilidad",   properties: { categoria: "Protocolo" } },

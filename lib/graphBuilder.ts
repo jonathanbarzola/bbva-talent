@@ -69,7 +69,6 @@ export function buildEnrichedGraph(employeeId: string): GraphResponse {
       squad: employee.squad,
       nivel: employee.nivel,
       ubicacion: employee.ubicacion,
-      ...(employee.rol_bbva ? { rol_bbva: employee.rol_bbva } : {}),
       ...(employee.registro ? { registro: employee.registro } : {}),
     },
   });
@@ -220,7 +219,7 @@ export function buildEnrichedGraph(employeeId: string): GraphResponse {
       properties: {
         rol: teammate.rol,
         squad: teammate.squad,
-        ...(teammate.rol_bbva ? { rol_bbva: teammate.rol_bbva } : {}),
+        nivel: teammate.nivel,
         ...(sharedProjectCode ? { proyecto_compartido: sharedProjectCode } : {}),
       },
     });

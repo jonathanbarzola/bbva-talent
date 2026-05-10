@@ -11,10 +11,9 @@ interface TeamBalancePanelProps {
 }
 
 const NIVEL_COLOR: Record<string, string> = {
-  Junior: BBVA.ice,
-  Mid:    BBVA.canary,
-  Senior: BBVA.lime,
-  Staff:  BBVA.mandarin,
+  Analyst:   BBVA.ice,
+  Associate: BBVA.canary,
+  Expert:    BBVA.mandarin,
 };
 
 const RATING_COLOR: Record<EDIRating, string> = {
@@ -91,7 +90,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
       ? Math.round((ediCounts[1] * 100 + ediCounts[2] * 65 + ediCounts[3] * 30) / ediTotal)
       : null;
 
-    const nivelCounts: Record<string, number> = { Junior: 0, Mid: 0, Senior: 0, Staff: 0 };
+    const nivelCounts: Record<string, number> = { Analyst: 0, Associate: 0, Expert: 0 };
     for (const c of team) {
       if (nivelCounts[c.nivel] !== undefined) nivelCounts[c.nivel]++;
     }
@@ -237,7 +236,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
           Distribución de seniority
         </p>
         <div className="space-y-1.5">
-          {(["Staff", "Senior", "Mid", "Junior"] as const).map(level => {
+          {(["Expert", "Associate", "Analyst"] as const).map(level => {
             const count = stats.nivelCounts[level] ?? 0;
             if (count === 0) return null;
             return (

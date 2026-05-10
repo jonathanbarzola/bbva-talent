@@ -14,10 +14,9 @@ import ThemeToggle from "@/components/ThemeToggle";
 import type { EmpleadoResult, AvailabilityStatus } from "@/lib/types";
 
 const NIVEL_COLOR: Record<string, string> = {
-  Junior: BBVA.ice,
-  Mid:    BBVA.canary,
-  Senior: BBVA.lime,
-  Staff:  BBVA.mandarin,
+  Analyst:   BBVA.ice,
+  Associate: BBVA.canary,
+  Expert:    BBVA.mandarin,
 };
 
 const AVAIL_LABEL: Record<AvailabilityStatus, { color: string; label: string; icon: string }> = {
@@ -222,15 +221,6 @@ export default function CandidateProfilePage({ params }: { params: Promise<{ id:
                 >
                   {candidate.nivel}
                 </span>
-                {candidate.rol_bbva && (
-                  <span
-                    className="font-mono text-[10px] font-bold px-2 py-0.5 rounded"
-                    style={{ background: `${BBVA.sereneBlue}15`, color: BBVA.sereneBlue, border: `1px solid ${BBVA.sereneBlue}40` }}
-                    title="Rol oficial BBVA"
-                  >
-                    {candidate.rol_bbva}
-                  </span>
-                )}
                 {candidate.registro && (
                   <span
                     className="font-mono text-[10px] font-bold px-2 py-0.5 rounded"

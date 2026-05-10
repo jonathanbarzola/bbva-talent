@@ -95,12 +95,13 @@ export type AvailabilityStatus =
 
 export type TipoContrato = "interno" | "externo";
 
-export type RolBBVA = "Analyst" | "Associate" | "Expert" | "Lead";
-// Mapping con nivel actual:
-//   Analyst   ≈ Junior
-//   Associate ≈ Mid (Semi Senior)
-//   Expert    ≈ Senior
-//   Lead      ≈ Staff / Principal
+// ── Nivel BBVA (taxonomía oficial banking) ───────────────────────────────
+// 3 niveles: Analyst → Associate → Expert
+// Modelo de carrera lineal — Expert es el top tier IC.
+export type Nivel = "Analyst" | "Associate" | "Expert";
+
+/** @deprecated usar Nivel — alias retenido temporalmente para evitar romper callers */
+export type RolBBVA = Nivel;
 
 export interface StaffingRecord {
   /** Período fiscal: "2024-Q3", "2024-Q4", "2025-Q1", "2025-Q2" */
@@ -132,7 +133,7 @@ export interface EmpleadoResult {
   email: string;
   rol: string;
   squad: string;
-  nivel: string;
+  nivel: Nivel;
   ubicacion: string;
   bio: string;
   score: number;
@@ -160,8 +161,6 @@ export interface EmpleadoResult {
   registro?: string;
   /** Consultora de origen — solo aplica para externos (Indra, Neoris, Bluetab, etc.) */
   consultora?: string;
-  /** Rol oficial en la nomenclatura BBVA (Analyst/Associate/Expert/Lead) */
-  rol_bbva?: RolBBVA;
   /** Histórico de staffing — últimos 4 quarters con FTE asignado por proyecto */
   staffing_historico?: StaffingRecord[];
   /** Feedback de jefes anteriores — solo aplica para externos */

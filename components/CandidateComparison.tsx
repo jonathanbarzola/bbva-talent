@@ -16,9 +16,8 @@ interface CandidateComparisonProps {
 
 const NIVEL_COLOR: Record<string, string> = {
   Junior: BBVA.ice,
-  Mid: BBVA.canary,
-  Senior: BBVA.lime,
-  Staff: BBVA.mandarin,
+  Associate: BBVA.canary,
+  Expert: BBVA.mandarin,
 };
 
 const AVAIL_LABEL: Record<AvailabilityStatus, { color: string; label: string; icon: string }> = {

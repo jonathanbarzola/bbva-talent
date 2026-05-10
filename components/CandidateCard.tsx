@@ -15,10 +15,9 @@ interface CandidateCardProps {
 }
 
 const NIVEL_CONFIG: Record<string, { color: string; label: string }> = {
-  Junior: { color: BBVA.ice,     label: "Junior" },
-  Mid:    { color: BBVA.canary,  label: "Mid" },
-  Senior: { color: BBVA.lime,    label: "Senior" },
-  Staff:  { color: BBVA.mandarin,label: "Staff" },
+  Analyst:   { color: BBVA.ice,      label: "Analyst" },
+  Associate: { color: BBVA.canary,   label: "Associate" },
+  Expert:    { color: BBVA.mandarin, label: "Expert" },
 };
 
 const AVAILABILITY_CONFIG: Record<AvailabilityStatus, { color: string; icon: string; label: string; bg: string }> = {
@@ -198,10 +197,8 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
             {candidate.registro && <ContractBadge candidate={candidate} />}
           </div>
           <p className="text-xs truncate" style={{ color: "var(--theme-text-muted)" }}>
-            {candidate.rol_bbva && (
-              <span className="font-mono" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
-            )}
-            {candidate.rol_bbva && " · "}
+            <span className="font-mono" style={{ color: BBVA.sereneBlue }}>{candidate.nivel}</span>
+            {" · "}
             {candidate.rol}
           </p>
           <div className="flex items-center gap-2 mt-1 flex-wrap">

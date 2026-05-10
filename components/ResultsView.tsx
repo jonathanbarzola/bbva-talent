@@ -15,7 +15,7 @@ interface ResultsViewProps {
   onNewSearch: () => void;
 }
 
-const NIVEL_FILTERS = ["Todos", "Junior", "Mid", "Senior", "Staff"];
+const NIVEL_FILTERS = ["Todos", "Analyst", "Associate", "Expert"];
 
 export default function ResultsView({ result, onViewConstellation, onNewSearch }: ResultsViewProps) {
   const [visible, setVisible]               = useState(false);

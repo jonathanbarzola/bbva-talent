@@ -1,23 +1,9 @@
 import type {
   EmpleadoResult,
   TipoContrato,
-  RolBBVA,
   StaffingRecord,
   ExternalFeedback,
 } from "./types";
-
-// ── Mapping de nivel actual → rol BBVA oficial ──────────────────────────
-
-const NIVEL_TO_ROL_BBVA: Record<string, RolBBVA> = {
-  Junior: "Analyst",
-  Mid:    "Associate",
-  Senior: "Expert",
-  Staff:  "Lead",
-};
-
-export function getRolBBVA(nivel: string): RolBBVA {
-  return NIVEL_TO_ROL_BBVA[nivel] ?? "Associate";
-}
 
 // ── Consultoras conocidas en BBVA Perú ──────────────────────────────────
 
@@ -34,8 +20,8 @@ export const KNOWN_CONSULTORAS = [
 // ── Perfiles de staffing por empleado ───────────────────────────────────
 // Mezcla deliberada de patrones para que el demo muestre variedad:
 //   - Internos siempre 1.0 FTE en un solo proyecto (perfil clásico)
-//   - Internos divididos 0.5/0.5 entre 2 proyectos (Senior/Expert)
-//   - Internos divididos 0.4/0.4/0.2 (Staff/Lead muy demandados)
+//   - Internos divididos 0.5/0.5 entre 2 proyectos (Experts)
+//   - Internos divididos 0.4/0.4/0.2 (Experts top tier muy demandados)
 //   - Externos con feedback mixto (señal a managers)
 //   - Externos con feedback excelente (bajo riesgo)
 //   - Externos con feedback negativo (bandera roja)
@@ -322,17 +308,13 @@ export function enrichEmpleado(emp: EmpleadoResult): EmpleadoResult {
   const profile = STAFFING_PROFILES[emp.id];
   if (!profile) {
     // Default fallback for any employee not in our profile map
-    return {
-      ...emp,
-      rol_bbva: emp.rol_bbva ?? getRolBBVA(emp.nivel),
-    };
+    return emp;
   }
   return {
     ...emp,
     tipo_contrato: profile.tipo_contrato,
     registro: profile.registro,
     consultora: profile.consultora,
-    rol_bbva: getRolBBVA(emp.nivel),
     staffing_historico: profile.staffing_historico,
     feedback_externo: profile.feedback_externo,
   };

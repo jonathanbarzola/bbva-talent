@@ -105,12 +105,11 @@ function LegendDot({ label, color }: { label: string; color: string }) {
 // ── Seniority Pyramid ───────────────────────────────────────────────────
 
 export function SeniorityPyramid() {
-  const total = SENIORITY_TOTALS.junior + SENIORITY_TOTALS.mid + SENIORITY_TOTALS.senior + SENIORITY_TOTALS.staff;
+  const total = SENIORITY_TOTALS.analyst + SENIORITY_TOTALS.associate + SENIORITY_TOTALS.expert;
   const levels = [
-    { label: "Staff",  count: SENIORITY_TOTALS.staff,  color: BBVA.mandarin },
-    { label: "Senior", count: SENIORITY_TOTALS.senior, color: BBVA.lime },
-    { label: "Mid",    count: SENIORITY_TOTALS.mid,    color: BBVA.canary },
-    { label: "Junior", count: SENIORITY_TOTALS.junior, color: BBVA.ice },
+    { label: "Expert",    count: SENIORITY_TOTALS.expert,    color: BBVA.mandarin },
+    { label: "Associate", count: SENIORITY_TOTALS.associate, color: BBVA.canary },
+    { label: "Analyst",   count: SENIORITY_TOTALS.analyst,   color: BBVA.ice },
   ];
   const max = Math.max(...levels.map(l => l.count));
 
@@ -158,7 +157,7 @@ export function SeniorityPyramid() {
       </div>
 
       <p className="font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "var(--theme-text-dim)" }}>
-        ⓘ Una pirámide saludable tiene base ancha (40-50% Junior+Mid) para alimentar promociones futuras.
+        ⓘ Una pirámide saludable tiene base ancha (40-50% Analyst+Associate) para alimentar promociones futuras.
       </p>
     </section>
   );

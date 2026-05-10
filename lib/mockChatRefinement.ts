@@ -47,12 +47,14 @@ const SKILL_ALIASES: Record<string, string[]> = {
   Security: ["security", "seguridad", "criptografía"],
 };
 
-const LEVELS = ["Junior", "Mid", "Senior", "Staff"] as const;
+const LEVELS = ["Analyst", "Associate", "Expert"] as const;
 const LEVEL_ALIASES: Record<(typeof LEVELS)[number], string[]> = {
-  Junior: ["junior", "jr", "juniors", "jrs"],
-  Mid: ["mid", "semi senior", "semi-senior", "mids"],
-  Senior: ["senior", "sr", "seniors", "srs"],
-  Staff: ["staff", "principal", "lead técnico", "lead tecnico"],
+  // BBVA: Analyst absorbs old Junior
+  Analyst:   ["analyst", "analysts", "junior", "jr", "juniors", "jrs"],
+  // BBVA: Associate absorbs old Mid (semi senior)
+  Associate: ["associate", "associates", "mid", "semi senior", "semi-senior", "mids"],
+  // BBVA: Expert absorbs both old Senior and Staff (top tier IC)
+  Expert:    ["expert", "experts", "senior", "sr", "seniors", "srs", "staff", "principal", "lead técnico", "lead tecnico"],
 };
 
 const AVAILABILITY_ALIASES: Record<AvailabilityStatus, string[]> = {
@@ -107,7 +109,7 @@ export type ParseAction =
 
 const REMOVE_VERBS = /\b(quit[áa]|excluí?|excluid?|sin|saca[rd]?|no quiero|no me sirven?|elimin[áa]r?|fuera|out|borr[áa]r?)\b/i;
 const REQUIRE_VERBS = /\b(necesito|con|que (tengan?|sepan?|conozcan?|domine[ne]?)|busc[áa]r?|agreg[áaá]r?|añad[íi]r?|dame|que sea|requiero|debe(?:r[aá])?\s+(?:tener|saber))\b/i;
-const RESET_PATTERNS = /\b(reset|reinici[áa]r?|volv[éeéer]?\s*(?:al|a)\s*(?:equipo\s*)?(?:original|inicial)|empez[áa]r?\s*de\s*nuevo|limpi[áa]r?\s*filtros?)\b/i;
+const RESET_PATTERNS = /\b(reset|reinici[áa]r?|(?:volv[éeé]|vuelve)\s*(?:al|a)\s*(?:equipo\s*)?(?:original|inicial)|empez[áa]r?\s*de\s*nuevo|limpi[áa]r?\s*filtros?)\b/i;
 const HELP_PATTERNS = /\b(ayud[aá]|help|qu[ée]\s*pod[ée]s\s*hacer|c[óo]mo\s*funciona|comandos?)\b/i;
 
 function findEntity<T extends string>(
@@ -151,7 +153,7 @@ export function parseCommand(text: string): ParseAction {
     return {
       type: "info",
       explain:
-        'Prueba pedidos como: "quita los que están en Pagos", "que tengan Kafka", "sin nadie de vacaciones", "excluye Juniors", o "vuelve al equipo original".',
+        'Prueba pedidos como: "quita los que están en Pagos", "que tengan Kafka", "sin nadie de vacaciones", "excluye Analysts", o "vuelve al equipo original".',
     };
   }
 
@@ -217,7 +219,7 @@ export function parseCommand(text: string): ParseAction {
     return {
       type: "unknown",
       explain:
-        'No detecté ninguna entidad conocida. Prueba con squad (Pagos, Riesgos, IA), skill (Python, Kafka, AWS), nivel (Senior, Junior) o disponibilidad (vacaciones, asignados).',
+        'No detecté ninguna entidad conocida. Prueba con squad (Pagos, Riesgos, IA), skill (Python, Kafka, AWS), nivel (Analyst, Associate, Expert) o disponibilidad (vacaciones, asignados).',
     };
   }
 

@@ -140,11 +140,11 @@ export interface TechWorkforce {
   techId: string;
   /** Cantidad total de colaboradores en esta tech */
   total: number;
+  /** Distribución BBVA: Analyst → Associate → Expert (top tier IC) */
   seniority: {
-    junior: number;
-    mid: number;
-    senior: number;
-    staff: number;
+    analyst: number;
+    associate: number;
+    expert: number;
   };
   availability: {
     available: number;
@@ -168,7 +168,7 @@ export interface TechWorkforce {
  * Distribución total: 1800 colaboradores en BBVA Engineering.
  *
  * Diseñada para mostrar contrastes:
- * - HOST y ASO con muy pocas personas + alta seniority + alto tenure → RIESGO CRÍTICO
+ * - HOST y ASO con muy pocas personas + alta concentración Expert + alto tenure → RIESGO CRÍTICO
  * - NACAR demandado pero supply estable
  * - AI con apenas 5 personas y 8 proyectos abiertos → DESBALANCE
  * - Backend/Mobile/Scrum como mayoría sana
@@ -178,7 +178,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "host",
     total: 12,
-    seniority: { junior: 0, mid: 1, senior: 4, staff: 7 },
+    seniority: { analyst: 0, associate: 1, expert: 11 },
     availability: { available: 3, partial: 6, assigned: 2, onLeave: 1 },
     avgTenureYears: 22,
     mentors: 3,
@@ -189,7 +189,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "aso",
     total: 18,
-    seniority: { junior: 0, mid: 2, senior: 8, staff: 8 },
+    seniority: { analyst: 0, associate: 2, expert: 16 },
     availability: { available: 4, partial: 9, assigned: 4, onLeave: 1 },
     avgTenureYears: 18,
     mentors: 4,
@@ -202,7 +202,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "nacar",
     total: 87,
-    seniority: { junior: 12, mid: 32, senior: 31, staff: 12 },
+    seniority: { analyst: 12, associate: 32, expert: 43 },
     availability: { available: 18, partial: 45, assigned: 20, onLeave: 4 },
     avgTenureYears: 8,
     mentors: 11,
@@ -213,7 +213,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "apx",
     total: 65,
-    seniority: { junior: 8, mid: 24, senior: 23, staff: 10 },
+    seniority: { analyst: 8, associate: 24, expert: 33 },
     availability: { available: 15, partial: 30, assigned: 18, onLeave: 2 },
     avgTenureYears: 7,
     mentors: 8,
@@ -224,7 +224,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "cells",
     total: 125,
-    seniority: { junior: 22, mid: 48, senior: 40, staff: 15 },
+    seniority: { analyst: 22, associate: 48, expert: 55 },
     availability: { available: 30, partial: 60, assigned: 30, onLeave: 5 },
     avgTenureYears: 6,
     mentors: 13,
@@ -237,7 +237,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "ai",
     total: 5,
-    seniority: { junior: 0, mid: 1, senior: 3, staff: 1 },
+    seniority: { analyst: 0, associate: 1, expert: 4 },
     availability: { available: 1, partial: 2, assigned: 2, onLeave: 0 },
     avgTenureYears: 5,
     mentors: 1,
@@ -250,7 +250,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "data",
     total: 148,
-    seniority: { junior: 32, mid: 60, senior: 42, staff: 14 },
+    seniority: { analyst: 32, associate: 60, expert: 56 },
     availability: { available: 36, partial: 78, assigned: 30, onLeave: 4 },
     avgTenureYears: 5,
     mentors: 14,
@@ -261,7 +261,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "mobile",
     total: 200,
-    seniority: { junior: 45, mid: 80, senior: 60, staff: 15 },
+    seniority: { analyst: 45, associate: 80, expert: 75 },
     availability: { available: 48, partial: 110, assigned: 38, onLeave: 4 },
     avgTenureYears: 4,
     mentors: 18,
@@ -272,7 +272,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "frontend",
     total: 180,
-    seniority: { junior: 42, mid: 72, senior: 52, staff: 14 },
+    seniority: { analyst: 42, associate: 72, expert: 66 },
     availability: { available: 45, partial: 95, assigned: 36, onLeave: 4 },
     avgTenureYears: 4,
     mentors: 16,
@@ -283,7 +283,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "backend",
     total: 410,
-    seniority: { junior: 95, mid: 168, senior: 117, staff: 30 },
+    seniority: { analyst: 95, associate: 168, expert: 147 },
     availability: { available: 102, partial: 210, assigned: 88, onLeave: 10 },
     avgTenureYears: 5,
     mentors: 38,
@@ -294,7 +294,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "devops",
     total: 110,
-    seniority: { junior: 18, mid: 42, senior: 38, staff: 12 },
+    seniority: { analyst: 18, associate: 42, expert: 50 },
     availability: { available: 28, partial: 58, assigned: 22, onLeave: 2 },
     avgTenureYears: 5,
     mentors: 10,
@@ -305,7 +305,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "security",
     total: 75,
-    seniority: { junior: 8, mid: 22, senior: 32, staff: 13 },
+    seniority: { analyst: 8, associate: 22, expert: 45 },
     availability: { available: 18, partial: 38, assigned: 17, onLeave: 2 },
     avgTenureYears: 7,
     mentors: 10,
@@ -316,7 +316,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "ux",
     total: 75,
-    seniority: { junior: 18, mid: 30, senior: 22, staff: 5 },
+    seniority: { analyst: 18, associate: 30, expert: 27 },
     availability: { available: 18, partial: 40, assigned: 15, onLeave: 2 },
     avgTenureYears: 4,
     mentors: 6,
@@ -327,7 +327,7 @@ export const WORKFORCE_DATA: TechWorkforce[] = [
   {
     techId: "scrum",
     total: 290,
-    seniority: { junior: 28, mid: 116, senior: 126, staff: 20 },
+    seniority: { analyst: 28, associate: 116, expert: 146 },
     availability: { available: 72, partial: 144, assigned: 64, onLeave: 10 },
     avgTenureYears: 6,
     mentors: 27,
@@ -359,20 +359,18 @@ export const WORKFORCE_BY_TYPE: Record<TechType, number> = WORKFORCE_DATA.reduce
 );
 
 export interface AggregatedSeniority {
-  junior: number;
-  mid: number;
-  senior: number;
-  staff: number;
+  analyst: number;
+  associate: number;
+  expert: number;
 }
 
 export const SENIORITY_TOTALS: AggregatedSeniority = WORKFORCE_DATA.reduce(
   (acc, w) => ({
-    junior: acc.junior + w.seniority.junior,
-    mid: acc.mid + w.seniority.mid,
-    senior: acc.senior + w.seniority.senior,
-    staff: acc.staff + w.seniority.staff,
+    analyst:   acc.analyst   + w.seniority.analyst,
+    associate: acc.associate + w.seniority.associate,
+    expert:    acc.expert    + w.seniority.expert,
   }),
-  { junior: 0, mid: 0, senior: 0, staff: 0 }
+  { analyst: 0, associate: 0, expert: 0 }
 );
 
 export const AVAILABILITY_TOTALS = WORKFORCE_DATA.reduce(

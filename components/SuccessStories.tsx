@@ -28,9 +28,9 @@ const STORIES: Story[] = [
     title: "Real-time Notifications",
     domain: "Plataforma",
     domainColor: BBVA.lime,
-    metric: { value: "35 min", label: "para encontrar al Senior ideal" },
+    metric: { value: "35 min", label: "para encontrar al Expert ideal" },
     result: "Manager armó squad completo de 4 personas en una sentada.",
-    highlight: "Match con Senior Kafka del squad de Banca Digital que nadie tenía en el radar.",
+    highlight: "Match con un Expert en Kafka del squad de Banca Digital que nadie tenía en el radar.",
   },
   {
     code: "SDA-53038",

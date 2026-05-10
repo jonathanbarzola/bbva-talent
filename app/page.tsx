@@ -13,6 +13,7 @@ import ImpactMetrics from "@/components/ImpactMetrics";
 import SuccessStories from "@/components/SuccessStories";
 import RoiCalculator from "@/components/RoiCalculator";
 import ThemeToggle from "@/components/ThemeToggle";
+import CurrentUserSelector from "@/components/CurrentUserSelector";
 
 // ── Lazy imports for heavy components ───────────────────────────────────────
 const ParticleBackground   = dynamic(() => import("@/components/ParticleBackground"),   { ssr: false });
@@ -109,7 +110,7 @@ function readPersistedView(): AppView | null {
 const MENTOR_SUGGESTIONS = [
   "Mentor en data science e IA",
   "Referente cloud AWS para networking",
-  "Senior en ciberseguridad y compliance",
+  "Expert en ciberseguridad y compliance",
   "Experto en arquitectura de microservicios",
 ];
 
@@ -208,6 +209,17 @@ function HomeView({
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
           <Link
+            href="/me"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all duration-150 hover:opacity-80"
+            style={{ background: `${BBVA.purple}14`, border: `1px solid ${BBVA.purple}38`, color: BBVA.purple }}
+          >
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+              <path d="M5.5 6.2c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3z" stroke="currentColor" strokeWidth="1.1"/>
+              <path d="M0.7 11c0-2.3 2.2-4.2 4.8-4.2S10.3 8.7 10.3 11" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+            </svg>
+            <span className="hidden sm:inline">Mi carrera</span>
+          </Link>
+          <Link
             href="/about"
             className="hidden sm:flex px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all duration-150 hover:opacity-80"
             style={{ background: "rgba(150,148,255,0.06)", border: "1px solid rgba(150,148,255,0.18)", color: BBVA.purple }}
@@ -223,6 +235,7 @@ function HomeView({
           >
             ?
           </button>
+          <CurrentUserSelector />
           <ThemeToggle />
         </div>
       </nav>

@@ -83,21 +83,21 @@ function checkBusFactor(w: TechWorkforce, cat: TechCategory): SiloRiskFactor | n
 
 function checkSuccession(w: TechWorkforce, _cat: TechCategory): SiloRiskFactor | null {
   if (w.total < 5) return null;
-  const seniorPlus = w.seniority.senior + w.seniority.staff;
-  const seniorRatio = seniorPlus / w.total;
+  const expertCount = w.seniority.expert;
+  const expertRatio = expertCount / w.total;
 
-  if (seniorRatio >= 0.85 && w.total >= 10) {
+  if (expertRatio >= 0.85 && w.total >= 10) {
     return {
       kind: "succession",
       severity: "high",
-      detail: `${pct(seniorPlus, w.total)}% del staff es Senior o Staff (${seniorPlus}/${w.total}). Sin plan de sucesión formal, las salidas concentran conocimiento crítico.`,
+      detail: `${pct(expertCount, w.total)}% del staff es Expert (${expertCount}/${w.total}). Sin plan de sucesión formal, las salidas concentran conocimiento crítico.`,
     };
   }
-  if (seniorRatio >= 0.7 && w.total >= 10) {
+  if (expertRatio >= 0.7 && w.total >= 10) {
     return {
       kind: "succession",
       severity: "medium",
-      detail: `${pct(seniorPlus, w.total)}% Senior+Staff. Pipeline de promoción Junior→Mid no está alimentando suficiente.`,
+      detail: `${pct(expertCount, w.total)}% Expert. Pipeline de promoción Analyst→Associate no está alimentando suficiente.`,
     };
   }
   return null;
@@ -123,19 +123,19 @@ function checkTenureConcentration(w: TechWorkforce, _cat: TechCategory): SiloRis
 
 function checkNoPipeline(w: TechWorkforce, _cat: TechCategory): SiloRiskFactor | null {
   if (w.total < 8) return null;
-  if (w.seniority.junior === 0) {
+  if (w.seniority.analyst === 0) {
     return {
       kind: "no-pipeline",
       severity: "high",
-      detail: `Cero Juniors en una tech con ${w.total} personas. Sin pipeline de formación interna — toda contratación nueva debe venir del mercado.`,
+      detail: `Cero Analysts en una tech con ${w.total} personas. Sin pipeline de formación interna — toda contratación nueva debe venir del mercado.`,
     };
   }
-  const juniorRatio = w.seniority.junior / w.total;
-  if (juniorRatio < 0.05 && w.total >= 30) {
+  const analystRatio = w.seniority.analyst / w.total;
+  if (analystRatio < 0.05 && w.total >= 30) {
     return {
       kind: "no-pipeline",
       severity: "medium",
-      detail: `Solo ${pct(w.seniority.junior, w.total)}% Juniors (${w.seniority.junior}/${w.total}). Pipeline débil para reemplazo natural.`,
+      detail: `Solo ${pct(w.seniority.analyst, w.total)}% Analysts (${w.seniority.analyst}/${w.total}). Pipeline débil para reemplazo natural.`,
     };
   }
   return null;
@@ -220,7 +220,7 @@ function buildAISuggestions(
 
   if (kinds.has("no-pipeline")) {
     suggestions.push(
-      `Habilitar tracks de formación Junior en ${cat.name}: bootcamp interno + asignación gradual a proyectos no críticos. Meta: 8-12% del headcount sea Junior en 12 meses.`
+      `Habilitar tracks de formación Analyst en ${cat.name}: bootcamp interno + asignación gradual a proyectos no críticos. Meta: 8-12% del headcount sea Analyst en 12 meses.`
     );
   }
 
@@ -239,7 +239,7 @@ function buildAISuggestions(
 
   if (kinds.has("succession") && !kinds.has("no-pipeline")) {
     suggestions.push(
-      `Promover Mid → Senior aceleradamente con ownership real en ${cat.name}. Evitar que los Senior actuales se conviertan en cuello de botella para code review y arquitectura.`
+      `Promover Associate → Expert aceleradamente con ownership real en ${cat.name}. Evitar que los Experts actuales se conviertan en cuello de botella para code review y arquitectura.`
     );
   }
 

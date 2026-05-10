@@ -39,8 +39,8 @@ const RISKY_AVAILABILITY: AvailabilityStatus[] = [
   "descanso_medico",
 ];
 
-const JUNIOR_LEVELS = new Set(["Junior", "Mid"]);
-const SENIOR_LEVELS = new Set(["Senior", "Staff"]);
+const JUNIOR_LEVELS = new Set(["Analyst", "Associate"]);
+const SENIOR_LEVELS = new Set(["Expert"]);
 
 function pickAssigned(
   candidates: EmpleadoResult[],
@@ -121,10 +121,10 @@ export function analyzeGaps(
       id: "seniority-no-senior",
       severity: "high",
       category: "seniority",
-      title: "Equipo sin referente Senior/Staff",
-      detail: `Los ${total} miembros asignados son Junior/Mid. Riesgo de ramp-up alto sin liderazgo técnico.`,
+      title: "Equipo sin referente Expert",
+      detail: `Los ${total} miembros asignados son Analyst/Associate. Riesgo de ramp-up alto sin liderazgo técnico.`,
       recommendation:
-        "Sumar al menos 1 Senior o Staff para acelerar onboarding y reducir riesgo técnico.",
+        "Sumar al menos 1 Expert para acelerar onboarding y reducir riesgo técnico.",
     });
   } else if (total >= 4 && juniorCount / total >= 0.6 && seniorCount <= 1) {
     gaps.push({
@@ -132,9 +132,9 @@ export function analyzeGaps(
       severity: "medium",
       category: "seniority",
       title: "Pirámide de seniority desbalanceada",
-      detail: `${juniorCount}/${total} miembros son Junior/Mid y solo ${seniorCount} es Senior/Staff. Riesgo medio de ramp-up.`,
+      detail: `${juniorCount}/${total} miembros son Analyst/Associate y solo ${seniorCount} es Expert. Riesgo medio de ramp-up.`,
       recommendation:
-        "Idealmente 30-40% Senior/Staff para distribuir mentoring y ownership.",
+        "Idealmente 30-40% Expert para distribuir mentoring y ownership.",
     });
   }
 

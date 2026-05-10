@@ -26,7 +26,7 @@ const RISK_LABEL: Record<SiloRiskKind, string> = {
   "bus-factor":            "Bus factor",
   "succession":            "Sucesión",
   "tenure-concentration":  "Concentración de tenure",
-  "no-pipeline":           "Sin pipeline Junior",
+  "no-pipeline":           "Sin pipeline Analyst",
   "demand-supply":         "Demanda > supply",
   "low-mentorship":        "Pocos mentores",
 };
@@ -202,11 +202,10 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
               </div>
 
               {/* Drill-down stats grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-                <DrillStat label="Junior" value={w.seniority.junior} total={w.total} color={BBVA.ice} />
-                <DrillStat label="Mid" value={w.seniority.mid} total={w.total} color={BBVA.canary} />
-                <DrillStat label="Senior" value={w.seniority.senior} total={w.total} color={BBVA.lime} />
-                <DrillStat label="Staff" value={w.seniority.staff} total={w.total} color={BBVA.mandarin} />
+              <div className="grid grid-cols-3 gap-2 pt-2">
+                <DrillStat label="Analyst" value={w.seniority.analyst} total={w.total} color={BBVA.ice} />
+                <DrillStat label="Associate" value={w.seniority.associate} total={w.total} color={BBVA.canary} />
+                <DrillStat label="Expert" value={w.seniority.expert} total={w.total} color={BBVA.mandarin} />
               </div>
             </div>
           </motion.div>

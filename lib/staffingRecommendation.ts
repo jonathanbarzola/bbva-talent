@@ -1,4 +1,4 @@
-import type { EmpleadoResult, StaffingRecord, ExternalFeedback } from "./types";
+import type { EmpleadoResult, Nivel, StaffingRecord, ExternalFeedback } from "./types";
 import {
   avgFTE,
   avgProjectsPerQuarter,
@@ -79,16 +79,16 @@ function clampToCommonFte(value: number): number {
   return best;
 }
 
-function fteForSeniority(rolBbva: string | undefined, baseFte: number): number {
-  // Analysts (Juniors) rarely split — they need focused mentorship and ramp-up
-  if (rolBbva === "Analyst") {
+function fteForSeniority(nivel: Nivel, baseFte: number): number {
+  // Analysts rarely split — they need focused mentorship and ramp-up
+  if (nivel === "Analyst") {
     return baseFte >= 0.7 ? 1.0 : 0.5;
   }
-  // Associate (Mid) can split 50/50 max
-  if (rolBbva === "Associate") {
+  // Associate can split 50/50 max
+  if (nivel === "Associate") {
     return baseFte >= 0.7 ? 1.0 : baseFte >= 0.4 ? 0.5 : 0.4;
   }
-  // Expert/Lead can go to any fraction
+  // Expert (top tier IC) can go to any fraction
   return clampToCommonFte(baseFte);
 }
 
@@ -102,7 +102,7 @@ export function recommendStaffing(
   const records = candidate.staffing_historico ?? [];
   const feedback = candidate.feedback_externo ?? [];
   const isExternal = candidate.tipo_contrato === "externo";
-  const rolBbva = candidate.rol_bbva;
+  const nivel = candidate.nivel;
 
   const pattern = detectPattern(records);
   const avgFte = avgFTE(records);
@@ -115,7 +115,7 @@ export function recommendStaffing(
 
   // ── 1. Sin historial ──
   if (pattern === "no-history") {
-    const fte = fteForSeniority(rolBbva, 1.0);
+    const fte = fteForSeniority(nivel, 1.0);
     reasoning.push({
       label: "Sin historial previo en BBVA",
       detail: isExternal
@@ -141,13 +141,13 @@ export function recommendStaffing(
         pastProjects: [],
       },
       riskSignals,
-      alternativeFtes: rolBbva === "Analyst" ? [1.0, 0.5] : [1.0, 0.75, 0.5],
+      alternativeFtes: nivel === "Analyst" ? [1.0, 0.5] : [1.0, 0.75, 0.5],
     };
   }
 
   // ── 2. Pattern = single-project ──
   if (pattern === "single-project") {
-    const fte = fteForSeniority(rolBbva, 1.0);
+    const fte = fteForSeniority(nivel, 1.0);
     reasoning.push({
       label: "Patrón histórico: dedicación completa",
       detail: `En los últimos ${quarters.length} quarter${quarters.length !== 1 ? "s" : ""}, ${candidate.nombre.split(" ")[0]} estuvo ${pattern === "single-project" ? "dedicado a un solo proyecto por Q" : ""} con FTE promedio ${(avgFte * 100).toFixed(0)}%. Mantener 100% en este nuevo proyecto.`,
@@ -164,7 +164,7 @@ export function recommendStaffing(
 
   // ── 3. Pattern = split-50 ──
   if (pattern === "split-50") {
-    const fte = fteForSeniority(rolBbva, 0.5);
+    const fte = fteForSeniority(nivel, 0.5);
     reasoning.push({
       label: "Patrón histórico: dividido entre 2 proyectos",
       detail: `Promedio de ${projsPerQ.toFixed(1)} proyectos por quarter en los últimos ${quarters.length} Qs (FTE prom. ${(avgFte * 100).toFixed(0)}%). ${candidate.nombre.split(" ")[0]} ya está acostumbrado a dividir su tiempo — staffearlo al ${(fte * 100).toFixed(0)}% es coherente con su track record.`,
@@ -177,10 +177,10 @@ export function recommendStaffing(
         weight: "supporting",
       });
     }
-    if (rolBbva === "Analyst") {
+    if (nivel === "Analyst") {
       reasoning.push({
         label: "Restricción por nivel (Analyst)",
-        detail: "Analysts (Juniors) requieren foco para ramp-up. Aunque el historial sugiere split, recomendamos no dividir más allá de 50% para no comprometer el aprendizaje.",
+        detail: "Los Analysts requieren foco para ramp-up. Aunque el historial sugiere split, recomendamos no dividir más allá de 50% para no comprometer el aprendizaje.",
         weight: "constraint",
       });
     }
@@ -188,7 +188,7 @@ export function recommendStaffing(
 
   // ── 4. Pattern = split-multi ──
   if (pattern === "split-multi") {
-    const fte = fteForSeniority(rolBbva, 1 / projsPerQ);
+    const fte = fteForSeniority(nivel, 1 / projsPerQ);
     reasoning.push({
       label: "Patrón histórico: dividido en 3+ proyectos simultáneos",
       detail: `${candidate.nombre.split(" ")[0]} es un perfil altamente demandado: promedio de ${projsPerQ.toFixed(1)} proyectos por Q. Sugerimos un FTE bajo (${(fte * 100).toFixed(0)}%) y validar con su manager actual antes de comprometer.`,
@@ -201,10 +201,10 @@ export function recommendStaffing(
         weight: "supporting",
       });
     }
-    if (rolBbva && rolBbva !== "Expert" && rolBbva !== "Lead") {
+    if (nivel !== "Expert") {
       reasoning.push({
-        label: "Constraint: solo Expert/Lead deben fracturarse en 3+",
-        detail: `El nivel ${rolBbva} no debería estar dividido en más de 2 proyectos sin compromiso de calidad. Considerar promoción o re-priorización del portfolio.`,
+        label: "Constraint: solo Experts deben fracturarse en 3+",
+        detail: `El nivel ${nivel} no debería estar dividido en más de 2 proyectos sin compromiso de calidad. Considerar promoción o re-priorización del portfolio.`,
         weight: "constraint",
       });
     }
@@ -250,7 +250,7 @@ export function recommendStaffing(
 
   // Recompute final fte after applying constraints
   const baseFte = pattern === "single-project" ? 1.0 : pattern === "split-50" ? 0.5 : 1 / Math.max(projsPerQ, 2);
-  const finalFte = fteForSeniority(rolBbva, baseFte);
+  const finalFte = fteForSeniority(nivel, baseFte);
 
   // Confidence: high if ≥3 quarters of consistent pattern, medium if 2, low otherwise
   let confidence: Confidence = "low";
@@ -264,8 +264,8 @@ export function recommendStaffing(
 
   // Alternatives — useful for the staffer to override
   const alternativeFtes = (
-    rolBbva === "Analyst" ? [1.0, 0.5] :
-    rolBbva === "Associate" ? [1.0, 0.5, 0.4] :
+    nivel === "Analyst" ? [1.0, 0.5] :
+    nivel === "Associate" ? [1.0, 0.5, 0.4] :
     [1.0, 0.75, 0.5, 0.4, 0.25]
   ).filter(f => f !== finalFte);
 
