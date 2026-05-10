@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { BBVA } from "@/lib/bbva-colors";
 import { BTOKEN_TIER_CONFIG } from "@/lib/trust-score";
 import TrustScoreBadge from "./TrustScoreBadge";
@@ -107,23 +108,50 @@ function ProfileCard({
         )}
       </div>
 
-      {/* Connect CTA */}
-      <button
-        disabled={loading || !canAfford}
-        onClick={() => onConnect(profile)}
-        className="w-full py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
-        style={{
-          background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.05)",
-          color:      canAfford ? "#fff" : "#3d4f6e",
-          border:     canAfford ? "none" : "1px solid rgba(133,200,255,0.08)",
-          cursor:     canAfford && !loading ? "pointer" : "not-allowed",
-          letterSpacing: "0.06em",
-        }}
-      >
-        <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "#3d4f6e" }}>{profile.costo_bt} BT</span>
-        <span>·</span>
-        <span>{loading ? "Conectando..." : profile.tipo === "mentor" ? "Solicitar mentoría" : "Conectar"}</span>
-      </button>
+      {/* Action row: Ver perfil + Connect CTA */}
+      <div className="flex gap-2">
+        <Link
+          href={`/candidate/${emp.id}`}
+          aria-label={`Ver perfil completo de ${emp.nombre}`}
+          className="flex-shrink-0 px-3 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5"
+          style={{
+            background: `${BBVA.purple}12`,
+            border: `1px solid ${BBVA.purple}38`,
+            color: BBVA.purple,
+            letterSpacing: "0.06em",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}24`;
+            (e.currentTarget as HTMLElement).style.boxShadow = `0 0 18px ${BBVA.purple}38`;
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}12`;
+            (e.currentTarget as HTMLElement).style.boxShadow = "none";
+          }}
+        >
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <circle cx="5.5" cy="3.8" r="2" stroke="currentColor" strokeWidth="1.3"/>
+            <path d="M2 9.5c0-1.5 1.5-2.7 3.5-2.7s3.5 1.2 3.5 2.7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+          </svg>
+          <span>Ver perfil</span>
+        </Link>
+        <button
+          disabled={loading || !canAfford}
+          onClick={() => onConnect(profile)}
+          className="flex-1 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
+          style={{
+            background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.05)",
+            color:      canAfford ? "#fff" : "#3d4f6e",
+            border:     canAfford ? "none" : "1px solid rgba(133,200,255,0.08)",
+            cursor:     canAfford && !loading ? "pointer" : "not-allowed",
+            letterSpacing: "0.06em",
+          }}
+        >
+          <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "#3d4f6e" }}>{profile.costo_bt} BT</span>
+          <span>·</span>
+          <span>{loading ? "Conectando..." : profile.tipo === "mentor" ? "Solicitar mentoría" : "Conectar"}</span>
+        </button>
+      </div>
       {!canAfford && (
         <p className="text-center text-[10px] font-mono mt-1.5" style={{ color: "#3d4f6e" }}>
           Saldo insuficiente
