@@ -1,6 +1,5 @@
-import type { Config } from "jest";
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
@@ -11,7 +10,7 @@ const config: Config = {
   transform: {
     "^.+\\.(ts|tsx)$": ["ts-jest", { tsconfig: { jsx: "react-jsx" } }],
   },
-  testPathPattern: "__tests__",
+  testMatch: ["<rootDir>/__tests__/**/*.test.(ts|tsx)"],
   collectCoverageFrom: [
     "lib/**/*.ts",
     "components/**/*.tsx",
@@ -19,4 +18,4 @@ const config: Config = {
   ],
 };
 
-export default config;
+module.exports = config;
