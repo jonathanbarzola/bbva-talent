@@ -246,6 +246,12 @@ export interface NetworkingProfile {
   disponibilidad_horaria: string;
   temas: string[];
   costo_bt: number;
+  /** Mentees activos asignados (solo aplica para tipo "mentor") */
+  mentees_actuales?: number;
+  /** Cupo máximo de mentees simultáneos. Default: 2 en BBVA Perú */
+  cupo_maximo?: number;
+  /** Fecha tentativa de disponibilidad si el cupo está lleno (ISO 8601) */
+  proxima_disponibilidad?: string;
 }
 
 export interface NetworkingSearchResponse {

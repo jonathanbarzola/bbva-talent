@@ -776,16 +776,49 @@ export function getMockTeamComposition(request: { project_name: string; roles: {
 
 // ── Networking profiles ───────────────────────────────────────────────────
 
+/**
+ * Returns a deterministic pseudo-random number 0..n-1 derived from a string seed.
+ * Used to keep mentor capacity stable across renders (always same mentees count
+ * for the same employee id) without committing to one hardcoded value per employee.
+ */
+function seededInt(seed: string, n: number): number {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % n;
+}
+
+/** Returns an ISO date `weeks` weeks ahead of today */
+function dateWeeksAhead(weeks: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + weeks * 7);
+  return d.toISOString().slice(0, 10);
+}
+
 export function getMockNetworkingProfiles(): NetworkingProfile[] {
+  const MENTOR_CUPO = 2; // BBVA Perú policy: 2 mentees max simultaneous
+
   const mentors: NetworkingProfile[] = RAW
     .filter(e => e.es_mentor && e.disponible_networking)
-    .map(e => ({
-      empleado: CANDIDATE_POOL[e.id],
-      tipo: "mentor" as const,
-      disponibilidad_horaria: "Lunes y Miércoles 17:00-18:00",
-      temas: e.networking_tags ?? [],
-      costo_bt: 30,
-    }));
+    .map(e => {
+      // Deterministic mentor capacity: 0, 1 or 2 active mentees
+      const menteesActuales = seededInt(e.id + "mentees", 3);
+      const isFull = menteesActuales >= MENTOR_CUPO;
+
+      return {
+        empleado: CANDIDATE_POOL[e.id],
+        tipo: "mentor" as const,
+        disponibilidad_horaria: "Lunes y Miércoles 17:00-18:00",
+        temas: e.networking_tags ?? [],
+        costo_bt: 30,
+        mentees_actuales: menteesActuales,
+        cupo_maximo: MENTOR_CUPO,
+        // Si el cupo está lleno, fecha tentativa entre 4 y 12 semanas adelante
+        ...(isFull ? { proxima_disponibilidad: dateWeeksAhead(4 + seededInt(e.id + "date", 9)) } : {}),
+      };
+    });
 
   const peers: NetworkingProfile[] = RAW
     .filter(e => !e.es_mentor && e.disponible_networking && (CANDIDATE_POOL[e.id].trust_score?.overall ?? 0) >= 50)

@@ -21,6 +21,29 @@ const TIPO_LABELS: Record<FilterTipo, string> = {
   mentee:  "Mentees",
 };
 
+// ── Mentor capacity helpers ──────────────────────────────────────────────
+
+const MONTH_ABBREV_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+function formatDateShort(iso: string): string {
+  // "2026-07-14" → "14 jul 2026"
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${MONTH_ABBREV_ES[(m ?? 1) - 1]} ${y}`;
+}
+
+function weeksUntil(iso: string): number {
+  const target = new Date(iso + "T00:00:00");
+  const now = new Date();
+  const diffMs = target.getTime() - now.getTime();
+  return Math.max(0, Math.round(diffMs / (1000 * 60 * 60 * 24 * 7)));
+}
+
+function isMentorFull(profile: NetworkingProfile): boolean {
+  if (profile.tipo !== "mentor") return false;
+  const cupoMax = profile.cupo_maximo ?? 2;
+  return (profile.mentees_actuales ?? 0) >= cupoMax;
+}
+
 function ProfileCard({
   profile,
   userWallet,
@@ -35,6 +58,7 @@ function ProfileCard({
   const emp      = profile.empleado;
   const initials = emp.nombre.split(" ").map(n => n[0]).slice(0, 2).join("");
   const canAfford = userWallet ? userWallet.balance >= profile.costo_bt : false;
+  const isFull = isMentorFull(profile);
 
   const tipoColor: Record<NetworkingTipo, string> = {
     mentor: BBVA.lime,
@@ -58,7 +82,7 @@ function ProfileCard({
           <div className="absolute inset-0 opacity-25" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 60%)" }} />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-0.5">
+          <div className="flex items-center gap-2 mb-0.5 flex-wrap">
             <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{emp.nombre}</h3>
             <span
               className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0"
@@ -66,6 +90,21 @@ function ProfileCard({
             >
               {profile.tipo}
             </span>
+            {/* Mentor capacity badge */}
+            {profile.tipo === "mentor" && profile.mentees_actuales !== undefined && profile.cupo_maximo !== undefined && (
+              <span
+                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0"
+                style={{
+                  background: isFull ? "rgba(251,146,60,0.12)" : "rgba(133,200,255,0.06)",
+                  color: isFull ? "#fb923c" : BBVA.sereneBlue,
+                  border: `1px solid ${isFull ? "rgba(251,146,60,0.35)" : "rgba(133,200,255,0.18)"}`,
+                }}
+                title={isFull ? "Cupo completo · sin mentees disponibles" : `${profile.mentees_actuales} de ${profile.cupo_maximo} mentees activos`}
+              >
+                {isFull && <span style={{ fontSize: 9 }}>⏳</span>}
+                {profile.mentees_actuales}/{profile.cupo_maximo} mentees
+              </span>
+            )}
           </div>
           <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>{emp.rol}</p>
           <p className="font-mono text-[10px] mt-0.5" style={{ color: "#3d4f6e" }}>
@@ -108,55 +147,150 @@ function ProfileCard({
         )}
       </div>
 
-      {/* Action row: Ver perfil + Connect CTA */}
-      <div className="flex gap-2">
-        <Link
-          href={`/candidate/${emp.id}`}
-          aria-label={`Ver perfil completo de ${emp.nombre}`}
-          className="flex-shrink-0 px-3 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-1.5"
-          style={{
-            background: `${BBVA.purple}12`,
-            border: `1px solid ${BBVA.purple}38`,
-            color: BBVA.purple,
-            letterSpacing: "0.06em",
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}24`;
-            (e.currentTarget as HTMLElement).style.boxShadow = `0 0 18px ${BBVA.purple}38`;
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}12`;
-            (e.currentTarget as HTMLElement).style.boxShadow = "none";
-          }}
-        >
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-            <circle cx="5.5" cy="3.8" r="2" stroke="currentColor" strokeWidth="1.3"/>
-            <path d="M2 9.5c0-1.5 1.5-2.7 3.5-2.7s3.5 1.2 3.5 2.7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-          </svg>
-          <span>Ver perfil</span>
-        </Link>
-        <button
-          disabled={loading || !canAfford}
-          onClick={() => onConnect(profile)}
-          className="flex-1 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
-          style={{
-            background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.05)",
-            color:      canAfford ? "#fff" : "#3d4f6e",
-            border:     canAfford ? "none" : "1px solid rgba(133,200,255,0.08)",
-            cursor:     canAfford && !loading ? "pointer" : "not-allowed",
-            letterSpacing: "0.06em",
-          }}
-        >
-          <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "#3d4f6e" }}>{profile.costo_bt} BT</span>
-          <span>·</span>
-          <span>{loading ? "Conectando..." : profile.tipo === "mentor" ? "Solicitar mentoría" : "Conectar"}</span>
-        </button>
-      </div>
-      {!canAfford && (
+      {/* ── Mentor with full capacity: tentative-availability panel ── */}
+      {isFull && profile.proxima_disponibilidad ? (
+        <FullCapacityPanel
+          empleadoId={emp.id}
+          empleadoNombre={emp.nombre}
+          proximaDisponibilidad={profile.proxima_disponibilidad}
+        />
+      ) : (
+        // ── Normal action row: compact "Ver perfil" icon + main CTA ──
+        <div className="flex gap-2">
+          <Link
+            href={`/candidate/${emp.id}`}
+            aria-label={`Ver perfil completo de ${emp.nombre}`}
+            title="Ver perfil completo"
+            className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200"
+            style={{
+              background: `${BBVA.purple}10`,
+              border: `1px solid ${BBVA.purple}30`,
+              color: BBVA.purple,
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}24`;
+              (e.currentTarget as HTMLElement).style.boxShadow = `0 0 16px ${BBVA.purple}38`;
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}10`;
+              (e.currentTarget as HTMLElement).style.boxShadow = "none";
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <circle cx="7" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M2.5 12c0-2 2-3.5 4.5-3.5s4.5 1.5 4.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+          </Link>
+          <button
+            disabled={loading || !canAfford}
+            onClick={() => onConnect(profile)}
+            className="flex-1 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
+            style={{
+              background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.05)",
+              color:      canAfford ? "#fff" : "#3d4f6e",
+              border:     canAfford ? "none" : "1px solid rgba(133,200,255,0.08)",
+              cursor:     canAfford && !loading ? "pointer" : "not-allowed",
+              letterSpacing: "0.06em",
+            }}
+          >
+            <span>{loading ? "Conectando..." : profile.tipo === "mentor" ? "Solicitar mentoría" : "Conectar"}</span>
+            <span className="opacity-60">·</span>
+            <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "#3d4f6e" }}>{profile.costo_bt} BT</span>
+          </button>
+        </div>
+      )}
+
+      {!canAfford && !isFull && (
         <p className="text-center text-[10px] font-mono mt-1.5" style={{ color: "#3d4f6e" }}>
           Saldo insuficiente
         </p>
       )}
+    </div>
+  );
+}
+
+// ── Full-capacity panel ─────────────────────────────────────────────────
+
+function FullCapacityPanel({
+  empleadoId,
+  empleadoNombre,
+  proximaDisponibilidad,
+}: {
+  empleadoId: string;
+  empleadoNombre: string;
+  proximaDisponibilidad: string;
+}) {
+  const weeks = weeksUntil(proximaDisponibilidad);
+  const dateLabel = formatDateShort(proximaDisponibilidad);
+
+  return (
+    <div
+      className="rounded-xl p-3.5"
+      style={{
+        background: "rgba(251,146,60,0.06)",
+        border: "1px solid rgba(251,146,60,0.28)",
+      }}
+    >
+      <div className="flex items-start gap-2.5 mb-2.5">
+        <span style={{ color: "#fb923c", fontSize: 14, lineHeight: "20px" }}>⏳</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-[12px] leading-tight" style={{ color: "#fb923c" }}>
+            Cupo de mentoría completo
+          </p>
+          <p className="font-mono text-[11px] leading-relaxed mt-0.5" style={{ color: "#a8b8d0" }}>
+            <span className="font-bold" style={{ color: "#e8eeff" }}>{empleadoNombre.split(" ")[0]}</span>{" "}
+            ya tiene 2/2 mentees activos. Próxima ventana tentativa:{" "}
+            <span className="font-bold" style={{ color: "#fb923c" }}>{dateLabel}</span>
+            {weeks > 0 && (
+              <span style={{ color: "#6b7fa3" }}> · en ~{weeks} semana{weeks !== 1 ? "s" : ""}</span>
+            )}
+            .
+          </p>
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <Link
+          href={`/candidate/${empleadoId}`}
+          aria-label={`Ver perfil completo de ${empleadoNombre}`}
+          title="Ver perfil completo"
+          className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
+          style={{
+            background: `${BBVA.purple}10`,
+            border: `1px solid ${BBVA.purple}30`,
+            color: BBVA.purple,
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}24`;
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = `${BBVA.purple}10`;
+          }}
+        >
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
+            <path d="M2.5 12c0-2 2-3.5 4.5-3.5s4.5 1.5 4.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+          </svg>
+        </Link>
+        <button
+          className="flex-1 py-2 rounded-xl text-[11px] font-bold tracking-wider uppercase transition-all duration-200"
+          style={{
+            background: "rgba(251,146,60,0.14)",
+            border: "1px solid rgba(251,146,60,0.45)",
+            color: "#fb923c",
+            cursor: "pointer",
+            letterSpacing: "0.06em",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = "rgba(251,146,60,0.24)";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = "rgba(251,146,60,0.14)";
+          }}
+        >
+          Notificarme cuando se libere
+        </button>
+      </div>
     </div>
   );
 }
