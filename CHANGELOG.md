@@ -6,6 +6,83 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · pr
 
 ---
 
+## [0.5.0] — Sprint 5: Career view + Workforce Intelligence + Theme (2026-05)
+
+### Agregado
+
+#### Vista "Mi carrera" (`/me`)
+- `app/me/page.tsx` — vista personal de progresión hacia el siguiente nivel BBVA.
+- `lib/careerProgress.ts` — heurística auditable `analyzeCareerProgress(employee, pool)`:
+  - 6 factores ponderados sumando 100 pts (skills 30 + Trust 25 + EDI 15 + tenure 10 + mentoring 10 + soft 10).
+  - Comparación contra el **percentil 75** del cohorte del nivel siguiente.
+  - 5 buckets de soft skills (`communication`, `ownership`, `mentoring`, `systems-design`, `stakeholder-mgmt`) detectados via regex sobre peer_comments + manager_comment del EDI.
+  - Mapeo automático de gaps técnicos a cursos + certs ponderado por cobertura.
+  - Modo `isTopTier` para Experts (sin nivel siguiente) con métrica "salud del perfil".
+- `components/CareerProgressHero.tsx` — hero con avatar + transición Analyst→Associate + barra grande animada.
+- `components/SkillGapTable.tsx` — tabla con barras duales (current vs target p75), icono ⊘ para skills ausentes, % de cobertura del cohorte.
+- `components/EDIInsights.tsx` — fortalezas confirmadas con quotes + gaps con acción concreta.
+- `components/LearningPlanCards.tsx` — 3 secciones por plataforma con "Por qué este curso/cert" en cada item.
+
+#### 3 catálogos de aprendizaje
+- `lib/campus-bbva-mock.ts` — 20 cursos en alianza con **Coursera + LinkedIn Learning** (Python, Java, Go, React, ML, Spark, Kafka, AWS, GCP, K8s, OAuth2, OWASP, soft skills).
+- `lib/techu-mock.ts` — 8 cursos **propios BBVA** sobre tecnologías propietarias (APX, Cells, NACAR, ASO, HOST + COBOL, PSD2 / Open Banking, Plataforma Ether).
+- `lib/ninja-project-mock.ts` — 15 certificaciones de mercado con costo en **B-Tokens** (AWS SAA/SAP/MLS, Azure AZ-104/305, GCP PCA/PDE, CKA/CKAD, Terraform Associate, CCDAK Confluent, Databricks, CISSP, CSM, Hyperledger). Cada cert suma `trust_score_boost` al pasarse.
+
+#### Workforce Intelligence Dashboard (`/dashboard`)
+- `app/dashboard/page.tsx` — vista panorámica para staffers/managers.
+- `lib/siloAnalysis.ts` — heurística con 6 reglas de detección de silos: bus-factor, succession, tenure-concentration, no-pipeline, demand-supply, low-mentorship.
+- `lib/workforce-stats.ts` — datos sintéticos de 1,800 colaboradores en 14 áreas tecnológicas.
+- `components/WorkforceCharts.tsx` — `TechDistributionBarChart`, `SeniorityPyramid`, `AvailabilityDonut`, `DemandSupplyChart`, `TechCard`.
+- `components/SiloRiskCard.tsx` — card expandible por tech con factores detectados + sugerencias de IA.
+- `components/StaffingRecommendationPanel.tsx` + `lib/staffingRecommendation.ts` — recomendación de FTE basado en historial + nivel + feedback externo.
+
+#### Selector de "current user"
+- `lib/current-user.ts` — hook `useCurrentUser()` + storage en localStorage (`bbva-talent:current-user-id`) + broadcast via CustomEvent para sync entre instancias.
+- `components/CurrentUserSelector.tsx` — dropdown agrupado por nivel con anti-FOUC placeholder.
+- Inyectado en home nav y dashboard nav.
+
+#### Theme light / dark
+- `components/ThemeToggle.tsx` — toggle con persistencia en localStorage (`bbva-talent:theme`).
+- Inline anti-FOUC script aplica `data-theme` en `<html>` antes de hidratación para evitar flash.
+- Migración completa de colores hardcoded a CSS variables `--theme-*` en `app/globals.css`.
+
+#### Networking · mentor capacity model
+- `NetworkingProfile` extendido con `cupo_maximo`, `mentees_actuales`, `proxima_disponibilidad`.
+- `FullCapacityPanel` cuando un mentor está en 2/2 — muestra fecha tentativa + botón "Notificarme cuando se libere".
+- Botón circular "Ver perfil" en cada `ProfileCard` (navega a `/candidate/[id]`).
+
+#### Persistencia de vista entre rutas
+- `sessionStorage` key `bbva-talent:last-view` — restaura `home` o `networking` al volver desde `/candidate/[id]`.
+
+#### Datos staffing extendidos
+- `staffing_historico` por empleado — últimos 4 quarters con FTE asignado por proyecto.
+- `feedback_externo` para empleados externos (XP-registro) — ratings 1-5 de jefes anteriores.
+- `tipo_contrato` (interno / externo) y `consultora` (Indra, Neoris, Bluetab, Capgemini, etc.).
+- `lib/graphBuilder.ts` — grafo enriquecido distinguiendo `proyecto-actual` vs `proyecto`, `teammate` vs `colaborador`.
+
+### Cambiado
+
+#### Refactor BREAKING — taxonomía de niveles BBVA
+- `nivel: string` libre → `nivel: Nivel` estricto (`"Analyst" | "Associate" | "Expert"`).
+- Mapeo aplicado a los 18 empleados: `Junior → Analyst`, `Mid → Associate`, `Senior → Expert`, `Staff → Expert` (los dos top-tier IC colapsan a Expert).
+- Eliminado el campo `rol_bbva` y la función `getRolBBVA()` (ahora redundantes).
+- `lib/mockChatRefinement.ts` — el parser conversacional acepta los nombres viejos (Senior, Junior, Staff, Mid) como aliases del usuario hacia los nuevos (compatibilidad de input).
+- `lib/workforce-stats.ts` `seniority` schema cambia de `{junior, mid, senior, staff}` a `{analyst, associate, expert}`. Datos numéricos: `senior + staff` sumados → `expert`.
+- 8 componentes con maps `NIVEL_COLOR` actualizados.
+- 5 archivos de tests actualizados (`gapAnalysis`, `mockChatRefinement`, `scoreExplain`, `trust-score`, `siloAnalysis`, `staffingRecommendation`).
+
+### Documentación
+
+- `testsprite-prd.md` — Product Requirements Document consolidado (~38KB, 17 secciones, 15+ features con criterios de aceptación testeables, 6 golden paths E2E) generado para alimentar TestSprite y otros agentes de QA.
+- `testsprite_tests/` — outputs del primer run de TestSprite con 15 tests automatizados (11 PASS / 3 FAIL / 1 BLOCKED). Reporte final en `testsprite_tests/testsprite-mcp-test-report.md`.
+
+### Hallazgos de QA
+
+- 🔴 **Bug confirmado**: `OnboardingTour.handleClose()` no escribe `localStorage` cuando el usuario hace "Skip" → el tour reaparece en cada visita. (Pendiente.)
+- 🟡 `ThemeToggle` tiene `aria-label` state-dependent que dificulta selectores estables en tests automatizados. (Mejora sugerida — agregar `data-testid`.)
+
+---
+
 ## [0.4.0] — Sprint 4: Pulido + storytelling (2026-05)
 
 ### Agregado

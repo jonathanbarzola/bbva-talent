@@ -1,0 +1,1448 @@
+[
+  {
+    "id": "TC001",
+    "title": "Launch the demo project from home",
+    "description": "This verifies the demo entry path loads the canonical SDA project and shows the recommended team results view with coverage, gaps, and roles populated.",
+    "category": "Demo Mode and Deep-Link Auto-Load",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select the demo project entry point"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the loading animation to finish"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the project results view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify coverage, gaps, and recommended roles are populated"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Open a demo project from a valid deep link",
+    "description": "This test verifies that a visitor can open a valid SDA demo deep link and land directly on the project results experience.",
+    "category": "Home Entry",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /?demo=SDA-00001"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the project results experience is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the team coverage summary is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Load the demo project from home",
+    "description": "This test verifies that a manager can launch the demo SDA project from home and reach the project results view with team coverage and gaps visible.",
+    "category": "Project Composer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Launch the demo SDA project"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the project results view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage and gaps summary is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Open a demo project directly from its deep link",
+    "description": "This verifies a valid demo code in the URL loads the matching project results view directly.",
+    "category": "Demo Mode and Deep-Link Auto-Load",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /?demo=SDA-53024"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the project results view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the matching demo project is loaded"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Complete onboarding tour and keep it dismissed",
+    "description": "This verifies a first-time visitor can step through the home onboarding tour, close it, and return later without it reopening automatically.",
+    "category": "Onboarding Tour",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the onboarding tour backdrop to appear"
+      },
+      {
+        "type": "action",
+        "description": "Advance to the next guided step"
+      },
+      {
+        "type": "action",
+        "description": "Advance through the remaining guided steps"
+      },
+      {
+        "type": "action",
+        "description": "Close the onboarding tour"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the onboarding tour remains closed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the home entry screen is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Review the recommended team coverage and gaps",
+    "description": "A manager can open a project result and immediately review the recommended team’s coverage, gaps, and role assignments.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the recommended team workspace is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify coverage, gaps, and role assignment information is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Block invalid candidate search until enough characters are entered",
+    "description": "This test verifies that a visitor cannot submit a candidate search query before the minimum character threshold is met.",
+    "category": "Candidate Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Enter a short candidate search query"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the search submission remains disabled"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the empty search state remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Persist theme across dashboard refresh",
+    "description": "This verifies a user can change the theme and keep that preference when returning to the dashboard experience.",
+    "category": "Theme Persistence",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the alternate theme"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected theme is still applied"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard content remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Filter projects, inspect a match, and request recommendations",
+    "description": "This verifies the Project Composer supports filtering the project list, selecting a project, reviewing its details, and generating team recommendations.",
+    "category": "Project Composer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the Project Composer"
+      },
+      {
+        "type": "action",
+        "description": "Type a search term that matches projects into the project filter"
+      },
+      {
+        "type": "action",
+        "description": "Select a project from the filtered list"
+      },
+      {
+        "type": "action",
+        "description": "Request team recommendations for the selected project"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the project results view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify coverage, gaps, and role assignments are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Search for a candidate from the home page",
+    "description": "An employee can search with a valid query from home and see ranked candidate results after submission.",
+    "category": "Free-form 1-to-1 Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the search input"
+      },
+      {
+        "type": "action",
+        "description": "Type a query with at least three characters into the search field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the search"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify ranked candidate results are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the loading state has completed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Persist the selected theme on the dashboard",
+    "description": "This test verifies that a visitor can switch themes on the dashboard and keep the selected theme after refresh.",
+    "category": "Workforce Intelligence Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the theme"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected theme is still applied"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard content remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Complete the onboarding tour once and keep it hidden",
+    "description": "This test verifies that a first-time visitor can complete the onboarding tour and not see it again after returning to the home page in the same browser.",
+    "category": "Home Entry",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Complete the onboarding tour"
+      },
+      {
+        "type": "action",
+        "description": "Navigate away from home and return to home"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the onboarding tour is hidden"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the home experience is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Open a candidate profile from a deep link",
+    "description": "A candidate or employee can open a shared profile deep link and view the full profile content.",
+    "category": "Candidate Profile and Deep Link",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /candidate/[id] using a valid candidate deep link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate profile page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the TrustScore, BToken, and EDI panels are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Request mentoring from an available mentor",
+    "description": "A user can request mentoring from an available mentor and see the confirmation and token balance update in the workspace.",
+    "category": "Networking and Mentoring",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Networking entry point"
+      },
+      {
+        "type": "action",
+        "description": "Select the mentors filter"
+      },
+      {
+        "type": "action",
+        "description": "Open a mentor with available capacity"
+      },
+      {
+        "type": "action",
+        "description": "Request mentoring"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a mentoring confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the B-Tokens balance is updated"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Ignore an invalid demo code and stay on home",
+    "description": "This test verifies that a visitor opening an invalid demo deep link stays on the home experience and does not load a project.",
+    "category": "Home Entry",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /?demo=INVALID"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the home experience is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no project results are loaded"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Compare selected candidates and open constellation",
+    "description": "This verifies a user can select multiple candidates, review the comparison grid, and jump into the team constellation view.",
+    "category": "Candidate Comparison",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open a project results view"
+      },
+      {
+        "type": "action",
+        "description": "Select two candidates for comparison"
+      },
+      {
+        "type": "action",
+        "description": "Open the comparison view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the side-by-side comparison grid and shared skills are visible"
+      },
+      {
+        "type": "action",
+        "description": "Open the constellation view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the team constellation view is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Return to restored networking state after visiting a profile",
+    "description": "This test verifies that an employee can open a profile from networking and then return to the same networking state after navigating back.",
+    "category": "Networking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open networking"
+      },
+      {
+        "type": "action",
+        "description": "Open a profile from networking"
+      },
+      {
+        "type": "action",
+        "description": "Click back"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the networking view is restored"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the prior networking filters or results are preserved"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Refine the team with a Spanish command and reset filters",
+    "description": "A manager can refine a recommended team with a valid Spanish command, remove an applied filter, and restore the original result by resetting all filters.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "action",
+        "description": "Open the refinement drawer"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid Spanish refinement command that requests Kafka skills"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a filter chip is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the team metrics update"
+      },
+      {
+        "type": "action",
+        "description": "Remove one applied filter chip"
+      },
+      {
+        "type": "action",
+        "description": "Reset all filters"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the original team result is restored"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Request mentoring from a capacity-aware mentor",
+    "description": "This test verifies that an employee can request mentoring from a mentor with available capacity and see the request state update.",
+    "category": "Networking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open networking"
+      },
+      {
+        "type": "action",
+        "description": "Request mentoring from an available mentor"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the mentoring request state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify mentor capacity information remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Browse networking profiles by role",
+    "description": "A user can open Networking and switch between all profiles, mentors, peers, and mentees to see the list update.",
+    "category": "Networking and Mentoring",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Networking entry point"
+      },
+      {
+        "type": "action",
+        "description": "Select the mentors filter"
+      },
+      {
+        "type": "action",
+        "description": "Select the peers filter"
+      },
+      {
+        "type": "action",
+        "description": "Select the mentees filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the networking profile list is displayed for the selected filters"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Open candidate audit from project results",
+    "description": "This verifies a manager can review a candidate's match explanation from project results and then reach the candidate's full profile.",
+    "category": "Why Candidate Audit Modal",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open a project results view"
+      },
+      {
+        "type": "action",
+        "description": "Open a candidate audit modal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the score summary and factor breakdown are visible"
+      },
+      {
+        "type": "action",
+        "description": "Open the full profile link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate profile page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Review an employee profile from a deep link",
+    "description": "This test verifies that a visitor can open a candidate profile directly and see the full profile, TrustScore, BToken, and EDI panels.",
+    "category": "Candidate Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /candidate/1"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the employee profile is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the TrustScore, BToken, and EDI panels are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Compare selected candidates side by side",
+    "description": "A manager can select multiple candidates and see the comparison experience update as selections change.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "action",
+        "description": "Select at least two candidates from the recommended team"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the comparison bar is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Deselect one of the selected candidates"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the comparison bar updates to reflect the remaining selection"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Refine a recommended team with Spanish input",
+    "description": "This test verifies that a manager can use Spanish conversational refinement on a recommended team and see the team recommendations update accordingly.",
+    "category": "Project Composer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Launch the demo SDA project"
+      },
+      {
+        "type": "action",
+        "description": "Refine the recommended team using a Spanish availability and skill request"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the recommended team updates"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the coverage summary remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Search networking profiles by name or skill",
+    "description": "A user can search within Networking and see the results narrow to matching profiles.",
+    "category": "Networking and Mentoring",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Networking entry point"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid search term into the networking search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify matching networking profiles are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Review workforce intelligence overview",
+    "description": "This test verifies that a visitor can open the dashboard and see the headline insight, KPI summary, and workforce-type breakdown.",
+    "category": "Workforce Intelligence Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the AI headline insight is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the KPI cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the workforce-type summary is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC027",
+    "title": "Compare candidates from project results",
+    "description": "This test verifies that a manager can select multiple candidates from project results and open the side-by-side comparison view.",
+    "category": "Project Composer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Launch the demo SDA project"
+      },
+      {
+        "type": "action",
+        "description": "Select two candidates for comparison"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the comparison view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify both selected candidates are shown"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC028",
+    "title": "Inspect a gap recommendation in the team view",
+    "description": "A manager can expand a gap card and review the severity and recommendation for a missing skill or role.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "action",
+        "description": "Expand a gap card in the team workspace"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the gap details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the recommendation for addressing the gap is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC029",
+    "title": "Open team constellation from comparison",
+    "description": "This verifies a user can move from candidate comparison into the shared team constellation view and inspect a member focus change.",
+    "category": "Team Constellation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open a project results view"
+      },
+      {
+        "type": "action",
+        "description": "Select two candidates for comparison"
+      },
+      {
+        "type": "action",
+        "description": "Open the comparison view"
+      },
+      {
+        "type": "action",
+        "description": "Open the constellation view"
+      },
+      {
+        "type": "action",
+        "description": "Select a member from the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the graph focus updates to the selected member"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC030",
+    "title": "Connect with a peer and open their profile",
+    "description": "A user can connect with a peer from Networking and then open that person's profile view to continue exploring them.",
+    "category": "Networking and Mentoring",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Networking entry point"
+      },
+      {
+        "type": "action",
+        "description": "Select the peers filter"
+      },
+      {
+        "type": "action",
+        "description": "Connect with a peer"
+      },
+      {
+        "type": "action",
+        "description": "Open that person's profile view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate profile is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC031",
+    "title": "Open candidate audit and jump to a profile",
+    "description": "This test verifies that a manager can open the Why Candidate audit modal from project results and continue into the candidate's profile view.",
+    "category": "Project Composer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Launch the demo SDA project"
+      },
+      {
+        "type": "action",
+        "description": "Open the candidate audit view"
+      },
+      {
+        "type": "action",
+        "description": "Open the candidate profile from the audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate profile is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile's explanation panels are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC032",
+    "title": "Use a suggestion chip to search for talent",
+    "description": "An employee can pick a suggested query chip, submit it, and review the ranked talent results.",
+    "category": "Free-form 1-to-1 Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the search input"
+      },
+      {
+        "type": "action",
+        "description": "Select a suggestion chip to fill the query"
+      },
+      {
+        "type": "action",
+        "description": "Submit the search"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify ranked candidate results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC033",
+    "title": "Review workforce intelligence dashboard insights",
+    "description": "This verifies a stakeholder can open the workforce intelligence dashboard and see its core KPI, chart, and risk insight sections.",
+    "category": "Workforce Intelligence Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard headline insight is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the KPI cards and charts are visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC034",
+    "title": "Open a collaborator profile from a candidate page",
+    "description": "This test verifies that a visitor can follow a collaborator link from one employee profile to another and see the second profile load.",
+    "category": "Candidate Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /candidate/1"
+      },
+      {
+        "type": "action",
+        "description": "Click a collaborator link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the linked employee profile is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC035",
+    "title": "Review a candidate audit and open the full profile",
+    "description": "A manager can inspect the explainable audit for a recommended candidate and then open that candidate’s full profile.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "action",
+        "description": "Open the audit details for a candidate"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate audit modal is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the score breakdown is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Open the candidate’s full profile from the audit view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate profile page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC036",
+    "title": "Open workforce intelligence dashboard",
+    "description": "A stakeholder can open the dashboard and review the main workforce intelligence summary and supporting charts.",
+    "category": "Individual Constellation View",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the workforce intelligence summary is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard KPI and chart content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC037",
+    "title": "Open networking from home and review people discovery",
+    "description": "This test verifies that an employee can enter the networking experience from home and see mentor and peer discovery results.",
+    "category": "Networking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open networking"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the mentor and peer discovery results are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the B-Token and capacity information is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC038",
+    "title": "Export the team summary and deep link",
+    "description": "A manager can open the export menu and access the print, summary copy, and deep-link actions for the current recommendation.",
+    "category": "Project Results and Team Recommendation Review",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the demo project result from the home experience"
+      },
+      {
+        "type": "action",
+        "description": "Open the export menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify export actions are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Choose to print the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the print dialog is invoked"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC039",
+    "title": "Restore networking after returning from a profile",
+    "description": "A user can leave Networking for a profile and return with the browser back button to the same networking state.",
+    "category": "Networking and Mentoring",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the Networking entry point"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid search term into the networking search field"
+      },
+      {
+        "type": "action",
+        "description": "Open a profile from the networking results"
+      },
+      {
+        "type": "action",
+        "description": "Press the browser back button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the networking view is restored"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the prior networking filters or search state is restored"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC040",
+    "title": "Expand a workforce risk card",
+    "description": "This test verifies that a visitor can expand a silo risk card and review the detailed factors and suggestions for that risk.",
+    "category": "Workforce Intelligence Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Expand a silo risk card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the risk details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the AI suggestion content is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC041",
+    "title": "Open a candidate profile and follow collaborator links",
+    "description": "An employee can open an individual profile from search results and traverse collaborator links between profiles.",
+    "category": "Free-form 1-to-1 Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the search input"
+      },
+      {
+        "type": "action",
+        "description": "Type a query with at least three characters into the search field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the search"
+      },
+      {
+        "type": "action",
+        "description": "Open a candidate profile from the ranked results"
+      },
+      {
+        "type": "action",
+        "description": "Click a collaborator link from the profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the collaborator profile page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC042",
+    "title": "Open a candidate profile directly",
+    "description": "This verifies a candidate deep link opens an individual profile with the expected insight panels and collaborator links.",
+    "category": "Candidate Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to a valid candidate profile route"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the candidate hero section is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the TrustScore, BToken, and EDI panels are visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC043",
+    "title": "Filter networking results by role or skill",
+    "description": "This test verifies that an employee can refine networking results with filters and see the displayed mentors or peers change.",
+    "category": "Networking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open networking"
+      },
+      {
+        "type": "action",
+        "description": "Apply a networking filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the networking results update"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the filtered capacity information remains visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC044",
+    "title": "Switch theme on the dashboard and keep it after refresh",
+    "description": "A stakeholder can change the theme on the dashboard and see that choice persist after reloading the page.",
+    "category": "Workforce Intelligence Dashboard and Whitepaper",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Switch to a different theme"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected theme is still applied"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC045",
+    "title": "Review workforce charts and distributions",
+    "description": "This test verifies that a visitor can inspect the dashboard's demand-supply, availability, and seniority visualizations.",
+    "category": "Workforce Intelligence Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the demand-supply chart is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the availability chart is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the seniority chart is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC046",
+    "title": "Review collaborator connections on a candidate profile",
+    "description": "A viewer can inspect a profile’s collaborators and move to a connected person’s profile from the same page.",
+    "category": "Candidate Profile and Deep Link",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /candidate/[id] using a valid candidate deep link"
+      },
+      {
+        "type": "action",
+        "description": "Open a collaborator link from the profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the connected collaborator profile is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC047",
+    "title": "Review whitepaper architecture and compliance",
+    "description": "This test verifies that a visitor can open the whitepaper from home, review the architecture layers and component statuses, and reach the compliance section.",
+    "category": "About Whitepaper",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the whitepaper"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the architecture layers are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the compliance section is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC048",
+    "title": "Reopen the onboarding tour from home",
+    "description": "This verifies the user can open the guided tour again from the home page after dismissing it.",
+    "category": "Onboarding Tour",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the onboarding tour from the home page"
+      },
+      {
+        "type": "action",
+        "description": "Review the guided steps again"
+      },
+      {
+        "type": "action",
+        "description": "Close the onboarding tour"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the onboarding tour is closed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the home entry screen is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC049",
+    "title": "Prevent submitting too-short search queries",
+    "description": "An employee cannot submit a candidate search until the query is long enough to be valid.",
+    "category": "Free-form 1-to-1 Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the search input"
+      },
+      {
+        "type": "action",
+        "description": "Type fewer than three characters into the search field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify search submission remains disabled"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC050",
+    "title": "Traverse collaborator links between profiles",
+    "description": "This verifies a user can move from one candidate profile to another through collaborator links without leaving the profile experience.",
+    "category": "Candidate Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to a valid candidate profile route"
+      },
+      {
+        "type": "action",
+        "description": "Open a collaborator link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify another candidate profile page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the collaborator network section is visible"
+      }
+    ],
+    "priority": "Medium"
+  }
+]

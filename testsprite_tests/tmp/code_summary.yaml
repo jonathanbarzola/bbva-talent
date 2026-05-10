@@ -1,0 +1,347 @@
+version: "2"
+type: frontend
+tech_stack:
+  - "TypeScript 5 (strict)"
+  - "Next.js 16 (App Router)"
+  - "React 19"
+  - "Tailwind CSS 4"
+  - "Framer Motion 12"
+  - "react-force-graph-2d"
+  - "next/font (Syne, Space Mono)"
+  - "Jest 30"
+  - "React Testing Library 16"
+routes:
+  - path: "/"
+    file: "app/page.tsx"
+    auth_required: false
+    description: "Home with state machine of 7 internal views (home, searching, results, constellation, project-composer, project-results, networking). Renders ImpactMetrics, SuccessStories, RoiCalculator, OnboardingTour, ParticleBackground, ThemeToggle. Accepts query param ?demo=SDA-XXXXX for deep-link auto-load."
+  - path: "/about"
+    file: "app/about/page.tsx"
+    auth_required: false
+    description: "Whitepaper with 3 architecture layers (Presentation, Intelligence, Data), components with status (live/mock/planned), 6-step data flow, compliance section."
+  - path: "/candidate/[id]"
+    file: "app/candidate/[id]/page.tsx"
+    auth_required: false
+    description: "Deep-linkable individual employee profile. Hero card, bio, skills, project history, clickable collaborators, aside with TrustScoreBadge full + BTokenBadge full + EDIPanel full, networking tags. Friendly 404 state for non-existent ids."
+  - path: "/dashboard"
+    file: "app/dashboard/page.tsx"
+    auth_required: false
+    description: "Workforce Intelligence dashboard. AI headline insight, KPI strip (4 cards), workforce-by-type strip (Legacy/Proprietary/Modern/Emerging), TechDistributionBarChart, SiloRiskCard list (6-rule heuristic), DemandSupplyChart, AvailabilityDonut, SeniorityPyramid, TechCard grid."
+features:
+  - name: "Onboarding Tour (auto-open on first visit)"
+    description: "3-step guided tour with backdrop, spotlight ring, auto-positioned tooltip. Persists completion in localStorage key bbva-talent:onboarding-seen-v1."
+    files:
+      - "components/OnboardingTour.tsx"
+      - "app/page.tsx"
+    entry_route: "/"
+    user_interactions:
+      - "Wait ~700ms after first visit for the tour backdrop to appear"
+      - "Click forward arrow to advance to step 2"
+      - "Click forward arrow to advance to step 3"
+      - "Click Finalizar to close the tour"
+      - "Press Escape at any time to close the tour"
+      - "Click ? button in the home nav to re-open the tour"
+    api_calls: []
+    auth_required: false
+  - name: "Demo mode and deep-link auto-load"
+    description: "Pre-loads a canonical SDA project (FX Tracker SDA-53021) and navigates to project-results. Also accepts /?demo=SDA-XXXXX URL param matching the regex ^SDA-\\d+$."
+    files:
+      - "app/page.tsx"
+      - "lib/api.ts"
+      - "lib/mock-data.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Click the Prueba un caso real CTA on home (SDA-53021 FX Tracker)"
+      - "Wait for SearchingAnimation to finish"
+      - "See project-results view with coverage, gaps, team balance and roles populated"
+      - "Visit /?demo=SDA-53024 directly to deep-link into Fraud Detection AI"
+      - "Visit /?demo=NOT-A-CODE and observe URL is ignored (regex no match)"
+      - "Visit /?demo=SDA-99999 (invalid code) and observe error toast Proyecto SDA-99999 no encontrado"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getSDAProjects()"
+      - method: "MOCK"
+        endpoint: "getProjectRecommendations(project)"
+    auth_required: false
+  - name: "Project Composer"
+    description: "Browse and select one of 30 SDA projects with role definitions and required quantities. Filterable list with sticky detail panel and empty state."
+    files:
+      - "components/TeamComposerView.tsx"
+      - "lib/api.ts"
+      - "lib/mock-data.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Click Project Composer CTA on home"
+      - "Type into search input to filter the project list"
+      - "Click any project to select it and see its detail in the sticky panel"
+      - "Click Buscar equipo or equivalent CTA to request recommendations"
+      - "Click Limpiar busqueda in empty state when filter has no matches"
+      - "Click the back button to return to home"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getSDAProjects()"
+      - method: "MOCK"
+        endpoint: "getProjectRecommendations(project)"
+    auth_required: false
+  - name: "Project Results — recommended team"
+    description: "Recommended team for the selected project with CoverageRing, total skills, GapAnalysisPanel (6 rules), TeamBalancePanel, role sections with candidate rows, multi-select for comparison, refinement chat, and export menu."
+    files:
+      - "components/ProjectResultsView.tsx"
+      - "components/GapAnalysisPanel.tsx"
+      - "components/TeamBalancePanel.tsx"
+      - "components/CandidateCard.tsx"
+      - "components/TrustScoreBadge.tsx"
+      - "components/BTokenBadge.tsx"
+      - "lib/gapAnalysis.ts"
+      - "lib/scoreExplain.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Observe coverage_score, total_skills and gaps computed at mount"
+      - "Expand a GapAnalysisPanel card to read severity and recommendation"
+      - "Toggle a candidate checkbox to add to comparison selection"
+      - "See floating bar appear Comparar lado a lado (N) when N is at least 2"
+      - "Click ? on a candidate row to open WhyCandidateModal"
+      - "Click 360 on a candidate row to view their constellation graph"
+      - "Click Refinar con IA to open the refinement chat drawer"
+      - "Click the back button to go back to project-composer"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getProjectRecommendations(project)"
+      - method: "MOCK"
+        endpoint: "getEmployeeGraph(employeeId)"
+    auth_required: false
+  - name: "Free-form 1-to-1 Search"
+    description: "Free text search opens an inline input on home; submits when input has at least 3 characters. Shows SearchingAnimation then ResultsView with candidates ordered by score."
+    files:
+      - "app/page.tsx"
+      - "components/SearchingAnimation.tsx"
+      - "components/ResultsView.tsx"
+      - "components/CandidateCard.tsx"
+      - "lib/api.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Click Buscar perfil CTA to expand the search input"
+      - "Type a query (must be at least 3 chars to enable submit)"
+      - "Click a suggestion chip to fill the input"
+      - "Press Enter or click Buscar button to submit"
+      - "Wait for SearchingAnimation to finish"
+      - "See ResultsView with candidate cards ordered by score"
+      - "Click 360 on any candidate to view their constellation graph"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "searchTalent(query)"
+    auth_required: false
+  - name: "Refinement Chat (Spanish conversational filters)"
+    description: "Side drawer chat that parses Spanish (neutral and Argentine voseo) into 5 filter types — excludeSquads, excludeAvailability, requireSkills, excludeLevels, requireLevels. Filter chips removable individually; coverage and gaps recompute live via useMemo."
+    files:
+      - "components/RefinementChat.tsx"
+      - "lib/mockChatRefinement.ts"
+    entry_route: "/"
+    user_interactions:
+      - "From project-results, click Refinar con IA to open the drawer"
+      - "Type que tengan Kafka and submit; see filter chip and coverage update"
+      - "Type sin nadie de vacaciones to add a second chip"
+      - "Type solo Senior y Staff to set requireLevels"
+      - "Type quita los de Pagos to add an excludeSquads filter"
+      - "Click the X on a filter chip to revert that single filter"
+      - "Type vuelve al equipo original to clear all filters and reset"
+      - "Type a non-recognized command to trigger an unknown message bubble"
+    api_calls: []
+    auth_required: false
+  - name: "Why Candidate Modal (score auditability)"
+    description: "Modal explaining a candidate's match score with a 6-factor breakdown (Skills 30, Trust 25, Availability +-12, Domain experience 15, Collaborations 10, EDI 8). Footer with link to /candidate/[id] and GDPR Art. 22 note."
+    files:
+      - "components/WhyCandidateModal.tsx"
+      - "lib/scoreExplain.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Click ? on any candidate row in project-results to open the modal"
+      - "Read the human summary and warnings (e.g. vacation flag)"
+      - "Inspect the 6 factor bars and their textual recommendations"
+      - "Press Escape or click outside to close the modal"
+      - "Click Ver perfil completo to navigate to /candidate/{id}"
+    api_calls: []
+    auth_required: false
+  - name: "Candidate Comparison"
+    description: "Full-screen modal that compares 2 to 4 selected candidates side by side. Shared skills (intersection of skill sets) highlighted with green check. Top stats strip (match avg, total unique skills, shared skills, available now). Button to open Team Constellation."
+    files:
+      - "components/CandidateComparison.tsx"
+    entry_route: "/"
+    user_interactions:
+      - "In project-results, select 2 to 4 candidates via checkboxes"
+      - "Click the floating Comparar lado a lado bar"
+      - "See the comparison grid with shared skills highlighted"
+      - "Click Constelacion to open TeamConstellation modal"
+      - "Press Escape to close the comparison modal"
+    api_calls: []
+    auth_required: false
+  - name: "Team Constellation (graph)"
+    description: "Full-screen modal with force-directed graph showing team members, skills (top 4 per person plus shared), and collaboration edges. Sidebar with clickable members and 4-metric stats strip."
+    files:
+      - "components/TeamConstellation.tsx"
+      - "components/TalentGraph.tsx"
+    entry_route: "/"
+    user_interactions:
+      - "From comparison modal, click Constelacion"
+      - "Click any member in the sidebar to highlight them in the graph"
+      - "Press Escape to close the modal"
+    api_calls: []
+    auth_required: false
+  - name: "Constellation View (individual)"
+    description: "50/50 layout view with full candidate info on the left and force-directed personal graph on the right. Mobile stacks sidebar above graph. Clicking a collaborator in the graph loads that person's graph."
+    files:
+      - "components/ConstellationView.tsx"
+      - "components/TalentGraph.tsx"
+    entry_route: "/"
+    user_interactions:
+      - "From results or project-results, click 360 on a candidate"
+      - "See the candidate full info on the sidebar and their graph"
+      - "Click any collaborator node in the graph to switch focus"
+      - "Click the back button to return to the previous view"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getEmployeeGraph(employeeId)"
+    auth_required: false
+  - name: "Networking and Mentoring"
+    description: "Browse mentor / peer / mentee profiles with filter chips and search box. ProfileCards show capacity badges for mentors (e.g. 2/2 mentees). Mentors at full capacity render a FullCapacityPanel with next availability date. Wallet badge in header shows B-Tokens balance and tier; CTA cost displayed in BT."
+    files:
+      - "components/NetworkingView.tsx"
+      - "lib/api.ts"
+    entry_route: "/"
+    user_interactions:
+      - "Click Networking in the home nav"
+      - "Toggle the filter between Todos / Mentores / Peers / Mentees"
+      - "Type into search input to filter by name, skills or topics (300ms debounce)"
+      - "Click a mentor with full capacity to see Cupo de mentoria completo panel and Notificarme cuando se libere button"
+      - "Click a mentor with capacity to Solicitar mentoria — verify B-Tokens decrement and toast appears"
+      - "Click a peer to Conectar"
+      - "Click the round Ver perfil icon-button to navigate to /candidate/{id}"
+      - "Press the browser back button and verify the Networking view is restored from sessionStorage"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getNetworkingProfiles(filter, query)"
+      - method: "MOCK"
+        endpoint: "getUserBTokens()"
+      - method: "MOCK"
+        endpoint: "requestMentoring(empId)"
+      - method: "MOCK"
+        endpoint: "requestNetworking(empId)"
+    auth_required: false
+  - name: "Candidate Profile (deep-link)"
+    description: "Deep-linkable employee profile at /candidate/[id]. Hero card, bio, skills with bars, project trajectory with quarters, clickable collaborators, aside with TrustScoreBadge full + BTokenBadge full + EDIPanel full, networking tags. Loading skeleton on entry, friendly 404 for missing ids."
+    files:
+      - "app/candidate/[id]/page.tsx"
+      - "components/TrustScoreBadge.tsx"
+      - "components/BTokenBadge.tsx"
+      - "components/EDIPanel.tsx"
+    entry_route: "/candidate/[id]"
+    user_interactions:
+      - "Visit /candidate/emp_001 directly and confirm Valentina Rios profile loads"
+      - "Visit /candidate/no_existe and observe friendly 404 state"
+      - "Click any collaborator in the aside to navigate to /candidate/{collaboratorId}"
+      - "Read TrustScoreBadge full breakdown (manager / EDI / peers / tenure / skills)"
+      - "Read EDIPanel full with rating, manager_comment and peer_comments"
+    api_calls:
+      - method: "MOCK"
+        endpoint: "getEmployeeById(id)"
+    auth_required: false
+  - name: "About / whitepaper"
+    description: "Static technical whitepaper page with 3 architecture layers, components with live/mock/planned status, 6-step data flow, and compliance section."
+    files:
+      - "app/about/page.tsx"
+    entry_route: "/about"
+    user_interactions:
+      - "Click Arquitectura in the home nav to navigate to /about"
+      - "Scroll through the 3 architecture layers (Presentation / Intelligence / Data)"
+      - "Verify each component card has its correct status badge"
+    api_calls: []
+    auth_required: false
+  - name: "Workforce Intelligence Dashboard"
+    description: "Aggregate workforce dashboard. AI headline insight derived from highest-severity silo, KPI strip (Headcount, Silos at risk, Coverage, Mentors), workforce-by-type strip (Legacy / Proprietary / Modern / Emerging), TechDistributionBarChart, SiloRiskCard list with 6-rule heuristic (bus-factor, succession, tenure-concentration, no-pipeline, demand-supply, low-mentorship), DemandSupplyChart, AvailabilityDonut, SeniorityPyramid, TechCard grid, ThemeToggle in header."
+    files:
+      - "app/dashboard/page.tsx"
+      - "lib/siloAnalysis.ts"
+      - "lib/workforce-stats.ts"
+      - "lib/staffing-mock.ts"
+      - "components/WorkforceCharts.tsx"
+      - "components/SiloRiskCard.tsx"
+      - "components/StaffingRecommendationPanel.tsx"
+    entry_route: "/dashboard"
+    user_interactions:
+      - "Click Dashboard in the home nav to navigate to /dashboard"
+      - "Read the AI headline insight"
+      - "Verify the 4 KPI cards display computed values"
+      - "Verify the 4 workforce-type cards show counts and percentages"
+      - "Expand a SiloRiskCard to read its detected factors and AI suggestions"
+      - "Inspect DemandSupplyChart, AvailabilityDonut and SeniorityPyramid"
+      - "Click ThemeToggle in the header and verify the page re-renders in the new theme"
+      - "Click the back button to return to the previous route (or / if no history)"
+    api_calls: []
+    auth_required: false
+  - name: "Theme toggle (light / dark)"
+    description: "Toggle between dark and light themes. Persists choice in localStorage. Applies CSS variables on the html element. Should not flash unstyled content on page load."
+    files:
+      - "components/ThemeToggle.tsx"
+      - "app/globals.css"
+    entry_route: "/"
+    user_interactions:
+      - "Click ThemeToggle on home or dashboard to switch themes"
+      - "Refresh the page and verify the chosen theme persists"
+      - "Clear localStorage and refresh — verify default theme (dark) is applied"
+    api_calls: []
+    auth_required: false
+  - name: "Export team (print, copy, deep-link)"
+    description: "Dropdown in project-results header with three actions — Print/PDF (window.print() with @media print CSS), Copy summary (formatted plain text to clipboard), Copy deep-link (origin + ?demo=SDA-XXXXX to clipboard)."
+    files:
+      - "components/ExportTeamMenu.tsx"
+      - "app/globals.css"
+    entry_route: "/"
+    user_interactions:
+      - "In project-results, click the export menu dropdown"
+      - "Click Imprimir / PDF and observe the browser print dialog opens"
+      - "Click Copiar resumen and verify clipboard contains formatted plain text and a confirmation appears"
+      - "Click Copiar deep-link and verify clipboard contains origin/?demo=SDA-XXXXX"
+    api_calls: []
+    auth_required: false
+  - name: "Error handling and edge cases"
+    description: "Robust error handling — search submit disabled for query under 3 chars, ErrorBoundary global, ErrorToast for failed API calls, friendly 404 on missing candidate, deep-link with bad regex ignored silently, deep-link with non-existent code shows toast."
+    files:
+      - "app/layout.tsx"
+      - "components/ErrorBoundary.tsx"
+      - "app/page.tsx"
+    entry_route: "/"
+    user_interactions:
+      - "Type fewer than 3 chars in search input and observe the submit button stays disabled"
+      - "Visit /?demo=SDA-99999 and observe the error toast"
+      - "Visit /?demo=foo (invalid pattern) and observe the URL is ignored without error"
+      - "Trigger an artificial render error and observe the ErrorBoundary fallback with Volver al inicio / Recargar"
+    api_calls: []
+    auth_required: false
+known_limitations:
+  - issue: "Mock-only — IS_MOCK defaults to true; the app never hits a real backend in this build"
+    location: "lib/api.ts"
+    impact: "All API calls are simulated locally; no network traffic to localhost:8000 should occur"
+  - issue: "Refinement Chat does NOT use a real LLM"
+    location: "lib/mockChatRefinement.ts"
+    impact: "Conversational refinement is a deterministic Spanish parser over alias dictionaries (SQUAD, SKILL, LEVEL, AVAILABILITY); behavior is fully predictable for tests"
+  - issue: "PDF export uses window.print(), not a JS PDF library"
+    location: "components/ExportTeamMenu.tsx and app/globals.css @media print"
+    impact: "There is no programmatic Save as PDF — tests should validate that the print dialog is invoked, not that a file is produced"
+  - issue: "Pre-existing TypeScript error in jest.config.ts"
+    location: "jest.config.ts"
+    impact: "npx tsc --noEmit returns the known error TS2561 about testPathPattern; do NOT treat this as a regression"
+  - issue: "Playwright E2E tests are NOT implemented"
+    location: "project-wide"
+    impact: "Only Jest unit tests exist; full end-to-end is part of the future roadmap"
+  - issue: "README.md and CHANGELOG.md are out of date"
+    location: "README.md, CHANGELOG.md"
+    impact: "They do not list /dashboard, ThemeToggle, or the mentor capacity model in Networking; testsprite-prd.md at repo root is the authoritative spec"
+  - issue: "Heavy components are dynamically imported with ssr disabled"
+    location: "app/page.tsx (dynamic imports)"
+    impact: "ParticleBackground, SearchingAnimation, ResultsView, ConstellationView, TeamComposerView, ProjectResultsView, NetworkingView render only on the client"
+  - issue: "Onboarding tour persistence uses a versioned localStorage key"
+    location: "components/OnboardingTour.tsx and app/page.tsx"
+    impact: "The key is bbva-talent:onboarding-seen-v1; tests that need a fresh tour must clear this key explicitly"
+  - issue: "Networking view persists across the /candidate/[id] round-trip via sessionStorage"
+    location: "app/page.tsx (RESTORABLE_VIEWS, VIEW_STORAGE_KEY = bbva-talent:last-view)"
+    impact: "Only home and networking are restored; other internal views reset to home when the page remounts"

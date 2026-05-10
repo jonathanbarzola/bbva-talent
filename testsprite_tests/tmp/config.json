@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "bbva-talent",
+    "projectPath": "C:\\Users\\Jonathan\\Documents\\Proyectos\\bbva-talent",
+    "testIds": [],
+    "additionalInstruction": "App is mock-only (IS_MOCK defaults to true) — never expect real network calls to localhost:8000. UI is in Spanish neutro (tuteo) — match Spanish copy. Onboarding tour persists in localStorage key bbva-talent:onboarding-seen-v1; clear it before tests that need a fresh tour. Networking view persists in sessionStorage key bbva-talent:last-view; clear it for clean state. Theme persists in localStorage. Heavy components are dynamic with ssr:false — wait for client hydration. Canonical demo: SDA-53021 FX Tracker. Canonical employee: emp_001 Valentina Rios.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-EhdLljr10QGlNXgPCUyC4M-vj9WBvb7hrtWOs2gRq7pejAXJdFaPEc9eelO6g-JBTPBuhVF0X7vXFMjvF639e0Invmp_LM7rnuX64sJCCqLLqofwlfA52tigYWxzqWd1iZQ"
+    }
+  },
+  "serverPort": 51662
+}

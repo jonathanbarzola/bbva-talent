@@ -36,6 +36,34 @@ Abrí [http://localhost:3000](http://localhost:3000). Si es tu primera visita, a
 
 ## ✨ Features principales
 
+### 🪞 Mi Carrera (`/me`) — flujo personal
+Vista personal donde un colaborador ve su progresión hacia el siguiente nivel BBVA (Analyst → Associate → Expert).
+- **Hero con barra grande** mostrando porcentaje de avance vs el percentil 75 del cohorte target.
+- **6 factores auditables** (skills 30 + Trust 25 + EDI 15 + tenure 10 + mentoring 10 + soft 10 = 100 pts).
+- **Skill gap table** con barras duales (tu nivel vs target p75) y % de cobertura del cohorte.
+- **EDI Insights**: fortalezas confirmadas (con quotes textuales de peers) + gaps de soft skills con acción concreta.
+- **Plan de aprendizaje recomendado** combinando 3 plataformas:
+  - **Campus BBVA** — 20 cursos en alianza con Coursera + LinkedIn Learning.
+  - **TechU** — 8 cursos propios sobre tecnologías propietarias BBVA (APX, Cells, NACAR, HOST, ASO, PSD2).
+  - **TheNinjaProject** — 15 certificaciones de mercado con costo en B-Tokens (AWS, Azure, GCP, K8s, Confluent, ISC2, etc.).
+- Cada recomendación viene con **"Por qué este curso/cert"** explícito, basado en la cobertura de tus gaps.
+- Selector de "current user" en el header para demostrar el flujo desde cualquier nivel/perfil.
+
+### 📊 Workforce Intelligence Dashboard (`/dashboard`)
+Vista panorámica para staffers, managers y people ops sobre los 1,800 colaboradores de BBVA Engineering.
+- **AI Headline Insight** derivado del riesgo más severo detectado.
+- **KPI strip**: headcount total, silos en riesgo, cobertura demanda global, mentores activos.
+- **Workforce by type**: legacy / propietario BBVA / stack moderno / emergente.
+- **6 reglas heurísticas de detección de silos** con cards expandibles:
+  1. Bus factor — pocas personas en tech crítica
+  2. Sucesión — alta concentración Expert sin pipeline
+  3. Tenure concentration — riesgo retiro a 5 años
+  4. No pipeline — sin Analysts para reemplazo natural
+  5. Demand vs supply — déficit operacional
+  6. Low mentorship — conocimiento que no se transmite
+- **Demand vs Supply chart**, **Availability donut**, **Seniority pyramid** (Analyst / Associate / Expert).
+- Recomendaciones de IA accionables por riesgo detectado.
+
 ### 🎯 Recomendación por proyecto (flujo primario)
 - 30 proyectos SDA pre-mapeados con roles y cantidades requeridas
 - 18 empleados sintéticos con perfiles ricos (skills + categorías + scores, proyectos pasados, colaboradores con weights)
@@ -103,6 +131,19 @@ Ruta deep-linkable con:
 - **Copiar resumen** al clipboard (texto plano formateado)
 - **Deep-link** `?demo=SDA-XXXXX` que pre-carga el proyecto en otro browser
 
+### 🌗 Theme light / dark
+- `ThemeToggle` con icono sol / luna animado.
+- Persiste en `localStorage` (`bbva-talent:theme`).
+- Anti-FOUC inline script aplica `data-theme` en `<html>` antes de hidratación.
+- Toda la paleta migrada a CSS variables `--theme-*`.
+
+### 🤝 Networking & mentor capacity
+- Filtros por tipo (Mentores / Peers / Mentees) + búsqueda por nombre, skills, temas.
+- **Modelo de capacidad de mentores**: cada mentor tiene `cupo_maximo` (default 2) y `mentees_actuales`.
+- Si un mentor está full (`2/2`), la card muestra `FullCapacityPanel` con la próxima ventana de disponibilidad y botón "Notificarme cuando se libere".
+- Botón circular "Ver perfil" en cada `ProfileCard` para navegar a `/candidate/[id]`.
+- Wallet de B-Tokens en el header — `Solicitar mentoría` descuenta del balance.
+
 ### ♿ Accesibilidad
 - Skip-to-content link
 - Focus-visible rings (solo navegación por teclado)
@@ -137,18 +178,20 @@ Layout responsive en home, results, comparison, perfil individual, /about, proje
 bbva-talent/
 ├── app/                              # Next.js App Router
 │   ├── layout.tsx                    # ErrorBoundary + skip-to-content
-│   ├── globals.css                   # Theme Neural Cosmos + a11y + print
+│   ├── globals.css                   # Theme Neural Cosmos (CSS vars) + a11y + print
 │   ├── page.tsx                      # State machine principal (7 vistas)
 │   ├── about/page.tsx                # Whitepaper de arquitectura
-│   └── candidate/[id]/page.tsx       # Perfil individual deep-linkable
+│   ├── candidate/[id]/page.tsx       # Perfil individual deep-linkable
+│   ├── dashboard/page.tsx            # Workforce Intelligence (silo analysis)
+│   └── me/page.tsx                   # Mi carrera — progresión personal
 │
-├── components/                       # 25+ componentes
+├── components/                       # 30+ componentes
 │   ├── # Vistas principales
 │   ├── ResultsView.tsx               # Resultados de búsqueda libre
 │   ├── ProjectResultsView.tsx        # Equipo recomendado (vista primaria)
 │   ├── TeamComposerView.tsx          # Selector de proyectos SDA
 │   ├── ConstellationView.tsx         # Grafo individual (50/50 layout)
-│   ├── NetworkingView.tsx            # Red de mentores
+│   ├── NetworkingView.tsx            # Red de mentores + capacity model
 │   │
 │   ├── # Cards y badges
 │   ├── CandidateCard.tsx             # Card de candidato (resultados)
@@ -171,6 +214,21 @@ bbva-talent/
 │   ├── SuccessStories.tsx            # Casos reales narrativos
 │   ├── RoiCalculator.tsx             # Calculadora interactiva
 │   │
+│   ├── # Mi Carrera (/me)
+│   ├── CareerProgressHero.tsx        # Hero con transición Analyst→Associate
+│   ├── SkillGapTable.tsx             # Barras duales current vs p75
+│   ├── EDIInsights.tsx               # Soft skills confirmados + gaps
+│   ├── LearningPlanCards.tsx         # 3 secciones por plataforma
+│   │
+│   ├── # Workforce Dashboard (/dashboard)
+│   ├── WorkforceCharts.tsx           # Bar chart, donut, pyramid, demand-supply
+│   ├── SiloRiskCard.tsx              # Card expandible por tech con AI suggestions
+│   ├── StaffingRecommendationPanel.tsx # FTE recomendado + reasoning
+│   │
+│   ├── # Header / global
+│   ├── ThemeToggle.tsx               # Light / dark con persist
+│   ├── CurrentUserSelector.tsx       # Dropdown agrupado por nivel
+│   │
 │   ├── # Soporte
 │   ├── TalentGraph.tsx               # Wrapper de react-force-graph-2d
 │   ├── TeamBuilderPanel.tsx          # Panel flotante con selección
@@ -181,13 +239,25 @@ bbva-talent/
 │
 ├── lib/                              # Lógica de negocio
 │   ├── api.ts                        # Capa de fetch (mock por defecto)
-│   ├── types.ts                      # TypeScript types compartidos
+│   ├── types.ts                      # TypeScript types compartidos (Nivel = Analyst|Associate|Expert)
 │   ├── bbva-colors.ts                # Paleta de marca BBVA
 │   ├── trust-score.ts                # Cálculo de Trust Score + tiers
 │   ├── mock-data.ts                  # 18 empleados + 30 proyectos SDA
 │   ├── scoreExplain.ts               # Heurística de explicabilidad (6 factores)
-│   ├── gapAnalysis.ts                # 6 reglas de gap detection
-│   └── mockChatRefinement.ts         # Parser conversacional español
+│   ├── gapAnalysis.ts                # 6 reglas de gap detection (equipo)
+│   ├── mockChatRefinement.ts         # Parser conversacional español
+│   ├── # Career view
+│   ├── careerProgress.ts             # Heurística de progresión vs p75 (6 factores)
+│   ├── current-user.ts               # Hook + storage del usuario activo
+│   ├── campus-bbva-mock.ts           # 20 cursos Coursera + LinkedIn Learning
+│   ├── techu-mock.ts                 # 8 cursos propios BBVA
+│   ├── ninja-project-mock.ts         # 15 certs de mercado
+│   ├── # Workforce dashboard
+│   ├── workforce-stats.ts            # 1800 colaboradores · 14 áreas tech
+│   ├── siloAnalysis.ts               # 6 reglas de silo detection
+│   ├── staffing-mock.ts              # Histórico FTE por empleado
+│   ├── staffingRecommendation.ts     # FTE recomendado + risk signals
+│   └── graphBuilder.ts               # Grafo enriquecido (current/past projects)
 │
 ├── package.json
 ├── tsconfig.json
@@ -305,6 +375,21 @@ npm install
 - Componentes con status (live / mock / planned)
 - Data flow de 6 pasos
 - Sección de compliance (GDPR, encryption, audit log)
+
+### 11. Workforce Intelligence Dashboard (`/dashboard`)
+- AI Headline Insight + KPI strip (4 cards) + workforce-by-type (4 cards)
+- 6 reglas de detección de silos con cards expandibles
+- Demand vs Supply chart + Availability donut + Seniority pyramid
+- Snapshot por tecnología (14 áreas)
+- Selector de usuario activo en header
+
+### 12. Mi Carrera (`/me`)
+- Hero con avatar + transición Analyst → Associate → Expert + barra grande
+- 6 FactorCards (skills, Trust, EDI, tenure, mentoring, soft skills)
+- Skill gap table con barras duales (tu nivel vs target p75)
+- EDI Insights con fortalezas confirmadas + gaps con acción concreta
+- Plan de aprendizaje en 3 secciones (Campus BBVA · TechU · TheNinjaProject)
+- Cada recomendación con "Por qué este curso/cert"
 
 ---
 
@@ -472,6 +557,17 @@ Todos los tipos están en `lib/types.ts`. Los mocks viven en `lib/mock-data.ts`.
 - A11y: focus-visible rings, aria-modal, skip-to-content, prefers-reduced-motion
 - Mobile responsive (incluido layout 50/50 en ConstellationView)
 
+### Sprint 5 — Career view + Workforce Intelligence + Theme ✅
+- **`/me` — Mi Carrera**: heurística `careerProgress.ts` + 4 componentes nuevos
+- **3 catálogos de aprendizaje**: Campus BBVA (20 cursos) + TechU (8 cursos) + TheNinjaProject (15 certs)
+- **`/dashboard` — Workforce Intelligence**: 6 reglas de silo detection, charts, AI suggestions
+- **Theme light / dark** con persistencia + anti-FOUC
+- **Networking mentor capacity model** (`cupo_maximo`, `mentees_actuales`, próxima disponibilidad)
+- **Selector de current user** con dropdown agrupado por nivel
+- **Refactor BREAKING**: taxonomía de niveles → `Analyst | Associate | Expert` (ex-`Junior/Mid/Senior/Staff`)
+- **Persistencia de vista** entre rutas vía `sessionStorage`
+- **Datos staffing extendidos**: histórico FTE por quarter + feedback externo
+
 ---
 
 ## 🚦 Roadmap futuro (post-concurso)
@@ -480,7 +576,6 @@ Backlog priorizable para la siguiente iteración:
 
 - [ ] Filtros multi-select en ResultsView (skills, squad, disponibilidad)
 - [ ] Heatmap de skills del banco vs demanda actual
-- [ ] Modo claro / oscuro toggle
 - [ ] Filtros con NLP real (Claude/OpenAI)
 - [ ] Predicción de éxito del equipo (Health Score compuesto)
 - [ ] Integraciones reales con stack BBVA (HR Hub, Workday, SSO)
@@ -488,6 +583,8 @@ Backlog priorizable para la siguiente iteración:
 - [ ] Performance metrics footer
 - [ ] Tests E2E con Playwright (3 flujos críticos)
 - [ ] Backend real con FastAPI + Neo4j + embeddings
+- [ ] Tests para `lib/careerProgress.ts` (la heurística no tiene cobertura todavía)
+- [ ] Fix: onboarding tour persiste solo en "Empezar →", no en "Skip" (ver TestSprite report)
 
 ---
 
@@ -526,7 +623,9 @@ vercel --prod
 - `/?demo=SDA-53021` — Auto-carga FX Tracker (Pagos Digitales · 2 ML + 1 Backend + 1 DevOps)
 - `/?demo=SDA-53024` — Auto-carga Fraud Detection AI
 - `/?demo=SDA-53038` — Auto-carga AML Monitor
-- `/candidate/emp_001` — Perfil de Valentina Ríos (Senior Backend, Pagos Digitales)
+- `/candidate/emp_001` — Perfil de Valentina Ríos (Expert Backend, Pagos Digitales)
+- `/dashboard` — Workforce Intelligence Dashboard
+- `/me` — Mi Carrera (usá el selector del header para cambiar entre los 18 perfiles)
 - `/about` — Whitepaper técnico
 
 ---
