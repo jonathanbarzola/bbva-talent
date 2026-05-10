@@ -16,7 +16,7 @@ const METRICS: Metric[] = [
   {
     value: 47,
     label: "equipos formados",
-    detail: "vs 21 días en Excel + Slack",
+    detail: "vs 21 días en Excel + Google Chat",
     color: BBVA.lime,
     delay: 0,
   },
@@ -37,9 +37,27 @@ const METRICS: Metric[] = [
   },
 ];
 
-function useCountUp(target: number, duration = 1400, startDelay = 0): number {
-  const [value, setValue] = useState(0);
-  const startedRef = useRef(false);
+/**
+ * Count-up hook that respects session memory.
+ * If the user already saw this counter animate in the current session
+ * (e.g. they visited home, navigated away, and came back), the value
+ * starts at `target` directly to avoid the "everything resets to 0" effect.
+ */
+function useCountUp(target: number, duration = 1400, startDelay = 0, sessionKey?: string): number {
+  const storageKey = sessionKey ? `bbva-talent:countup:${sessionKey}:${target}` : null;
+
+  // Read sessionStorage SYNCHRONOUSLY before first paint to avoid flicker
+  const alreadyAnimated = (() => {
+    if (typeof window === "undefined" || !storageKey) return false;
+    try {
+      return window.sessionStorage.getItem(storageKey) === "1";
+    } catch {
+      return false;
+    }
+  })();
+
+  const [value, setValue] = useState(alreadyAnimated ? target : 0);
+  const startedRef = useRef(alreadyAnimated);
 
   useEffect(() => {
     if (startedRef.current) return;
@@ -54,7 +72,14 @@ function useCountUp(target: number, duration = 1400, startDelay = 0): number {
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         setValue(Math.round(eased * target));
-        if (progress < 1) raf = requestAnimationFrame(tick);
+        if (progress < 1) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          // Mark this counter as animated for the rest of the session
+          if (storageKey && typeof window !== "undefined") {
+            try { window.sessionStorage.setItem(storageKey, "1"); } catch { /* ignore */ }
+          }
+        }
       };
       raf = requestAnimationFrame(tick);
     };
@@ -64,13 +89,13 @@ function useCountUp(target: number, duration = 1400, startDelay = 0): number {
       clearTimeout(t);
       cancelAnimationFrame(raf);
     };
-  }, [target, duration, startDelay]);
+  }, [target, duration, startDelay, storageKey]);
 
   return value;
 }
 
 function MetricCard({ metric }: { metric: Metric }) {
-  const value = useCountUp(metric.value, 1400, 250 + metric.delay);
+  const value = useCountUp(metric.value, 1400, 250 + metric.delay, metric.label);
 
   return (
     <div

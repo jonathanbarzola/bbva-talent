@@ -7,7 +7,7 @@
 
 ## ✦ Qué es
 
-BBVA Talent permite a un manager o tech lead **armar equipos para un proyecto SDA en minutos**, en lugar de las 14 horas promedio que toma hacerlo manualmente vía Excel + Slack.
+BBVA Talent permite a un manager o tech lead **armar equipos para un proyecto SDA en minutos**, en lugar de las 14 horas promedio que toma hacerlo manualmente vía Excel + Google Chat.
 
 El core del producto es un **Project Composer**: el manager elige uno de los proyectos SDA del banco (con roles ya pre-definidos), y la app recomienda los candidatos ideales por rol, analizando:
 

@@ -155,7 +155,7 @@ export default function RoiCalculator() {
         </p>
 
         <div className="space-y-2.5">
-          <ComparisonBar label="Excel + Slack manual" hours={HOURS_MANUAL} maxHours={HOURS_MANUAL} color="#fb923c" detail="14 horas en promedio" />
+          <ComparisonBar label="Excel + Google Chat manual" hours={HOURS_MANUAL} maxHours={HOURS_MANUAL} color="#fb923c" detail="14 horas en promedio" />
           <ComparisonBar label="BBVA Talent" hours={HOURS_WITH_TALENT} maxHours={HOURS_MANUAL} color={BBVA.lime} detail="22 minutos · -97%" />
         </div>
       </div>

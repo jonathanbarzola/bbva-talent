@@ -89,7 +89,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · pr
 
 ### Agregado
 - `ImpactMetrics` en home con count-up animado
-  - 47 equipos formados (vs 21 días en Excel + Slack)
+  - 47 equipos formados (vs 21 días en Excel + Google Chat)
   - 92% matches aceptados por managers
   - 134 talentos descubiertos
   - Hook custom `useCountUp` con `requestAnimationFrame` + cubic ease

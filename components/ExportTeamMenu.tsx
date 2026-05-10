@@ -152,7 +152,7 @@ export default function ExportTeamMenu({ project, team }: ExportTeamMenuProps) {
             <MenuItem
               icon="📋"
               title={copyState === "summary" ? "✓ Resumen copiado" : "Copiar resumen"}
-              detail="Texto plano para Slack o email"
+              detail="Texto plano para Google Chat o email"
               onClick={handleCopySummary}
               highlighted={copyState === "summary"}
             />
