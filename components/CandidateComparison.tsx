@@ -41,7 +41,7 @@ function ScoreRing({ score, size = 64 }: { score: number; size?: number }) {
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size}>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(133,200,255,0.08)" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--theme-tile-medium)" strokeWidth={stroke} />
         <circle
           cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color}
           strokeWidth={stroke} strokeLinecap="round"
@@ -51,7 +51,7 @@ function ScoreRing({ score, size = 64 }: { score: number; size?: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ color }}>
         <span className="font-mono font-black leading-none" style={{ fontSize: size * 0.28 }}>{pct}</span>
-        <span className="font-mono leading-none mt-0.5" style={{ fontSize: 9, color: "#3d4f6e" }}>match</span>
+        <span className="font-mono leading-none mt-0.5" style={{ fontSize: 9, color: "var(--theme-text-dim)" }}>match</span>
       </div>
     </div>
   );
@@ -59,9 +59,9 @@ function ScoreRing({ score, size = 64 }: { score: number; size?: number }) {
 
 function StatRow({ label, value, color }: { label: string; value: string | number; color?: string }) {
   return (
-    <div className="flex items-center justify-between py-2 px-3 rounded-lg" style={{ background: "rgba(133,200,255,0.03)", border: "1px solid rgba(133,200,255,0.06)" }}>
-      <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>{label}</span>
-      <span className="font-mono text-xs font-bold" style={{ color: color ?? "#e8eeff" }}>{value}</span>
+    <div className="flex items-center justify-between py-2 px-3 rounded-lg" style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.06)" }}>
+      <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>{label}</span>
+      <span className="font-mono text-xs font-bold" style={{ color: color ?? "var(--theme-text-primary)" }}>{value}</span>
     </div>
   );
 }
@@ -99,7 +99,7 @@ function CandidateColumn({
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: rank * 0.04 }}
       className="relative rounded-2xl overflow-hidden flex flex-col"
       style={{
-        background: "rgba(10,22,40,0.85)",
+        background: "var(--theme-bg-surface-strong)",
         border: "1px solid rgba(133,200,255,0.12)",
         backdropFilter: "blur(12px)",
       }}
@@ -117,8 +117,8 @@ function CandidateColumn({
           <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 60%)" }} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{candidate.nombre}</h3>
-          <p className="text-[11px] truncate" style={{ color: "#6b7fa3" }}>{candidate.rol}</p>
+          <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>{candidate.nombre}</h3>
+          <p className="text-[11px] truncate" style={{ color: "var(--theme-text-muted)" }}>{candidate.rol}</p>
           <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
             <span
               className="font-mono text-[9px] font-bold px-1.5 py-0.5 rounded"
@@ -126,7 +126,7 @@ function CandidateColumn({
             >
               {candidate.nivel}
             </span>
-            <span className="font-mono text-[9px]" style={{ color: "#3d4f6e" }}>{candidate.squad}</span>
+            <span className="font-mono text-[9px]" style={{ color: "var(--theme-text-dim)" }}>{candidate.squad}</span>
           </div>
         </div>
         <ScoreRing score={candidate.score} size={56} />
@@ -191,7 +191,7 @@ function CandidateColumn({
 
       {/* Skills */}
       <div className="px-4 pb-3">
-        <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "#3d4f6e" }}>
+        <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>
           Skills · {candidate.habilidades.length}
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -202,9 +202,9 @@ function CandidateColumn({
                 key={skill.nombre}
                 className="font-mono text-[10px] px-2 py-0.5 rounded-md"
                 style={{
-                  background: isShared ? `${BBVA.lime}18` : "rgba(133,200,255,0.05)",
-                  color: isShared ? BBVA.lime : "#6b7fa3",
-                  border: `1px solid ${isShared ? BBVA.lime + "55" : "rgba(133,200,255,0.08)"}`,
+                  background: isShared ? `${BBVA.lime}18` : "var(--theme-tile-soft)",
+                  color: isShared ? BBVA.lime : "var(--theme-text-muted)",
+                  border: `1px solid ${isShared ? BBVA.lime + "55" : "var(--theme-tile-medium)"}`,
                   fontWeight: isShared ? 700 : 400,
                 }}
                 title={isShared ? "Compartida con el resto del equipo" : undefined}
@@ -219,7 +219,7 @@ function CandidateColumn({
       {/* Projects */}
       {candidate.proyectos.length > 0 && (
         <div className="px-4 pb-3">
-          <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "#3d4f6e" }}>
+          <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>
             Proyectos · {candidate.proyectos.length}
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -239,7 +239,7 @@ function CandidateColumn({
       {/* Collaborators */}
       {candidate.colaboradores.length > 0 && (
         <div className="px-4 pb-4 mt-auto">
-          <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "#3d4f6e" }}>
+          <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>
             Colaboradores · {candidate.colaboradores.length}
           </p>
           <div className="flex -space-x-1.5">
@@ -256,7 +256,7 @@ function CandidateColumn({
             {candidate.colaboradores.length > 5 && (
               <div
                 className="w-6 h-6 rounded-full border flex items-center justify-center text-[8px] font-bold"
-                style={{ background: "rgba(133,200,255,0.1)", borderColor: "#0a1628", color: "#6b7fa3" }}
+                style={{ background: "var(--theme-border-default)", borderColor: "#0a1628", color: "var(--theme-text-muted)" }}
               >
                 +{candidate.colaboradores.length - 5}
               </div>
@@ -316,7 +316,7 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
           transition={{ duration: 0.25 }}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0" onClick={onClose} style={{ background: "rgba(5,10,20,0.92)", backdropFilter: "blur(8px)" }} />
+          <div className="absolute inset-0" onClick={onClose} style={{ background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(8px)" }} />
 
           {/* Modal */}
           <motion.div
@@ -329,7 +329,7 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
             <div className="max-w-[1500px] mx-auto px-6 py-8">
 
               {/* Header */}
-              <header className="flex items-center justify-between mb-6 sticky top-0 py-4" style={{ background: "rgba(5,10,20,0.95)", backdropFilter: "blur(20px)", zIndex: 5 }}>
+              <header className="flex items-center justify-between mb-6 sticky top-0 py-4" style={{ background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)", zIndex: 5 }}>
                 <div className="flex items-center gap-4">
                   <div
                     className="px-3 py-1.5 rounded-lg font-mono text-[10px] font-bold uppercase tracking-widest"
@@ -337,7 +337,7 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
                   >
                     Comparación
                   </div>
-                  <h2 className="font-black text-lg sm:text-xl" style={{ color: "#e8eeff" }}>
+                  <h2 className="font-black text-lg sm:text-xl" style={{ color: "var(--theme-text-primary)" }}>
                     {candidates.length} candidato{candidates.length !== 1 ? "s" : ""} lado a lado
                   </h2>
                 </div>
@@ -361,7 +361,7 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
                   <button
                     onClick={onClose}
                     className="px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-opacity hover:opacity-80"
-                    style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+                    style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
                     aria-label="Cerrar comparación"
                   >
                     ✕ Cerrar
@@ -372,20 +372,20 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
               {/* Summary stats */}
               {candidates.length > 0 && (
                 <section className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                  <div className="rounded-xl px-4 py-3" style={{ background: "rgba(10,22,40,0.7)", border: `1px solid ${BBVA.lime}25` }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>Match promedio</p>
+                  <div className="rounded-xl px-4 py-3" style={{ background: "var(--theme-bg-surface)", border: `1px solid ${BBVA.lime}25` }}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>Match promedio</p>
                     <p className="font-black font-mono text-2xl" style={{ color: BBVA.lime }}>{Math.round(avgScore * 100)}%</p>
                   </div>
-                  <div className="rounded-xl px-4 py-3" style={{ background: "rgba(10,22,40,0.7)", border: `1px solid ${BBVA.sereneBlue}25` }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>Skills únicas</p>
+                  <div className="rounded-xl px-4 py-3" style={{ background: "var(--theme-bg-surface)", border: `1px solid ${BBVA.sereneBlue}25` }}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>Skills únicas</p>
                     <p className="font-black font-mono text-2xl" style={{ color: BBVA.sereneBlue }}>{totalSkills}</p>
                   </div>
-                  <div className="rounded-xl px-4 py-3" style={{ background: "rgba(10,22,40,0.7)", border: `1px solid ${BBVA.purple}25` }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>Skills compartidas</p>
+                  <div className="rounded-xl px-4 py-3" style={{ background: "var(--theme-bg-surface)", border: `1px solid ${BBVA.purple}25` }}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>Skills compartidas</p>
                     <p className="font-black font-mono text-2xl" style={{ color: BBVA.purple }}>{sharedSkills.size}</p>
                   </div>
-                  <div className="rounded-xl px-4 py-3" style={{ background: "rgba(10,22,40,0.7)", border: `1px solid ${BBVA.canary}25` }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>Disponibles ahora</p>
+                  <div className="rounded-xl px-4 py-3" style={{ background: "var(--theme-bg-surface)", border: `1px solid ${BBVA.canary}25` }}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>Disponibles ahora</p>
                     <p className="font-black font-mono text-2xl" style={{ color: BBVA.canary }}>
                       {candidates.filter(c => c.disponibilidad === "disponible" || c.disponibilidad === "parcial").length}
                     </p>
@@ -418,13 +418,13 @@ export default function CandidateComparison({ candidates, open, onClose, onRemov
 
               {/* Empty state */}
               {candidates.length === 0 && (
-                <div className="py-24 flex flex-col items-center gap-4 rounded-2xl" style={{ background: "rgba(10,22,40,0.5)", border: "1px solid rgba(133,200,255,0.07)" }}>
+                <div className="py-24 flex flex-col items-center gap-4 rounded-2xl" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.07)" }}>
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: `${BBVA.purple}10`, border: `1px dashed ${BBVA.purple}40` }}>
                     <span className="text-2xl" style={{ color: BBVA.purple }}>⊞</span>
                   </div>
                   <div className="text-center">
-                    <p className="font-bold text-sm mb-1" style={{ color: "#e8eeff" }}>No hay candidatos para comparar</p>
-                    <p className="font-mono text-xs" style={{ color: "#3d4f6e" }}>
+                    <p className="font-bold text-sm mb-1" style={{ color: "var(--theme-text-primary)" }}>No hay candidatos para comparar</p>
+                    <p className="font-mono text-xs" style={{ color: "var(--theme-text-dim)" }}>
                       Selecciona al menos 2 candidatos desde resultados o equipo recomendado
                     </p>
                   </div>

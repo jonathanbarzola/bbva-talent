@@ -114,7 +114,7 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
         <div
           className="absolute inset-0"
           onClick={handleClose}
-          style={{ background: "rgba(5,10,20,0.78)", backdropFilter: "blur(4px)" }}
+          style={{ background: "var(--theme-bg-modal-backdrop)", backdropFilter: "blur(4px)" }}
         />
 
         {/* Spotlight ring around target */}
@@ -153,7 +153,7 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
           className="absolute w-[360px] max-w-[92vw] rounded-2xl p-5"
           style={{
             ...tooltipStyle,
-            background: "rgba(10,22,40,0.97)",
+            background: "var(--theme-bg-surface-strong)",
             border: `1px solid ${BBVA.purple}40`,
             boxShadow: `0 18px 60px rgba(0,0,0,0.55), 0 0 50px ${BBVA.purple}22`,
             backdropFilter: "blur(20px)",
@@ -170,7 +170,7 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
             <button
               onClick={handleClose}
               className="font-mono text-[10px] hover:opacity-100 transition-opacity"
-              style={{ color: "#6b7fa3", opacity: 0.7, cursor: "pointer" }}
+              style={{ color: "var(--theme-text-muted)", opacity: 0.7, cursor: "pointer" }}
               aria-label="Cerrar tour"
             >
               Saltar tour ✕
@@ -178,10 +178,10 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
           </div>
 
           {/* Body */}
-          <h3 className="font-black text-base mb-2 leading-tight" style={{ color: "#e8eeff" }}>
+          <h3 className="font-black text-base mb-2 leading-tight" style={{ color: "var(--theme-text-primary)" }}>
             {step.title}
           </h3>
-          <p className="font-mono text-[12px] leading-relaxed mb-5" style={{ color: "#a8b8d0" }}>
+          <p className="font-mono text-[12px] leading-relaxed mb-5" style={{ color: "var(--theme-text-secondary)" }}>
             {step.body}
           </p>
 
@@ -206,9 +206,9 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
               disabled={stepIdx === 0}
               className="px-3 py-2 rounded-lg font-mono text-[11px] font-bold transition-opacity"
               style={{
-                background: "rgba(133,200,255,0.05)",
+                background: "var(--theme-tile-soft)",
                 border: "1px solid rgba(133,200,255,0.1)",
-                color: stepIdx === 0 ? "#1e2d44" : "#6b7fa3",
+                color: stepIdx === 0 ? "var(--theme-text-faint)" : "var(--theme-text-muted)",
                 cursor: stepIdx === 0 ? "not-allowed" : "pointer",
                 opacity: stepIdx === 0 ? 0.5 : 1,
               }}

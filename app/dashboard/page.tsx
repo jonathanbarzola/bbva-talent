@@ -19,6 +19,7 @@ import {
   TechCard,
 } from "@/components/WorkforceCharts";
 import { SiloRiskCard } from "@/components/SiloRiskCard";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function DashboardPage() {
     ?? "Sin riesgos críticos detectados — la distribución de talento luce saludable.";
 
   return (
-    <div className="min-h-screen" style={{ background: "#050a14" }}>
+    <div className="min-h-screen" style={{ background: "var(--theme-bg-page)" }}>
       {/* Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div style={{ position: "absolute", top: "-15%", left: "-5%", width: 700, height: 700, borderRadius: "50%", background: `radial-gradient(circle, ${BBVA.electricBlue}1c 0%, transparent 65%)`, filter: "blur(80px)" }} />
@@ -46,12 +47,12 @@ export default function DashboardPage() {
       {/* Header */}
       <header
         className="relative z-10 sticky top-0 px-4 sm:px-6 py-3 flex items-center justify-between gap-3 flex-wrap"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.92)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <button
           onClick={() => (window.history.length > 1 ? router.back() : router.push("/"))}
           className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-          style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+          style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
         >
           ← Volver
         </button>
@@ -62,9 +63,10 @@ export default function DashboardPage() {
           >
             Workforce Intelligence
           </span>
-          <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+          <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
             BBVA Engineering · {kpis.totalWorkforce.toLocaleString("es")} colaboradores
           </span>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -76,10 +78,10 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h1 className="font-black leading-tight mb-3" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: "#e8eeff" }}>
+          <h1 className="font-black leading-tight mb-3" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: "var(--theme-text-primary)" }}>
             <span className="text-gradient">Mapa del talento</span> de Engineering
           </h1>
-          <p className="text-sm sm:text-base max-w-3xl leading-relaxed mb-5" style={{ color: "#a8b8d0" }}>
+          <p className="text-sm sm:text-base max-w-3xl leading-relaxed mb-5" style={{ color: "var(--theme-text-secondary)" }}>
             Vista en tiempo real para managers y staffers: distribución por tecnología, riesgos de silos
             de conocimiento, y recomendaciones proactivas de la IA para anticipar gaps antes de que sean
             problema operacional.
@@ -104,11 +106,11 @@ export default function DashboardPage() {
               <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1.5" style={{ color: BBVA.purple }}>
                 Insight prioritario · IA
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: "#e8eeff" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--theme-text-primary)" }}>
                 {headlineSuggestion}
               </p>
               {(criticalRisks.length > 0 || highRisks.length > 0) && (
-                <p className="font-mono text-[11px] mt-2" style={{ color: "#a8b8d0" }}>
+                <p className="font-mono text-[11px] mt-2" style={{ color: "var(--theme-text-secondary)" }}>
                   {criticalRisks.length > 0 && (
                     <span style={{ color: "#fca5a5" }}>{criticalRisks.length} silo{criticalRisks.length !== 1 ? "s" : ""} crítico{criticalRisks.length !== 1 ? "s" : ""}</span>
                   )}
@@ -178,10 +180,10 @@ export default function DashboardPage() {
             <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: BBVA.purple }}>
               Silos de conocimiento detectados
             </p>
-            <p className="font-bold text-base sm:text-lg" style={{ color: "#e8eeff" }}>
+            <p className="font-bold text-base sm:text-lg" style={{ color: "var(--theme-text-primary)" }}>
               {risks.length} tecnologías con factores de riesgo activos
             </p>
-            <p className="font-mono text-[11px] mt-1" style={{ color: "#6b7fa3" }}>
+            <p className="font-mono text-[11px] mt-1" style={{ color: "var(--theme-text-muted)" }}>
               Click en cada card para ver factores detectados, recomendaciones de la IA y distribución de seniority.
             </p>
           </header>
@@ -193,7 +195,7 @@ export default function DashboardPage() {
                 style={{ background: `${BBVA.lime}08`, border: `1px solid ${BBVA.lime}28` }}
               >
                 <p className="font-bold text-base" style={{ color: BBVA.lime }}>✓ Sin silos detectados</p>
-                <p className="font-mono text-xs mt-1" style={{ color: "#6b7fa3" }}>
+                <p className="font-mono text-xs mt-1" style={{ color: "var(--theme-text-muted)" }}>
                   Todas las áreas tecnológicas presentan distribución saludable.
                 </p>
               </div>
@@ -215,10 +217,10 @@ export default function DashboardPage() {
         {/* Tech cards grid (without silos) */}
         <section>
           <header className="mb-3">
-            <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "#6b7fa3" }}>
+            <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "var(--theme-text-muted)" }}>
               Snapshot por tecnología
             </p>
-            <p className="font-bold text-base" style={{ color: "#e8eeff" }}>
+            <p className="font-bold text-base" style={{ color: "var(--theme-text-primary)" }}>
               Métricas clave de las {WORKFORCE_DATA.length} áreas
             </p>
           </header>
@@ -233,13 +235,13 @@ export default function DashboardPage() {
         {/* Footer with disclaimer */}
         <footer
           className="rounded-xl px-4 py-3 flex items-start gap-2.5"
-          style={{ background: "rgba(133,200,255,0.04)", border: "1px solid rgba(133,200,255,0.10)" }}
+          style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
         >
           <span style={{ color: BBVA.sereneBlue, fontSize: 12 }}>ⓘ</span>
-          <p className="font-mono text-[10px] leading-relaxed" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-[10px] leading-relaxed" style={{ color: "var(--theme-text-muted)" }}>
             Datos sintéticos basados en distribución típica observada en bancos LATAM con stack mixto legacy + moderno.
             En producción se conecta a HR Hub para refresh diario y a SDA Catalog para demanda en tiempo real.
-            <span className="ml-1.5" style={{ color: "#3d4f6e" }}>· {TOTAL_OPEN_PROJECTS} proyectos SDA abiertos en este momento.</span>
+            <span className="ml-1.5" style={{ color: "var(--theme-text-dim)" }}>· {TOTAL_OPEN_PROJECTS} proyectos SDA abiertos en este momento.</span>
           </p>
         </footer>
       </main>
@@ -253,9 +255,9 @@ function KPI({ label, value, sub, color }: { label: string; value: string; sub: 
   return (
     <div
       className="rounded-2xl px-4 py-4"
-      style={{ background: "rgba(10,22,40,0.65)", border: `1px solid ${color}28`, backdropFilter: "blur(12px)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: `1px solid ${color}28`, backdropFilter: "blur(12px)" }}
     >
-      <p className="font-mono text-[10px] uppercase tracking-widest mb-1.5" style={{ color: "#3d4f6e" }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest mb-1.5" style={{ color: "var(--theme-text-dim)" }}>
         {label}
       </p>
       <p className="font-black font-mono leading-none mb-1" style={{ color, fontSize: "clamp(1.5rem, 3vw, 2rem)" }}>

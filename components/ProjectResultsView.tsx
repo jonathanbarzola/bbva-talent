@@ -56,11 +56,11 @@ function CandidateRow({
     <div
       className="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200"
       style={{
-        background: isSelected ? `${BBVA.lime}10` : "rgba(133,200,255,0.03)",
-        border: `1px solid ${isSelected ? BBVA.lime + "55" : "rgba(133,200,255,0.07)"}`,
+        background: isSelected ? `${BBVA.lime}10` : "var(--theme-tile-soft)",
+        border: `1px solid ${isSelected ? BBVA.lime + "55" : "var(--theme-tile-medium)"}`,
       }}
-      onMouseEnter={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.07)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.15)"; } }}
-      onMouseLeave={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.03)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.07)"; } }}
+      onMouseEnter={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-medium)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-border-strong)"; } }}
+      onMouseLeave={e => { if (!isSelected) { (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-soft)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-tile-medium)"; } }}
     >
       {/* Select checkbox */}
       <button
@@ -68,8 +68,8 @@ function CandidateRow({
         title={isSelected ? "Quitar de comparación" : "Agregar a comparación"}
         className="flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-all"
         style={{
-          background: isSelected ? `${BBVA.lime}25` : "rgba(133,200,255,0.05)",
-          border: `1.5px solid ${isSelected ? BBVA.lime + "aa" : "rgba(133,200,255,0.18)"}`,
+          background: isSelected ? `${BBVA.lime}25` : "var(--theme-tile-soft)",
+          border: `1.5px solid ${isSelected ? BBVA.lime + "aa" : "var(--theme-border-strong)"}`,
           cursor: "pointer",
         }}
       >
@@ -81,7 +81,7 @@ function CandidateRow({
       </button>
 
       {/* Rank */}
-      <span className="font-mono text-[10px] w-6 text-center flex-shrink-0" style={{ color: "#3d4f6e" }}>
+      <span className="font-mono text-[10px] w-6 text-center flex-shrink-0" style={{ color: "var(--theme-text-dim)" }}>
         #{rank}
       </span>
 
@@ -96,7 +96,7 @@ function CandidateRow({
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 flex-wrap">
-          <p className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{candidate.nombre}</p>
+          <p className="font-bold text-sm leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>{candidate.nombre}</p>
           {candidate.registro && (
             <span
               className="hidden sm:inline-flex font-mono text-[9px] font-bold px-1.5 py-0.5 rounded"
@@ -111,7 +111,7 @@ function CandidateRow({
             </span>
           )}
         </div>
-        <p className="text-[11px] truncate" style={{ color: "#6b7fa3" }}>
+        <p className="text-[11px] truncate" style={{ color: "var(--theme-text-muted)" }}>
           {candidate.rol_bbva && (
             <span className="font-mono font-bold mr-1" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
           )}
@@ -158,9 +158,9 @@ function CandidateRow({
       <button
         onClick={() => onViewGraph(candidate.id)}
         className="flex-shrink-0 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all duration-150"
-        style={{ background: "rgba(133,200,255,0.07)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.15)"; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.07)"; }}
+        style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--theme-border-strong)"; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-medium)"; }}
       >
         360°
       </button>
@@ -180,7 +180,7 @@ function CoverageRing({ score }: { score: number }) {
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="block">
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(133,200,255,0.06)" strokeWidth={stroke} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--theme-tile-medium)" strokeWidth={stroke} />
         <circle
           cx={size/2} cy={size/2} r={r} fill="none" stroke={color}
           strokeWidth={stroke} strokeLinecap="round"
@@ -190,7 +190,7 @@ function CoverageRing({ score }: { score: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="font-black font-mono" style={{ fontSize: 18, lineHeight: 1, color }}>{pct}%</span>
-        <span className="font-mono" style={{ fontSize: 8, color: "#3d4f6e" }}>coverage</span>
+        <span className="font-mono" style={{ fontSize: 8, color: "var(--theme-text-dim)" }}>coverage</span>
       </div>
     </div>
   );
@@ -231,18 +231,18 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#050a14", paddingBottom: selectedIds.length > 0 ? 88 : 0 }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--theme-bg-page)", paddingBottom: selectedIds.length > 0 ? 88 : 0 }}>
 
       {/* Header */}
       <header
         className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 sticky top-0 z-20"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.95)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <button
             onClick={onBack}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-80 transition-opacity"
-            style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue }}
+            style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue }}
           >
             ← Proyectos
           </button>
@@ -254,9 +254,9 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
               >
                 {project.dominio}
               </span>
-              <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>{project.codigo}</span>
+              <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>{project.codigo}</span>
             </div>
-            <h1 className="font-bold text-base mt-0.5" style={{ color: "#e8eeff" }}>{project.nombre}</h1>
+            <h1 className="font-bold text-base mt-0.5" style={{ color: "var(--theme-text-primary)" }}>{project.nombre}</h1>
           </div>
         </div>
 
@@ -303,7 +303,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
             <p className="font-black font-mono text-2xl leading-none" style={{ color: BBVA.lime }}>
               {refinedResult.total_skills}
             </p>
-            <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>skills totales</p>
+            <p className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>skills totales</p>
           </div>
           <ExportTeamMenu project={project} team={refinedResult} />
         </div>
@@ -321,10 +321,10 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
         {selectedIds.length === 0 && allCandidates.length > 1 && (
           <div
             className="rounded-xl px-4 py-2.5 flex items-center gap-3"
-            style={{ background: "rgba(133,200,255,0.04)", border: "1px dashed rgba(133,200,255,0.18)" }}
+            style={{ background: "var(--theme-tile-soft)", border: "1px dashed rgba(133,200,255,0.18)" }}
           >
             <span style={{ color: BBVA.sereneBlue, fontSize: 13 }}>ⓘ</span>
-            <p className="font-mono text-[11px]" style={{ color: "#6b7fa3" }}>
+            <p className="font-mono text-[11px]" style={{ color: "var(--theme-text-muted)" }}>
               Marca 2 o más candidatos con el checkbox para compararlos lado a lado.
             </p>
           </div>
@@ -342,8 +342,8 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-1 h-5 rounded-full" style={{ background: BBVA.sereneBlue }} />
-                  <h2 className="font-bold text-sm" style={{ color: "#e8eeff" }}>{roleMatch.role}</h2>
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded" style={{ background: "rgba(133,200,255,0.06)", color: "#3d4f6e" }}>
+                  <h2 className="font-bold text-sm" style={{ color: "var(--theme-text-primary)" }}>{roleMatch.role}</h2>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded" style={{ background: "var(--theme-tile-medium)", color: "var(--theme-text-dim)" }}>
                     {roleMatch.candidates.length}/{roleMatch.quantity} cubiertos
                   </span>
                 </div>
@@ -357,7 +357,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
                     );
                   })}
                   {uniqueSkills.length > 5 && (
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded" style={{ background: "rgba(133,200,255,0.05)", color: "#3d4f6e" }}>
+                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded" style={{ background: "var(--theme-tile-soft)", color: "var(--theme-text-dim)" }}>
                       +{uniqueSkills.length - 5}
                     </span>
                   )}
@@ -399,7 +399,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
                 {/* Reserve slots */}
                 {roleMatch.candidates.slice(roleMatch.quantity).length > 0 && (
                   <>
-                    <p className="font-mono text-[10px] pt-1 pb-0.5 pl-1" style={{ color: "#3d4f6e" }}>Reservas</p>
+                    <p className="font-mono text-[10px] pt-1 pb-0.5 pl-1" style={{ color: "var(--theme-text-dim)" }}>Reservas</p>
                     {roleMatch.candidates.slice(roleMatch.quantity).map((candidate, i) => (
                       <CandidateRow
                         key={candidate.id}
@@ -424,7 +424,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
         <div
           className="fixed bottom-0 left-0 right-0 z-40"
           style={{
-            background: "rgba(5,10,20,0.97)",
+            background: "var(--theme-bg-overlay-strong)",
             borderTop: `1px solid ${BBVA.lime}30`,
             backdropFilter: "blur(24px)",
             boxShadow: `0 -16px 48px ${BBVA.lime}14`,
@@ -433,16 +433,16 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
         >
           <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-4">
             <div className="flex-shrink-0">
-              <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>Seleccionados</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>Seleccionados</p>
               <p className="font-black text-lg leading-none" style={{ color: BBVA.lime }}>
                 {selectedIds.length}
-                <span className="font-mono text-[10px] font-normal ml-1" style={{ color: "#3d4f6e" }}>
+                <span className="font-mono text-[10px] font-normal ml-1" style={{ color: "var(--theme-text-dim)" }}>
                   candidato{selectedIds.length !== 1 ? "s" : ""}
                 </span>
               </p>
             </div>
 
-            <div className="w-px self-stretch" style={{ background: "rgba(133,200,255,0.1)" }} />
+            <div className="w-px self-stretch" style={{ background: "var(--theme-border-default)" }} />
 
             <div className="flex items-center gap-1.5 flex-1 overflow-x-auto">
               {selectedCandidates.map((c, i) => {
@@ -466,7 +466,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
               <button
                 onClick={() => setSelectedIds([])}
                 className="px-3 py-2 rounded-lg text-xs font-mono transition-opacity hover:opacity-70"
-                style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.12)", color: "#3d4f6e", cursor: "pointer" }}
+                style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.12)", color: "var(--theme-text-dim)", cursor: "pointer" }}
               >
                 Limpiar
               </button>

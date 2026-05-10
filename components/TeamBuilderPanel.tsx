@@ -37,7 +37,7 @@ export default function TeamBuilderPanel({ selected, onRemove, onClear, onCompar
     <div
       className="fixed bottom-0 left-0 right-0 z-40"
       style={{
-        background: "rgba(5,10,20,0.97)",
+        background: "var(--theme-bg-overlay-strong)",
         borderTop: "1px solid rgba(133,200,255,0.18)",
         backdropFilter: "blur(24px)",
         boxShadow: "0 -20px 60px rgba(0,19,145,0.3)",
@@ -46,16 +46,16 @@ export default function TeamBuilderPanel({ selected, onRemove, onClear, onCompar
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-5 overflow-x-auto">
         <div className="flex-shrink-0 min-w-[72px]">
-          <p className="font-mono text-[9px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>Equipo</p>
+          <p className="font-mono text-[9px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>Equipo</p>
           <p className="font-black text-2xl leading-none" style={{ color: BBVA.lime }}>
             {selected.length}
-            <span className="font-mono text-xs font-normal ml-1" style={{ color: "#3d4f6e" }}>
+            <span className="font-mono text-xs font-normal ml-1" style={{ color: "var(--theme-text-dim)" }}>
               {selected.length === 1 ? "persona" : "personas"}
             </span>
           </p>
         </div>
 
-        <div className="w-px self-stretch flex-shrink-0" style={{ background: "rgba(133,200,255,0.1)" }} />
+        <div className="w-px self-stretch flex-shrink-0" style={{ background: "var(--theme-border-default)" }} />
 
         <div className="flex items-center gap-2 flex-shrink-0">
           {selected.map((emp, i) => {
@@ -75,14 +75,14 @@ export default function TeamBuilderPanel({ selected, onRemove, onClear, onCompar
           })}
         </div>
 
-        <div className="w-px self-stretch flex-shrink-0" style={{ background: "rgba(133,200,255,0.1)" }} />
+        <div className="w-px self-stretch flex-shrink-0" style={{ background: "var(--theme-border-default)" }} />
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2">
-            <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
+            <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
               Cobertura de skills — {teamSkills.length} únicas
             </p>
-            <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(133,200,255,0.08)", maxWidth: 120 }}>
+            <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "var(--theme-tile-medium)", maxWidth: 120 }}>
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{ width: `${coveragePct}%`, background: `linear-gradient(90deg, ${BBVA.electricBlue}, ${BBVA.sereneBlue}, ${BBVA.lime})` }}
@@ -107,7 +107,7 @@ export default function TeamBuilderPanel({ selected, onRemove, onClear, onCompar
           <button
             onClick={onClear}
             className="px-3 py-2 rounded-lg text-xs font-mono transition-all duration-150 hover:opacity-80"
-            style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.12)", color: "#3d4f6e", cursor: "pointer" }}
+            style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.12)", color: "var(--theme-text-dim)", cursor: "pointer" }}
           >
             Limpiar
           </button>

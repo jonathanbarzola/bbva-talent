@@ -12,6 +12,7 @@ import OnboardingTour, { type OnboardingStep } from "@/components/OnboardingTour
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SuccessStories from "@/components/SuccessStories";
 import RoiCalculator from "@/components/RoiCalculator";
+import ThemeToggle from "@/components/ThemeToggle";
 
 // ── Lazy imports for heavy components ───────────────────────────────────────
 const ParticleBackground   = dynamic(() => import("@/components/ParticleBackground"),   { ssr: false });
@@ -147,7 +148,7 @@ function HomeView({
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "#050a14" }}>
+    <div className="relative min-h-screen flex flex-col overflow-hidden" style={{ background: "var(--theme-bg-page)" }}>
       <ParticleBackground />
 
       {/* Ambient blobs */}
@@ -169,8 +170,8 @@ function HomeView({
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%)" }} />
           </div>
           <div>
-            <span className="font-black text-sm" style={{ color: "#e8eeff" }}>BBVA</span>
-            <span className="font-bold text-sm ml-1.5" style={{ color: "#3d4f6e" }}>Talent</span>
+            <span className="font-black text-sm" style={{ color: "var(--theme-text-primary)" }}>BBVA</span>
+            <span className="font-bold text-sm ml-1.5" style={{ color: "var(--theme-text-dim)" }}>Talent</span>
           </div>
         </div>
 
@@ -179,7 +180,7 @@ function HomeView({
           <button
             onClick={openSearch}
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-xs transition-all duration-150 hover:opacity-80"
-            style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.10)", color: "#3d4f6e", cursor: "pointer" }}
+            style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.10)", color: "var(--theme-text-dim)", cursor: "pointer" }}
           >
             <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
               <circle cx="5" cy="5" r="3.5" stroke="currentColor" strokeWidth="1.3"/>
@@ -190,7 +191,7 @@ function HomeView({
           <button
             onClick={onNetworking}
             className="px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all duration-150 hover:opacity-80"
-            style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue, cursor: "pointer" }}
+            style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue, cursor: "pointer" }}
           >
             Networking
           </button>
@@ -222,6 +223,7 @@ function HomeView({
           >
             ?
           </button>
+          <ThemeToggle />
         </div>
       </nav>
 
@@ -242,16 +244,16 @@ function HomeView({
           className="font-black leading-tight mb-4 animate-fade-up"
           style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.5rem)", animationDelay: "0.1s" }}
         >
-          <span style={{ color: "#e8eeff" }}>Arma el equipo</span>
+          <span style={{ color: "var(--theme-text-primary)" }}>Arma el equipo</span>
           <br />
           <span className="text-gradient">ideal para cada</span>
           <br />
-          <span style={{ color: "#e8eeff" }}>proyecto SDA</span>
+          <span style={{ color: "var(--theme-text-primary)" }}>proyecto SDA</span>
         </h1>
 
         <p
           className="text-base sm:text-lg leading-relaxed mb-7 max-w-lg animate-fade-up"
-          style={{ color: "#4d6080", animationDelay: "0.15s" }}
+          style={{ color: "var(--theme-text-muted)", animationDelay: "0.15s" }}
         >
           Selecciona un proyecto y la IA recomienda el equipo perfecto analizando
           habilidades, disponibilidad, Trust Score y colaboraciones previas.
@@ -297,7 +299,7 @@ function HomeView({
               {/* Text */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2.5 mb-1">
-                  <p className="font-black text-xl" style={{ color: "#e8eeff" }}>Project Composer</p>
+                  <p className="font-black text-xl" style={{ color: "var(--theme-text-primary)" }}>Project Composer</p>
                   <span
                     className="font-mono text-[10px] px-2 py-0.5 rounded-full font-bold"
                     style={{ background: `${BBVA.purple}20`, border: `1px solid ${BBVA.purple}40`, color: BBVA.purple }}
@@ -368,11 +370,11 @@ function HomeView({
 
         {/* ── Divider ── */}
         <div className="flex items-center gap-4 w-full max-w-2xl mt-8 mb-6 animate-fade-up" style={{ animationDelay: "0.28s" }}>
-          <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
-          <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#1e2d44" }}>
+          <div className="flex-1 h-px" style={{ background: "var(--theme-tile-medium)" }} />
+          <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--theme-text-faint)" }}>
             o si buscas algo puntual
           </span>
-          <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
+          <div className="flex-1 h-px" style={{ background: "var(--theme-tile-medium)" }} />
         </div>
 
         {/* ── SECONDARY CTAs ── */}
@@ -384,31 +386,31 @@ function HomeView({
               <button
                 onClick={openSearch}
                 className="group w-full flex items-center gap-4 px-5 py-4 rounded-xl text-left transition-all duration-200"
-                style={{ background: "rgba(10,22,40,0.7)", border: "1px solid rgba(133,200,255,0.10)", cursor: "pointer" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.25)"; (e.currentTarget as HTMLElement).style.background = "rgba(10,22,40,0.9)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.10)"; (e.currentTarget as HTMLElement).style.background = "rgba(10,22,40,0.7)"; }}
+                style={{ background: "var(--theme-bg-surface)", border: "1px solid rgba(133,200,255,0.10)", cursor: "pointer" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-border-hover)"; (e.currentTarget as HTMLElement).style.background = "var(--theme-bg-surface-strong)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-border-default)"; (e.currentTarget as HTMLElement).style.background = "var(--theme-bg-surface)"; }}
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(133,200,255,0.07)", border: "1px solid rgba(133,200,255,0.14)" }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)" }}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <circle cx="7" cy="7" r="4.5" stroke={BBVA.sereneBlue} strokeWidth="1.4"/>
                     <line x1="10.5" y1="10.5" x2="14" y2="14" stroke={BBVA.sereneBlue} strokeWidth="1.4" strokeLinecap="round"/>
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <p className="font-bold text-sm leading-tight" style={{ color: "#e8eeff" }}>Buscar perfil</p>
-                  <p className="font-mono text-[11px] mt-0.5" style={{ color: "#3d4f6e" }}>Búsqueda 1 a 1 por skills o rol</p>
+                  <p className="font-bold text-sm leading-tight" style={{ color: "var(--theme-text-primary)" }}>Buscar perfil</p>
+                  <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--theme-text-dim)" }}>Búsqueda 1 a 1 por skills o rol</p>
                 </div>
                 <svg className="ml-auto flex-shrink-0 group-hover:translate-x-0.5 transition-transform" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M5 11L9 7L5 3" stroke="#3d4f6e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M5 11L9 7L5 3" stroke="var(--theme-text-dim)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
             ) : (
               <div
                 className="w-full rounded-xl overflow-hidden"
-                style={{ background: "rgba(10,22,40,0.9)", border: "1px solid rgba(133,200,255,0.22)" }}
+                style={{ background: "var(--theme-bg-surface-strong)", border: "1px solid rgba(133,200,255,0.22)" }}
               >
                 <div className="flex items-center gap-2 px-4 py-3">
-                  <svg className="flex-shrink-0" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "#3d4f6e" }}>
+                  <svg className="flex-shrink-0" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "var(--theme-text-dim)" }}>
                     <circle cx="6" cy="6" r="4" stroke="currentColor" strokeWidth="1.3"/>
                     <line x1="9" y1="9" x2="13" y2="13" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
                   </svg>
@@ -420,15 +422,15 @@ function HomeView({
                     onKeyDown={handleKeyDown}
                     placeholder="Busca un mentor, perfil o skill..."
                     className="flex-1 bg-transparent outline-none text-sm font-mono placeholder:opacity-30"
-                    style={{ color: "#e8eeff" }}
+                    style={{ color: "var(--theme-text-primary)" }}
                   />
                   <button
                     onClick={handleSubmit}
                     disabled={query.trim().length < 3}
                     className="flex-shrink-0 px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider transition-all"
                     style={{
-                      background: query.trim().length >= 3 ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.06)",
-                      color: query.trim().length >= 3 ? "#fff" : "#3d4f6e",
+                      background: query.trim().length >= 3 ? "linear-gradient(135deg, #001391, #0020cc)" : "var(--theme-tile-medium)",
+                      color: query.trim().length >= 3 ? "#fff" : "var(--theme-text-dim)",
                       cursor: query.trim().length >= 3 ? "pointer" : "not-allowed",
                     }}
                   >
@@ -442,7 +444,7 @@ function HomeView({
                       key={s}
                       onClick={() => { setQuery(s); inputRef.current?.focus(); }}
                       className="px-2 py-1 rounded font-mono text-[10px] transition-opacity hover:opacity-80"
-                      style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.08)", color: "#3d4f6e", cursor: "pointer" }}
+                      style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.08)", color: "var(--theme-text-dim)", cursor: "pointer" }}
                     >
                       {s}
                     </button>
@@ -456,9 +458,9 @@ function HomeView({
           <button
             onClick={onNetworking}
             className="group flex items-center gap-4 px-5 py-4 rounded-xl text-left transition-all duration-200"
-            style={{ background: "rgba(10,22,40,0.7)", border: "1px solid rgba(133,200,255,0.10)", cursor: "pointer" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${BBVA.sereneBlue}40`; (e.currentTarget as HTMLElement).style.background = "rgba(10,22,40,0.9)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.10)"; (e.currentTarget as HTMLElement).style.background = "rgba(10,22,40,0.7)"; }}
+            style={{ background: "var(--theme-bg-surface)", border: "1px solid rgba(133,200,255,0.10)", cursor: "pointer" }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${BBVA.sereneBlue}40`; (e.currentTarget as HTMLElement).style.background = "var(--theme-bg-surface-strong)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-border-default)"; (e.currentTarget as HTMLElement).style.background = "var(--theme-bg-surface)"; }}
           >
             <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${BBVA.sereneBlue}0d`, border: `1px solid ${BBVA.sereneBlue}25` }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -469,11 +471,11 @@ function HomeView({
               </svg>
             </div>
             <div className="min-w-0">
-              <p className="font-bold text-sm leading-tight" style={{ color: "#e8eeff" }}>Networking & Mentores</p>
-              <p className="font-mono text-[11px] mt-0.5" style={{ color: "#3d4f6e" }}>Conecta con referentes internos · B-Tokens</p>
+              <p className="font-bold text-sm leading-tight" style={{ color: "var(--theme-text-primary)" }}>Networking & Mentores</p>
+              <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--theme-text-dim)" }}>Conecta con referentes internos · B-Tokens</p>
             </div>
             <svg className="ml-auto flex-shrink-0 group-hover:translate-x-0.5 transition-transform" width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5 11L9 7L5 3" stroke="#3d4f6e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 11L9 7L5 3" stroke="var(--theme-text-dim)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
         </div>
@@ -494,7 +496,7 @@ function HomeView({
           ].map(s => (
             <div key={s.label} className="text-center">
               <p className="font-black font-mono text-2xl leading-none mb-1" style={{ color: s.color }}>{s.value}</p>
-              <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>{s.label}</p>
+              <p className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -509,11 +511,11 @@ function ErrorToast({ message, onDismiss }: { message: string; onDismiss: () => 
   return (
     <div
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3 rounded-xl"
-      style={{ background: "rgba(10,22,40,0.97)", border: "1px solid rgba(248,113,113,0.35)", backdropFilter: "blur(20px)" }}
+      style={{ background: "var(--theme-bg-surface-strong)", border: "1px solid rgba(248,113,113,0.35)", backdropFilter: "blur(20px)" }}
     >
       <span style={{ color: "#f87171" }}>⚠</span>
       <span className="font-mono text-sm" style={{ color: "#fca5a5" }}>{message}</span>
-      <button onClick={onDismiss} className="ml-2 font-mono text-xs" style={{ color: "#3d4f6e", cursor: "pointer" }}>✕</button>
+      <button onClick={onDismiss} className="ml-2 font-mono text-xs" style={{ color: "var(--theme-text-dim)", cursor: "pointer" }}>✕</button>
     </div>
   );
 }

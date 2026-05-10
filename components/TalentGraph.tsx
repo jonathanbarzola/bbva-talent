@@ -191,7 +191,7 @@ export default function TalentGraph({ data, onNodeClick, height = 560, fullscree
 
       <div
         className="absolute top-3 left-3 z-10 flex flex-col gap-2 rounded-xl p-3"
-        style={{ background: "rgba(5,10,20,0.8)", border: "1px solid rgba(133,200,255,0.1)", backdropFilter: "blur(8px)" }}
+        style={{ background: "var(--theme-bg-modal-backdrop)", border: "1px solid rgba(133,200,255,0.1)", backdropFilter: "blur(8px)" }}
       >
         <p className="font-mono text-[9px] uppercase tracking-widest mb-0.5" style={{ color: BBVA.grey4 }}>Leyenda</p>
         {Object.entries(LEGEND_LABELS).map(([type, label]) => (
@@ -200,7 +200,7 @@ export default function TalentGraph({ data, onNodeClick, height = 560, fullscree
               className="rounded-full flex-shrink-0"
               style={{ width: NODE_RADIUS[type], height: NODE_RADIUS[type], backgroundColor: NODE_COLORS[type], boxShadow: `0 0 6px ${NODE_COLORS[type]}88` }}
             />
-            <span className="text-[10px] font-mono" style={{ color: "#6b7fa3" }}>{label}</span>
+            <span className="text-[10px] font-mono" style={{ color: "var(--theme-text-muted)" }}>{label}</span>
           </div>
         ))}
       </div>
@@ -208,19 +208,19 @@ export default function TalentGraph({ data, onNodeClick, height = 560, fullscree
       {hoveredNode && (
         <div
           className="absolute top-3 right-3 z-10 max-w-[200px] rounded-xl p-3"
-          style={{ background: "rgba(5,10,20,0.9)", border: `1px solid ${NODE_COLORS[hoveredNode.type]}44`, backdropFilter: "blur(8px)", boxShadow: `0 0 20px ${NODE_COLORS[hoveredNode.type]}22` }}
+          style={{ background: "var(--theme-bg-overlay-strong)", border: `1px solid ${NODE_COLORS[hoveredNode.type]}44`, backdropFilter: "blur(8px)", boxShadow: `0 0 20px ${NODE_COLORS[hoveredNode.type]}22` }}
         >
           <p className="font-bold text-xs mb-2 leading-tight" style={{ color: NODE_COLORS[hoveredNode.type] }}>
             {hoveredNode.label}
           </p>
           {Object.entries(hoveredNode.properties).slice(0, 3).map(([k, v]) => (
             <div key={k} className="flex justify-between gap-2 text-[10px] font-mono">
-              <span style={{ color: "#3d4f6e" }}>{k}</span>
-              <span style={{ color: "#6b7fa3" }} className="truncate max-w-[100px]">{String(v)}</span>
+              <span style={{ color: "var(--theme-text-dim)" }}>{k}</span>
+              <span style={{ color: "var(--theme-text-muted)" }} className="truncate max-w-[100px]">{String(v)}</span>
             </div>
           ))}
           {hoveredNode.type === "colaborador" && (
-            <p className="text-[10px] mt-2 pt-2 border-t" style={{ borderColor: "rgba(133,200,255,0.1)", color: BBVA.sereneBlue }}>
+            <p className="text-[10px] mt-2 pt-2 border-t" style={{ borderColor: "var(--theme-border-default)", color: BBVA.sereneBlue }}>
               Click para explorar →
             </p>
           )}

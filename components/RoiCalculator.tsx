@@ -40,7 +40,7 @@ export default function RoiCalculator() {
       className="relative w-full max-w-5xl mx-auto mt-10 mb-4 animate-fade-up rounded-2xl p-6 sm:p-7 overflow-hidden"
       style={{
         animationDelay: "0.46s",
-        background: "rgba(10,22,40,0.7)",
+        background: "var(--theme-bg-surface)",
         border: `1px solid ${BBVA.canary}28`,
         backdropFilter: "blur(12px)",
       }}
@@ -63,10 +63,10 @@ export default function RoiCalculator() {
             </span>
           </div>
 
-          <h3 className="font-black text-lg sm:text-xl mb-1.5" style={{ color: "#e8eeff" }}>
+          <h3 className="font-black text-lg sm:text-xl mb-1.5" style={{ color: "var(--theme-text-primary)" }}>
             ¿Cuánto ahorra tu unidad al año?
           </h3>
-          <p className="font-mono text-xs mb-5 leading-relaxed" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-xs mb-5 leading-relaxed" style={{ color: "var(--theme-text-muted)" }}>
             Mueve el slider con cuántos equipos arma tu unidad por año. Calculamos en vivo basándonos
             en {HOURS_MANUAL}h promedio por equipo manualmente vs {HOURS_WITH_TALENT * 60} min con BBVA Talent.
           </p>
@@ -74,7 +74,7 @@ export default function RoiCalculator() {
           {/* Slider */}
           <div className="mb-3">
             <div className="flex items-baseline justify-between mb-2">
-              <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#6b7fa3" }}>
+              <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--theme-text-muted)" }}>
                 Equipos formados al año
               </span>
               <span className="font-black font-mono text-2xl leading-none" style={{ color: BBVA.canary }}>
@@ -98,23 +98,23 @@ export default function RoiCalculator() {
             />
 
             <div className="flex justify-between mt-1">
-              <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>50</span>
-              <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>1000</span>
+              <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>50</span>
+              <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>1000</span>
             </div>
           </div>
 
           {/* Presets */}
           <div className="flex flex-wrap gap-1.5 mt-2">
-            <span className="font-mono text-[10px] mr-1 self-center" style={{ color: "#3d4f6e" }}>presets:</span>
+            <span className="font-mono text-[10px] mr-1 self-center" style={{ color: "var(--theme-text-dim)" }}>presets:</span>
             {PRESETS.map(p => (
               <button
                 key={p.label}
                 onClick={() => setTeams(p.value)}
                 className="font-mono text-[10px] px-2 py-1 rounded-lg transition-opacity hover:opacity-80"
                 style={{
-                  background: teams === p.value ? `${BBVA.canary}20` : "rgba(133,200,255,0.04)",
-                  border: `1px solid ${teams === p.value ? BBVA.canary + "55" : "rgba(133,200,255,0.12)"}`,
-                  color: teams === p.value ? BBVA.canary : "#a8b8d0",
+                  background: teams === p.value ? `${BBVA.canary}20` : "var(--theme-tile-soft)",
+                  border: `1px solid ${teams === p.value ? BBVA.canary + "55" : "var(--theme-border-default)"}`,
+                  color: teams === p.value ? BBVA.canary : "var(--theme-text-secondary)",
                   cursor: "pointer",
                 }}
               >
@@ -150,7 +150,7 @@ export default function RoiCalculator() {
 
       {/* Comparison bar */}
       <div className="relative z-10 mt-6 pt-5" style={{ borderTop: "1px solid rgba(133,200,255,0.08)" }}>
-        <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style={{ color: "#6b7fa3" }}>
+        <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style={{ color: "var(--theme-text-muted)" }}>
           Tiempo por equipo
         </p>
 
@@ -160,7 +160,7 @@ export default function RoiCalculator() {
         </div>
       </div>
 
-      <p className="relative z-10 font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "#3d4f6e" }}>
+      <p className="relative z-10 font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "var(--theme-text-dim)" }}>
         ⓘ Estimación basada en tiempos promedio observados en pilotos internos. Costo hora del manager según tarifario interno BBVA 2026.
       </p>
     </section>
@@ -208,10 +208,10 @@ function ComparisonBar({ label, hours, maxHours, color, detail }: { label: strin
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <span className="font-mono text-[11px]" style={{ color: "#a8b8d0" }}>{label}</span>
+        <span className="font-mono text-[11px]" style={{ color: "var(--theme-text-secondary)" }}>{label}</span>
         <span className="font-mono text-[10px] font-bold" style={{ color }}>{detail}</span>
       </div>
-      <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "rgba(133,200,255,0.05)" }}>
+      <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "var(--theme-tile-soft)" }}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${Math.max(2, pct)}%` }}

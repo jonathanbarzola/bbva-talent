@@ -72,7 +72,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
           <p className="font-mono text-[10px] uppercase tracking-widest mt-1" style={{ color: BBVA.purple, opacity: 0.8 }}>
             FTE sugerido
           </p>
-          <p className="font-mono text-[10px] mt-0.5" style={{ color: "#a8b8d0" }}>
+          <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--theme-text-secondary)" }}>
             {fteToBucketName(rec.recommendedFte)}
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
                 {patternToLabel(rec.historicalSummary.pattern)}
               </span>
             </div>
-            <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#c8d4ec" }}>
+            <p className="font-mono text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
               Basado en {rec.historicalSummary.quartersAnalyzed} quarter{rec.historicalSummary.quartersAnalyzed !== 1 ? "s" : ""} analizados ·
               {" "}promedio {rec.historicalSummary.avgProjectsPerQuarter.toFixed(1)} proyectos/Q
               {" "}({(rec.historicalSummary.avgFte * 100).toFixed(0)}% FTE prom.).
@@ -103,12 +103,12 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
           {/* Alternative FTEs — visual reference */}
           {rec.alternativeFtes.length > 0 && (
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>alternativas:</span>
+              <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>alternativas:</span>
               {rec.alternativeFtes.map(f => (
                 <span
                   key={f}
                   className="font-mono text-[10px] px-1.5 py-0.5 rounded"
-                  style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.15)", color: "#a8b8d0" }}
+                  style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.15)", color: "var(--theme-text-secondary)" }}
                 >
                   {fteToLabel(f)}
                 </span>
@@ -121,7 +121,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
       {/* Reasoning */}
       {rec.reasoning.length > 0 && (
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "var(--theme-text-muted)" }}>
             Razonamiento
           </p>
           <div className="space-y-2">
@@ -144,7 +144,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                      <span className="font-bold text-[12px]" style={{ color: "#e8eeff" }}>{r.label}</span>
+                      <span className="font-bold text-[12px]" style={{ color: "var(--theme-text-primary)" }}>{r.label}</span>
                       <span
                         className="font-mono text-[9px] uppercase tracking-widest px-1 py-0.5 rounded"
                         style={{ background: `${wcfg.color}24`, color: wcfg.color }}
@@ -152,7 +152,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
                         {wcfg.label}
                       </span>
                     </div>
-                    <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#a8b8d0" }}>
+                    <p className="font-mono text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
                       {r.detail}
                     </p>
                   </div>
@@ -171,7 +171,7 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
       {/* Risk signals */}
       {rec.riskSignals.length > 0 && (
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "var(--theme-text-muted)" }}>
             Señales a considerar
           </p>
           <div className="space-y-2">
@@ -192,11 +192,11 @@ export default function StaffingRecommendationPanel({ candidate, projectName, pr
                       <p className="font-bold text-[12px] leading-tight mb-0.5" style={{ color: rcfg.color }}>
                         {rcfg.label}
                       </p>
-                      <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#a8b8d0" }}>
+                      <p className="font-mono text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
                         {rs.message}
                       </p>
                       {rs.context && (
-                        <p className="font-mono text-[10px] mt-1.5 italic leading-relaxed" style={{ color: "#6b7fa3" }}>
+                        <p className="font-mono text-[10px] mt-1.5 italic leading-relaxed" style={{ color: "var(--theme-text-muted)" }}>
                           {rs.context}
                         </p>
                       )}
@@ -244,12 +244,12 @@ function HistoricalTimeline({ candidate }: { candidate: EmpleadoResult }) {
 
   return (
     <div>
-      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "#6b7fa3" }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "var(--theme-text-muted)" }}>
         Historial de staffing por quarter
       </p>
       <div
         className="rounded-xl p-3 sm:p-4"
-        style={{ background: "rgba(133,200,255,0.03)", border: "1px solid rgba(133,200,255,0.10)" }}
+        style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
       >
         <div className="space-y-2">
           {quarters.map((q, qIdx) => {
@@ -264,10 +264,10 @@ function HistoricalTimeline({ candidate }: { candidate: EmpleadoResult }) {
                 transition={{ duration: 0.22, delay: qIdx * 0.04 }}
                 className="flex items-center gap-3"
               >
-                <span className="w-16 flex-shrink-0 font-mono text-[10px] font-bold" style={{ color: "#a8b8d0" }}>
+                <span className="w-16 flex-shrink-0 font-mono text-[10px] font-bold" style={{ color: "var(--theme-text-secondary)" }}>
                   {q}
                 </span>
-                <div className="flex-1 h-6 rounded-md overflow-hidden flex" style={{ background: "rgba(133,200,255,0.04)" }}>
+                <div className="flex-1 h-6 rounded-md overflow-hidden flex" style={{ background: "var(--theme-tile-soft)" }}>
                   {items.map((r, i) => {
                     const widthPct = r.fte * 100;
                     const color = projectColorMap.get(r.proyecto_codigo)!;
@@ -303,7 +303,7 @@ function HistoricalTimeline({ candidate }: { candidate: EmpleadoResult }) {
         </div>
 
         {/* Project legend */}
-        <div className="mt-3 pt-3 border-t flex flex-wrap gap-1.5" style={{ borderColor: "rgba(133,200,255,0.08)" }}>
+        <div className="mt-3 pt-3 border-t flex flex-wrap gap-1.5" style={{ borderColor: "var(--theme-tile-medium)" }}>
           {Array.from(projectColorMap.entries()).map(([codigo, color]) => {
             const project = records.find(r => r.proyecto_codigo === codigo)!;
             return (
@@ -334,7 +334,7 @@ function ExternalFeedbackList({
 }) {
   return (
     <div>
-      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "#6b7fa3" }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2" style={{ color: "var(--theme-text-muted)" }}>
         Feedback de jefes anteriores {consultora ? `(${consultora})` : ""}
       </p>
       <div className="space-y-2">
@@ -351,16 +351,16 @@ function ExternalFeedbackList({
             >
               <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-bold text-[12px]" style={{ color: "#e8eeff" }}>
+                  <span className="font-bold text-[12px]" style={{ color: "var(--theme-text-primary)" }}>
                     {f.manager_nombre}
                   </span>
-                  <span className="font-mono text-[10px]" style={{ color: "#6b7fa3" }}>
+                  <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-muted)" }}>
                     · {f.proyecto_codigo} {f.proyecto_nombre} · {f.quarter}
                   </span>
                 </div>
                 <RatingStars rating={f.rating} color={ratingColor} />
               </div>
-              <p className="font-mono text-[11px] leading-relaxed italic" style={{ color: "#a8b8d0" }}>
+              <p className="font-mono text-[11px] leading-relaxed italic" style={{ color: "var(--theme-text-secondary)" }}>
                 &ldquo;{f.comentario}&rdquo;
               </p>
             </div>
@@ -375,7 +375,7 @@ function RatingStars({ rating, color }: { rating: number; color: string }) {
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map(n => (
-        <span key={n} style={{ color: n <= rating ? color : "rgba(133,200,255,0.15)", fontSize: 11 }}>
+        <span key={n} style={{ color: n <= rating ? color : "var(--theme-border-strong)", fontSize: 11 }}>
           ★
         </span>
       ))}

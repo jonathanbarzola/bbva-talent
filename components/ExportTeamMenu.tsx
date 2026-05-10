@@ -128,17 +128,17 @@ export default function ExportTeamMenu({ project, team }: ExportTeamMenuProps) {
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             className="absolute right-0 top-full mt-2 w-72 rounded-xl overflow-hidden z-30"
             style={{
-              background: "rgba(10,22,40,0.97)",
+              background: "var(--theme-bg-surface-strong)",
               border: `1px solid ${BBVA.lime}30`,
               boxShadow: `0 18px 48px rgba(0,0,0,0.45), 0 0 30px ${BBVA.lime}1a`,
               backdropFilter: "blur(20px)",
             }}
           >
             <div className="px-3 py-2" style={{ borderBottom: "1px solid rgba(133,200,255,0.06)" }}>
-              <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
+              <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
                 Compartir equipo
               </p>
-              <p className="font-bold text-xs leading-tight mt-0.5 truncate" style={{ color: "#e8eeff" }}>
+              <p className="font-bold text-xs leading-tight mt-0.5 truncate" style={{ color: "var(--theme-text-primary)" }}>
                 {project.codigo} · {project.nombre}
               </p>
             </div>
@@ -164,8 +164,8 @@ export default function ExportTeamMenu({ project, team }: ExportTeamMenuProps) {
               highlighted={copyState === "link"}
             />
 
-            <div className="px-3 py-2" style={{ borderTop: "1px solid rgba(133,200,255,0.06)", background: "rgba(5,10,20,0.5)" }}>
-              <p className="font-mono text-[9px] leading-relaxed" style={{ color: "#3d4f6e" }}>
+            <div className="px-3 py-2" style={{ borderTop: "1px solid rgba(133,200,255,0.06)", background: "var(--theme-bg-overlay-soft)" }}>
+              <p className="font-mono text-[9px] leading-relaxed" style={{ color: "var(--theme-text-dim)" }}>
                 ⓘ En producción se generará PDF con branding BBVA y firma digital del manager.
               </p>
             </div>
@@ -197,15 +197,15 @@ function MenuItem({
         background: highlighted ? `${BBVA.lime}10` : "transparent",
         cursor: "pointer",
       }}
-      onMouseEnter={e => { if (!highlighted) (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.05)"; }}
+      onMouseEnter={e => { if (!highlighted) (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-soft)"; }}
       onMouseLeave={e => { if (!highlighted) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
     >
       <span style={{ fontSize: 14, lineHeight: "20px" }}>{icon}</span>
       <div className="flex-1 min-w-0">
-        <p className="font-bold text-xs leading-tight" style={{ color: highlighted ? BBVA.lime : "#e8eeff" }}>
+        <p className="font-bold text-xs leading-tight" style={{ color: highlighted ? BBVA.lime : "var(--theme-text-primary)" }}>
           {title}
         </p>
-        <p className="font-mono text-[10px] mt-0.5" style={{ color: "#6b7fa3" }}>
+        <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--theme-text-muted)" }}>
           {detail}
         </p>
       </div>

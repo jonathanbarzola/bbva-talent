@@ -20,6 +20,27 @@ export const metadata: Metadata = {
   description: "Descubre el talento oculto usando grafos de conocimiento e IA Generativa.",
 };
 
+/**
+ * Anti-FOUC theme script — runs synchronously in <head> before first paint.
+ * Reads the user's saved preference from localStorage and applies the
+ * data-theme attribute to <html> immediately. Prevents the brief flash
+ * of dark theme before React hydrates and the toggle takes over.
+ */
+const themeBootScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('bbva-talent:theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,6 +48,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${syne.variable} ${spaceMono.variable} h-full`} suppressHydrationWarning>
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-to-content">Saltar al contenido</a>
         <ErrorBoundary>

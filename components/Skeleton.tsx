@@ -57,7 +57,7 @@ export function SkeletonCandidateCard() {
   return (
     <div
       className="rounded-2xl p-5 space-y-3"
-      style={{ background: "rgba(10,22,40,0.55)", border: "1px solid rgba(133,200,255,0.07)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.07)" }}
     >
       <div className="flex items-start gap-3">
         <SkeletonAvatar size={40} />
@@ -83,7 +83,7 @@ export function SkeletonCandidateRow() {
   return (
     <div
       className="flex items-center gap-4 px-4 py-3 rounded-xl"
-      style={{ background: "rgba(133,200,255,0.02)", border: "1px solid rgba(133,200,255,0.05)" }}
+      style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.05)" }}
     >
       <div style={{ ...SHIMMER_STYLE, width: 18, height: 18, borderRadius: 4 }} />
       <SkeletonAvatar size={36} />

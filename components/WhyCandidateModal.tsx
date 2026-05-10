@@ -55,7 +55,7 @@ function FactorRow({ factor, index }: { factor: ScoreFactor; index: number }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2 mb-1">
-            <p className="font-bold text-[13px] leading-tight" style={{ color: "#e8eeff" }}>
+            <p className="font-bold text-[13px] leading-tight" style={{ color: "var(--theme-text-primary)" }}>
               {factor.label}
             </p>
             <span
@@ -67,7 +67,7 @@ function FactorRow({ factor, index }: { factor: ScoreFactor; index: number }) {
           </div>
 
           {/* Bar */}
-          <div className="h-1.5 rounded-full overflow-hidden mb-2" style={{ background: "rgba(133,200,255,0.06)" }}>
+          <div className="h-1.5 rounded-full overflow-hidden mb-2" style={{ background: "var(--theme-tile-medium)" }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${fillPct}%` }}
@@ -81,7 +81,7 @@ function FactorRow({ factor, index }: { factor: ScoreFactor; index: number }) {
             />
           </div>
 
-          <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#a8b8d0" }}>
+          <p className="font-mono text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
             {factor.detail}
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
           <div
             className="absolute inset-0"
             onClick={onClose}
-            style={{ background: "rgba(5,10,20,0.88)", backdropFilter: "blur(8px)" }}
+            style={{ background: "var(--theme-bg-modal-backdrop)", backdropFilter: "blur(8px)" }}
           />
 
           <motion.div
@@ -139,7 +139,7 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="relative max-w-xl w-full max-h-[90vh] overflow-hidden flex flex-col rounded-2xl"
             style={{
-              background: "rgba(10,22,40,0.97)",
+              background: "var(--theme-bg-surface-strong)",
               border: `1px solid ${BBVA.purple}40`,
               boxShadow: `0 28px 80px rgba(0,0,0,0.6), 0 0 60px ${BBVA.purple}22`,
               backdropFilter: "blur(24px)",
@@ -160,10 +160,10 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
                 >
                   Auditoría de match
                 </span>
-                <h2 className="font-black text-base leading-tight mb-0.5" style={{ color: "#e8eeff" }}>
+                <h2 className="font-black text-base leading-tight mb-0.5" style={{ color: "var(--theme-text-primary)" }}>
                   ¿Por qué {candidate.nombre.split(" ")[0]}?
                 </h2>
-                <p className="font-mono text-[11px]" style={{ color: "#6b7fa3" }}>
+                <p className="font-mono text-[11px]" style={{ color: "var(--theme-text-muted)" }}>
                   {candidate.rol} · {candidate.squad}
                   {context?.roleName && context.roleName !== candidate.rol && ` · evaluado para ${context.roleName}`}
                 </p>
@@ -172,13 +172,13 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
                 <div className="font-black font-mono leading-none" style={{ color: BBVA.lime, fontSize: 36 }}>
                   {explanation.totalScore}
                 </div>
-                <div className="font-mono text-[10px] mt-0.5" style={{ color: "#3d4f6e" }}>% match</div>
+                <div className="font-mono text-[10px] mt-0.5" style={{ color: "var(--theme-text-dim)" }}>% match</div>
               </div>
             </header>
 
             {/* Summary + warnings */}
             <div className="px-5 py-3" style={{ borderBottom: "1px solid rgba(133,200,255,0.06)" }}>
-              <p className="text-[13px] leading-relaxed mb-2" style={{ color: "#c8d4ec" }}>
+              <p className="text-[13px] leading-relaxed mb-2" style={{ color: "var(--theme-text-secondary)" }}>
                 {explanation.summary}
               </p>
               {explanation.warnings.length > 0 && (
@@ -202,7 +202,7 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
             {/* Factors */}
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-2">
               <div className="flex items-center justify-between mb-2">
-                <p className="font-mono text-[10px] uppercase tracking-widest font-bold" style={{ color: "#6b7fa3" }}>
+                <p className="font-mono text-[10px] uppercase tracking-widest font-bold" style={{ color: "var(--theme-text-muted)" }}>
                   Desglose del score
                 </p>
                 <div className="flex items-center gap-1.5">
@@ -221,7 +221,7 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
               ))}
 
               {/* Staffing recommendation (FTE + historical context + external feedback) */}
-              <div className="pt-4 mt-4 border-t" style={{ borderColor: "rgba(133,200,255,0.08)" }}>
+              <div className="pt-4 mt-4 border-t" style={{ borderColor: "var(--theme-tile-medium)" }}>
                 <StaffingRecommendationPanel
                   candidate={candidate}
                   projectName={context?.projectName}
@@ -231,8 +231,8 @@ export default function WhyCandidateModal({ candidate, open, onClose, context }:
             </div>
 
             {/* Footer */}
-            <footer className="px-5 py-3 flex items-center justify-between gap-3 flex-wrap" style={{ borderTop: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.5)" }}>
-              <p className="font-mono text-[10px] leading-tight flex-1 min-w-0" style={{ color: "#3d4f6e" }}>
+            <footer className="px-5 py-3 flex items-center justify-between gap-3 flex-wrap" style={{ borderTop: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-soft)" }}>
+              <p className="font-mono text-[10px] leading-tight flex-1 min-w-0" style={{ color: "var(--theme-text-dim)" }}>
                 Modelo de scoring auditable · Cumple con principios de transparencia algorítmica (GDPR Art. 22).
               </p>
               <div className="flex items-center gap-2 flex-shrink-0">

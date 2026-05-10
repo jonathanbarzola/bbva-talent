@@ -45,8 +45,8 @@ function MiniBar({ label, count, total, color }: { label: string; count: number;
   const pct = total > 0 ? (count / total) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
-      <span className="font-mono text-[10px] w-14 flex-shrink-0" style={{ color: "#6b7fa3" }}>{label}</span>
-      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(133,200,255,0.06)" }}>
+      <span className="font-mono text-[10px] w-14 flex-shrink-0" style={{ color: "var(--theme-text-muted)" }}>{label}</span>
+      <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--theme-tile-medium)" }}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
@@ -122,7 +122,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
   return (
     <section
       className="rounded-2xl p-4"
-      style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
     >
       <header className="flex items-center justify-between mb-4 flex-wrap gap-2">
         <div className="flex items-center gap-2">
@@ -132,7 +132,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
           >
             Team Balance
           </span>
-          <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+          <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
             {stats.total} miembro{stats.total !== 1 ? "s" : ""} asignado{stats.total !== 1 ? "s" : ""}
           </span>
         </div>
@@ -145,7 +145,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
               {stats.mentors} mentor{stats.mentors > 1 ? "es" : ""}
             </span>
           )}
-          <span className="font-mono text-[9px]" style={{ color: "#3d4f6e" }}>
+          <span className="font-mono text-[9px]" style={{ color: "var(--theme-text-dim)" }}>
             tenure prom. {stats.tenureAvg} año{stats.tenureAvg !== 1 ? "s" : ""}
           </span>
         </div>
@@ -232,8 +232,8 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
       </div>
 
       {/* Seniority distribution */}
-      <div className="mt-3 rounded-xl px-4 py-3" style={{ background: "rgba(133,200,255,0.03)", border: "1px solid rgba(133,200,255,0.08)" }}>
-        <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "#6b7fa3" }}>
+      <div className="mt-3 rounded-xl px-4 py-3" style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.08)" }}>
+        <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-muted)" }}>
           Distribución de seniority
         </p>
         <div className="space-y-1.5">

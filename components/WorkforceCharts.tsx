@@ -29,14 +29,14 @@ export function TechDistributionBarChart() {
   return (
     <section
       className="rounded-2xl p-5 sm:p-6"
-      style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
     >
       <header className="flex items-center justify-between mb-5 flex-wrap gap-2">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "var(--theme-text-muted)" }}>
             Distribución por tecnología
           </p>
-          <h3 className="font-black text-base" style={{ color: "#e8eeff" }}>
+          <h3 className="font-black text-base" style={{ color: "var(--theme-text-primary)" }}>
             {WORKFORCE_TOTAL.toLocaleString("es")} colaboradores en {WORKFORCE_DATA.length} áreas
           </h3>
         </div>
@@ -54,16 +54,16 @@ export function TechDistributionBarChart() {
           return (
             <div key={w.techId} className="flex items-center gap-3">
               <div className="w-32 flex-shrink-0">
-                <p className="font-bold text-xs leading-tight truncate" style={{ color: "#e8eeff" }}>
+                <p className="font-bold text-xs leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>
                   {cat.name}
                 </p>
-                <p className="font-mono text-[9px] truncate" style={{ color: "#6b7fa3" }}>
+                <p className="font-mono text-[9px] truncate" style={{ color: "var(--theme-text-muted)" }}>
                   {cat.type === "legacy" ? "Legacy" : cat.type === "proprietary" ? "BBVA" : cat.type === "emerging" ? "Emergente" : "Moderno"}
                   {cat.isCritical && " · crítico"}
                 </p>
               </div>
 
-              <div className="flex-1 h-7 rounded-md overflow-hidden relative" style={{ background: "rgba(133,200,255,0.04)" }}>
+              <div className="flex-1 h-7 rounded-md overflow-hidden relative" style={{ background: "var(--theme-tile-soft)" }}>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${widthPct}%` }}
@@ -81,7 +81,7 @@ export function TechDistributionBarChart() {
               </div>
 
               <div className="w-12 flex-shrink-0 text-right">
-                <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+                <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
                   {((w.total / WORKFORCE_TOTAL) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -95,7 +95,7 @@ export function TechDistributionBarChart() {
 
 function LegendDot({ label, color }: { label: string; color: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 font-mono text-[9px]" style={{ color: "#6b7fa3" }}>
+    <span className="inline-flex items-center gap-1.5 font-mono text-[9px]" style={{ color: "var(--theme-text-muted)" }}>
       <span className="w-2 h-2 rounded-full" style={{ background: color }} />
       {label}
     </span>
@@ -117,9 +117,9 @@ export function SeniorityPyramid() {
   return (
     <section
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
     >
-      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-4" style={{ color: "#6b7fa3" }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-4" style={{ color: "var(--theme-text-muted)" }}>
         Pirámide de seniority
       </p>
 
@@ -134,7 +134,7 @@ export function SeniorityPyramid() {
                   {lv.label}
                 </span>
               </div>
-              <div className="flex-1 h-6 rounded-md overflow-hidden relative" style={{ background: "rgba(133,200,255,0.04)" }}>
+              <div className="flex-1 h-6 rounded-md overflow-hidden relative" style={{ background: "var(--theme-tile-soft)" }}>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${widthPct}%` }}
@@ -150,14 +150,14 @@ export function SeniorityPyramid() {
                 </motion.div>
               </div>
               <div className="w-10 flex-shrink-0 text-right">
-                <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>{sharePct}%</span>
+                <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>{sharePct}%</span>
               </div>
             </div>
           );
         })}
       </div>
 
-      <p className="font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "#3d4f6e" }}>
+      <p className="font-mono text-[10px] mt-4 leading-relaxed" style={{ color: "var(--theme-text-dim)" }}>
         ⓘ Una pirámide saludable tiene base ancha (40-50% Junior+Mid) para alimentar promociones futuras.
       </p>
     </section>
@@ -196,9 +196,9 @@ export function AvailabilityDonut() {
   return (
     <section
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
     >
-      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-4" style={{ color: "#6b7fa3" }}>
+      <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-4" style={{ color: "var(--theme-text-muted)" }}>
         Disponibilidad agregada
       </p>
 
@@ -210,7 +210,7 @@ export function AvailabilityDonut() {
               cy={size / 2}
               r={r}
               fill="none"
-              stroke="rgba(133,200,255,0.06)"
+              stroke="var(--theme-tile-medium)"
               strokeWidth={stroke}
             />
             {arcs.map((a, i) => (
@@ -239,8 +239,8 @@ export function AvailabilityDonut() {
             <span className="font-black font-mono text-2xl leading-none" style={{ color: BBVA.lime }}>
               {freeCapacity.toLocaleString("es")}
             </span>
-            <span className="font-mono text-[9px] mt-0.5" style={{ color: "#6b7fa3" }}>capacidad efectiva</span>
-            <span className="font-mono text-[9px]" style={{ color: "#3d4f6e" }}>de {total.toLocaleString("es")}</span>
+            <span className="font-mono text-[9px] mt-0.5" style={{ color: "var(--theme-text-muted)" }}>capacidad efectiva</span>
+            <span className="font-mono text-[9px]" style={{ color: "var(--theme-text-dim)" }}>de {total.toLocaleString("es")}</span>
           </div>
         </div>
 
@@ -248,13 +248,13 @@ export function AvailabilityDonut() {
           {arcs.map(a => (
             <div key={a.label} className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: a.color }} />
-              <span className="font-mono text-[11px] flex-1 truncate" style={{ color: "#a8b8d0" }}>
+              <span className="font-mono text-[11px] flex-1 truncate" style={{ color: "var(--theme-text-secondary)" }}>
                 {a.label}
               </span>
               <span className="font-mono text-[11px] font-bold" style={{ color: a.color }}>
                 {a.count.toLocaleString("es")}
               </span>
-              <span className="font-mono text-[10px] w-10 text-right" style={{ color: "#3d4f6e" }}>
+              <span className="font-mono text-[10px] w-10 text-right" style={{ color: "var(--theme-text-dim)" }}>
                 {((a.pct) * 100).toFixed(0)}%
               </span>
             </div>
@@ -283,13 +283,13 @@ export function DemandSupplyChart() {
   return (
     <section
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
     >
       <header className="mb-4">
-        <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "#6b7fa3" }}>
+        <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-1" style={{ color: "var(--theme-text-muted)" }}>
           Demanda vs supply efectivo
         </p>
-        <p className="font-mono text-[11px]" style={{ color: "#8099b8" }}>
+        <p className="font-mono text-[11px]" style={{ color: "var(--theme-text-secondary)" }}>
           Headcount disponible (
           <span style={{ color: BBVA.lime }}>verde</span>) vs demandado en proyectos abiertos (
           <span style={{ color: BBVA.canary }}>amarillo</span>). Ordenado por peor cobertura.
@@ -305,7 +305,7 @@ export function DemandSupplyChart() {
           return (
             <div key={w.techId}>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-bold text-xs" style={{ color: "#e8eeff" }}>{cat.name}</span>
+                <span className="font-bold text-xs" style={{ color: "var(--theme-text-primary)" }}>{cat.name}</span>
                 <span className="font-mono text-[10px] font-bold" style={{ color: coverColor }}>
                   {Math.round(ratio * 100)}% cobertura
                 </span>
@@ -316,7 +316,7 @@ export function DemandSupplyChart() {
                   <span className="w-12 font-mono text-[9px] flex-shrink-0" style={{ color: BBVA.lime }}>
                     supply
                   </span>
-                  <div className="flex-1 h-3 rounded-sm overflow-hidden" style={{ background: "rgba(133,200,255,0.04)" }}>
+                  <div className="flex-1 h-3 rounded-sm overflow-hidden" style={{ background: "var(--theme-tile-soft)" }}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${supplyPct}%` }}
@@ -334,7 +334,7 @@ export function DemandSupplyChart() {
                   <span className="w-12 font-mono text-[9px] flex-shrink-0" style={{ color: BBVA.canary }}>
                     demanda
                   </span>
-                  <div className="flex-1 h-3 rounded-sm overflow-hidden" style={{ background: "rgba(133,200,255,0.04)" }}>
+                  <div className="flex-1 h-3 rounded-sm overflow-hidden" style={{ background: "var(--theme-tile-soft)" }}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${demandPct}%` }}
@@ -366,14 +366,14 @@ export function TechCard({ workforce, category }: { workforce: TechWorkforce; ca
   return (
     <div
       className="rounded-xl p-4"
-      style={{ background: "rgba(10,22,40,0.5)", border: `1px solid ${category.color}30` }}
+      style={{ background: "var(--theme-bg-surface-soft)", border: `1px solid ${category.color}30` }}
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="min-w-0">
-          <p className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>
+          <p className="font-bold text-sm leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>
             {category.name}
           </p>
-          <p className="font-mono text-[10px] truncate" style={{ color: "#6b7fa3" }}>
+          <p className="font-mono text-[10px] truncate" style={{ color: "var(--theme-text-muted)" }}>
             {category.type === "legacy" ? "Legacy" : category.type === "proprietary" ? "Propietario BBVA" : category.type === "emerging" ? "Emergente" : "Moderno"}
             {category.isCritical && " · crítico"}
           </p>
@@ -382,18 +382,18 @@ export function TechCard({ workforce, category }: { workforce: TechWorkforce; ca
           <p className="font-black font-mono leading-none" style={{ color: category.color, fontSize: 22 }}>
             {workforce.total}
           </p>
-          <p className="font-mono text-[9px]" style={{ color: "#3d4f6e" }}>colaboradores</p>
+          <p className="font-mono text-[9px]" style={{ color: "var(--theme-text-dim)" }}>colaboradores</p>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-1.5 mt-3">
-        <Stat label="tenure" value={`${workforce.avgTenureYears}a`} color={workforce.avgTenureYears >= 15 ? "#fb923c" : "#a8b8d0"} />
+        <Stat label="tenure" value={`${workforce.avgTenureYears}a`} color={workforce.avgTenureYears >= 15 ? "#fb923c" : "var(--theme-text-secondary)"} />
         <Stat label="mentores" value={workforce.mentors} color={BBVA.purple} />
         <Stat label="bus factor" value={`${workforce.busFactor}/5`} color={workforce.busFactor <= 2 ? "#f87171" : workforce.busFactor === 3 ? BBVA.canary : BBVA.lime} />
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <span className="font-mono text-[10px]" style={{ color: "#6b7fa3" }}>
+        <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-muted)" }}>
           cobertura demanda
         </span>
         <span className="font-mono text-[10px] font-bold" style={{ color: ratioColor }}>
@@ -408,10 +408,10 @@ function Stat({ label, value, color }: { label: string; value: string | number; 
   return (
     <div
       className="rounded px-1.5 py-1 text-center"
-      style={{ background: "rgba(133,200,255,0.03)", border: "1px solid rgba(133,200,255,0.06)" }}
+      style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.06)" }}
     >
       <p className="font-mono font-bold text-[11px] leading-none" style={{ color }}>{value}</p>
-      <p className="font-mono text-[8px] uppercase tracking-widest mt-0.5" style={{ color: "#3d4f6e" }}>{label}</p>
+      <p className="font-mono text-[8px] uppercase tracking-widest mt-0.5" style={{ color: "var(--theme-text-dim)" }}>{label}</p>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { BBVA } from "@/lib/bbva-colors";
+import ThemeToggle from "@/components/ThemeToggle";
 
 interface Layer {
   title: string;
@@ -59,7 +60,7 @@ export default function AboutPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen" style={{ background: "#050a14" }}>
+    <div className="min-h-screen" style={{ background: "var(--theme-bg-page)" }}>
       {/* Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div style={{ position: "absolute", top: "-15%", left: "-5%", width: 700, height: 700, borderRadius: "50%", background: `radial-gradient(circle, ${BBVA.electricBlue}1c 0%, transparent 65%)`, filter: "blur(80px)" }} />
@@ -70,18 +71,21 @@ export default function AboutPage() {
       {/* Header */}
       <header
         className="relative z-10 sticky top-0 px-6 py-3 flex items-center justify-between"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.92)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <button
           onClick={() => (window.history.length > 1 ? router.back() : router.push("/"))}
           className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity hover:opacity-80"
-          style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+          style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
         >
           ← Volver
         </button>
-        <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
-          Arquitectura · Whitepaper
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
+            Arquitectura · Whitepaper
+          </span>
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-10">
@@ -99,10 +103,10 @@ export default function AboutPage() {
           >
             Arquitectura técnica
           </span>
-          <h1 className="font-black leading-tight mb-3" style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", color: "#e8eeff" }}>
+          <h1 className="font-black leading-tight mb-3" style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", color: "var(--theme-text-primary)" }}>
             Cómo BBVA Talent <span className="text-gradient">se conecta al banco</span>
           </h1>
-          <p className="text-base max-w-2xl leading-relaxed" style={{ color: "#a8b8d0" }}>
+          <p className="text-base max-w-2xl leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
             Lo que ves en el demo es la capa de presentación. En producción, BBVA Talent se enchufa
             como un orquestador entre los sistemas que el banco ya tiene: HR, EDI, SDA, B-Tokens y el
             Knowledge Graph corporativo.
@@ -119,7 +123,7 @@ export default function AboutPage() {
               transition={{ duration: 0.4, delay: 0.1 + idx * 0.08 }}
               className="rounded-2xl p-5 sm:p-6"
               style={{
-                background: "rgba(10,22,40,0.65)",
+                background: "var(--theme-bg-surface-soft)",
                 border: `1px solid ${layer.color}30`,
                 backdropFilter: "blur(12px)",
               }}
@@ -129,7 +133,7 @@ export default function AboutPage() {
                   className="w-1 h-6 rounded-full"
                   style={{ background: `linear-gradient(180deg, ${layer.color}00, ${layer.color}, ${layer.color}00)` }}
                 />
-                <h2 className="font-black text-base sm:text-lg" style={{ color: "#e8eeff" }}>
+                <h2 className="font-black text-base sm:text-lg" style={{ color: "var(--theme-text-primary)" }}>
                   {layer.title}
                 </h2>
                 <span className="font-mono text-[11px]" style={{ color: layer.color, opacity: 0.85 }}>
@@ -147,10 +151,10 @@ export default function AboutPage() {
                       style={{ background: `${layer.color}06`, border: `1px solid ${layer.color}1c` }}
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-[13px] leading-tight" style={{ color: "#e8eeff" }}>
+                        <p className="font-bold text-[13px] leading-tight" style={{ color: "var(--theme-text-primary)" }}>
                           {comp.name}
                         </p>
-                        <p className="font-mono text-[10px] mt-0.5" style={{ color: "#6b7fa3" }}>
+                        <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--theme-text-muted)" }}>
                           {comp.tag}
                         </p>
                       </div>
@@ -187,7 +191,7 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.45 }}
           className="rounded-2xl p-6 mb-12"
-          style={{ background: "rgba(10,22,40,0.65)", border: "1px solid rgba(133,200,255,0.12)" }}
+          style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.12)" }}
         >
           <div className="flex items-center gap-3 mb-4 flex-wrap">
             <span
@@ -196,7 +200,7 @@ export default function AboutPage() {
             >
               Flujo de datos
             </span>
-            <h2 className="font-black text-base" style={{ color: "#e8eeff" }}>
+            <h2 className="font-black text-base" style={{ color: "var(--theme-text-primary)" }}>
               Manager elige proyecto → recomendación en 22 minutos
             </h2>
           </div>
@@ -224,8 +228,8 @@ export default function AboutPage() {
                   {s.step}
                 </span>
                 <div className="flex-1 min-w-0 pt-1">
-                  <p className="font-bold text-sm leading-tight" style={{ color: "#e8eeff" }}>{s.title}</p>
-                  <p className="font-mono text-[11px] mt-0.5 leading-relaxed" style={{ color: "#6b7fa3" }}>
+                  <p className="font-bold text-sm leading-tight" style={{ color: "var(--theme-text-primary)" }}>{s.title}</p>
+                  <p className="font-mono text-[11px] mt-0.5 leading-relaxed" style={{ color: "var(--theme-text-muted)" }}>
                     {s.detail}
                   </p>
                 </div>
@@ -266,7 +270,7 @@ export default function AboutPage() {
                 className="flex items-start gap-2.5"
               >
                 <span style={{ color: BBVA.sereneBlue, fontSize: 12, lineHeight: "20px" }}>✓</span>
-                <p className="font-mono text-[12px] leading-relaxed flex-1" style={{ color: "#a8b8d0" }}>
+                <p className="font-mono text-[12px] leading-relaxed flex-1" style={{ color: "var(--theme-text-secondary)" }}>
                   {item}
                 </p>
               </motion.li>

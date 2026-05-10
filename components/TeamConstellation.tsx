@@ -134,7 +134,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.28 }}
-          style={{ background: "#050a14" }}
+          style={{ background: "var(--theme-bg-page)" }}
         >
           {/* Ambient */}
           <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
@@ -144,7 +144,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
           </div>
 
           {/* Header */}
-          <header className="relative z-10 flex items-center justify-between px-6 py-4 flex-shrink-0" style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.92)", backdropFilter: "blur(20px)" }}>
+          <header className="relative z-10 flex items-center justify-between px-6 py-4 flex-shrink-0" style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}>
             <div className="flex items-center gap-3">
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center text-base font-black"
@@ -159,7 +159,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
                 >
                   Constelación de equipo
                 </span>
-                <h2 className="font-black text-base sm:text-lg leading-tight" style={{ color: "#e8eeff" }}>
+                <h2 className="font-black text-base sm:text-lg leading-tight" style={{ color: "var(--theme-text-primary)" }}>
                   Tejido del equipo de {candidates.length} miembro{candidates.length !== 1 ? "s" : ""}
                 </h2>
               </div>
@@ -168,7 +168,7 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
             <button
               onClick={onClose}
               className="px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-opacity hover:opacity-80"
-              style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+              style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
               aria-label="Cerrar constelación de equipo"
             >
               ✕ Cerrar
@@ -176,13 +176,13 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
           </header>
 
           {/* Stats strip */}
-          <div className="relative z-10 flex items-center gap-4 px-6 py-3 flex-shrink-0 flex-wrap" style={{ borderBottom: "1px solid rgba(133,200,255,0.06)", background: "rgba(10,22,40,0.5)" }}>
+          <div className="relative z-10 flex items-center gap-4 px-6 py-3 flex-shrink-0 flex-wrap" style={{ borderBottom: "1px solid rgba(133,200,255,0.06)", background: "var(--theme-bg-surface-soft)" }}>
             <Stat label="Personas" value={candidates.length.toString()} color={BBVA.electricBlue} />
             <Stat label="Skills únicas" value={graphData.nodes.filter(n => n.type === "habilidad").length.toString()} color={BBVA.lime} />
             <Stat label="Skills compartidas" value={sharedSkills.length.toString()} color={BBVA.purple} />
             <Stat label="Colaboraciones previas" value={collabPairs.toString()} color={BBVA.sereneBlue} />
             <div className="flex-1 min-w-0" />
-            <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+            <p className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
               Tip: arrastra los nodos para reorganizar · scroll para zoom · click para inspeccionar
             </p>
           </div>
@@ -193,9 +193,9 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
             {/* Sidebar with team members */}
             <aside
               className="lg:w-72 flex-shrink-0 px-5 py-4 overflow-y-auto"
-              style={{ borderRight: "1px solid rgba(133,200,255,0.06)", background: "rgba(5,10,20,0.4)" }}
+              style={{ borderRight: "1px solid rgba(133,200,255,0.06)", background: "var(--theme-bg-overlay-soft)" }}
             >
-              <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style={{ color: "#6b7fa3" }}>
+              <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style={{ color: "var(--theme-text-muted)" }}>
                 Equipo ({candidates.length})
               </p>
               <div className="space-y-2">
@@ -207,16 +207,16 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
                       onClick={() => onViewIndividual?.(c.id)}
                       disabled={!onViewIndividual}
                       className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-left transition-all"
-                      style={{ background: "rgba(133,200,255,0.04)", border: "1px solid rgba(133,200,255,0.08)", cursor: onViewIndividual ? "pointer" : "default" }}
+                      style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.08)", cursor: onViewIndividual ? "pointer" : "default" }}
                       onMouseEnter={e => {
                         if (!onViewIndividual) return;
-                        (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.10)";
+                        (e.currentTarget as HTMLElement).style.background = "var(--theme-border-default)";
                         (e.currentTarget as HTMLElement).style.borderColor = `${BBVA.sereneBlue}40`;
                       }}
                       onMouseLeave={e => {
                         if (!onViewIndividual) return;
-                        (e.currentTarget as HTMLElement).style.background = "rgba(133,200,255,0.04)";
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(133,200,255,0.08)";
+                        (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-soft)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "var(--theme-tile-medium)";
                       }}
                     >
                       <div
@@ -226,8 +226,8 @@ export default function TeamConstellation({ candidates, open, onClose, onViewInd
                         {initials}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-xs leading-tight truncate" style={{ color: "#e8eeff" }}>{c.nombre}</p>
-                        <p className="font-mono text-[10px] truncate" style={{ color: "#6b7fa3" }}>{c.rol}</p>
+                        <p className="font-bold text-xs leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>{c.nombre}</p>
+                        <p className="font-mono text-[10px] truncate" style={{ color: "var(--theme-text-muted)" }}>{c.rol}</p>
                       </div>
                       <span
                         className="font-mono text-[10px] font-bold flex-shrink-0"
@@ -290,7 +290,7 @@ function Stat({ label, value, color }: { label: string; value: string; color: st
       <span className="font-black font-mono text-lg leading-none" style={{ color }}>
         {value}
       </span>
-      <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
+      <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
         {label}
       </span>
     </div>

@@ -200,7 +200,7 @@ export default function RefinementChat({
         className="fixed right-0 top-0 bottom-0 z-[80] flex flex-col"
         style={{
           width: "min(420px, 92vw)",
-          background: "rgba(5,10,20,0.97)",
+          background: "var(--theme-bg-overlay-strong)",
           borderLeft: `1px solid ${BBVA.purple}30`,
           boxShadow: `-20px 0 60px rgba(0,0,0,0.5)`,
           backdropFilter: "blur(24px)",
@@ -219,14 +219,14 @@ export default function RefinementChat({
               ✦
             </div>
             <div>
-              <p className="font-black text-sm" style={{ color: "#e8eeff" }}>Refina tu equipo</p>
+              <p className="font-black text-sm" style={{ color: "var(--theme-text-primary)" }}>Refina tu equipo</p>
               <p className="font-mono text-[10px]" style={{ color: BBVA.purple, opacity: 0.85 }}>Asistente conversacional · mock</p>
             </div>
           </div>
           <button
             onClick={onClose}
             className="px-2.5 py-1.5 rounded-lg font-mono text-[10px] transition-opacity hover:opacity-80"
-            style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.14)", color: "#6b7fa3", cursor: "pointer" }}
+            style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: "var(--theme-text-muted)", cursor: "pointer" }}
             aria-label="Cerrar chat"
           >
             ✕ Cerrar
@@ -236,7 +236,7 @@ export default function RefinementChat({
         {/* Active filters */}
         {!isEmpty(filters) && (
           <div className="px-5 py-3 flex flex-wrap gap-1.5 items-center" style={{ borderBottom: "1px solid rgba(133,200,255,0.06)", background: `${BBVA.purple}06` }}>
-            <span className="font-mono text-[9px] uppercase tracking-widest mr-1" style={{ color: "#6b7fa3" }}>
+            <span className="font-mono text-[9px] uppercase tracking-widest mr-1" style={{ color: "var(--theme-text-muted)" }}>
               Filtros activos
             </span>
             {filters.excludeSquads.map(s => (
@@ -257,7 +257,7 @@ export default function RefinementChat({
             <button
               onClick={handleClearAll}
               className="ml-auto font-mono text-[10px] underline transition-opacity hover:opacity-80"
-              style={{ color: "#6b7fa3", cursor: "pointer" }}
+              style={{ color: "var(--theme-text-muted)", cursor: "pointer" }}
             >
               limpiar todo
             </button>
@@ -295,7 +295,7 @@ export default function RefinementChat({
               onClick={() => handleSubmit(s)}
               disabled={thinking}
               className="font-mono text-[10px] px-2 py-1 rounded-lg transition-opacity hover:opacity-80 disabled:opacity-40"
-              style={{ background: "rgba(133,200,255,0.05)", border: "1px solid rgba(133,200,255,0.12)", color: "#a8b8d0", cursor: thinking ? "not-allowed" : "pointer" }}
+              style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.12)", color: "var(--theme-text-secondary)", cursor: thinking ? "not-allowed" : "pointer" }}
             >
               {s}
             </button>
@@ -314,9 +314,9 @@ export default function RefinementChat({
             disabled={thinking}
             className="flex-1 px-3 py-2 rounded-lg text-sm font-mono outline-none"
             style={{
-              background: "rgba(10,22,40,0.7)",
+              background: "var(--theme-bg-surface)",
               border: "1px solid rgba(133,200,255,0.14)",
-              color: "#e8eeff",
+              color: "var(--theme-text-primary)",
             }}
           />
           <button
@@ -326,8 +326,8 @@ export default function RefinementChat({
             style={{
               background: input.trim() && !thinking
                 ? `linear-gradient(135deg, ${BBVA.purple}, #4a00b4)`
-                : "rgba(133,200,255,0.08)",
-              color: input.trim() && !thinking ? "#fff" : "#3d4f6e",
+                : "var(--theme-tile-medium)",
+              color: input.trim() && !thinking ? "#fff" : "var(--theme-text-dim)",
               boxShadow: input.trim() && !thinking ? `0 0 18px ${BBVA.purple}40` : "none",
               cursor: input.trim() && !thinking ? "pointer" : "not-allowed",
             }}
@@ -383,7 +383,7 @@ function MessageRow({ msg }: { msg: ChatMessage }) {
         className="rounded-2xl px-3 py-2 flex-1"
         style={{ background: `${accent}10`, border: `1px solid ${accent}28` }}
       >
-        <p className="text-[13px] leading-relaxed" style={{ color: "#e8eeff" }}>{msg.text}</p>
+        <p className="text-[13px] leading-relaxed" style={{ color: "var(--theme-text-primary)" }}>{msg.text}</p>
         {msg.impact && (
           <p className="font-mono text-[10px] mt-1.5 px-2 py-1 rounded inline-block" style={{ background: `${accent}1a`, color: accent }}>
             {msg.impact}

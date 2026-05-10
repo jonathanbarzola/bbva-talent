@@ -47,7 +47,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
   return (
     <div
       className="min-h-screen"
-      style={{ background: "#050a14", opacity: visible ? 1 : 0, transition: "opacity 0.4s ease", paddingBottom: selectedIds.length > 0 ? 96 : 0 }}
+      style={{ background: "var(--theme-bg-page)", opacity: visible ? 1 : 0, transition: "opacity 0.4s ease", paddingBottom: selectedIds.length > 0 ? 96 : 0 }}
     >
       {/* Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
@@ -59,7 +59,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
       {/* Header */}
       <header
         className="relative z-10 sticky top-0 px-6 py-4 flex items-center justify-between"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.92)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <div className="flex items-center gap-4">
           <div
@@ -70,10 +70,10 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%)" }} />
           </div>
           <div className="hidden sm:flex items-center gap-2">
-            <span className="font-mono text-xs uppercase tracking-wider" style={{ color: "#3d4f6e" }}>resultados para</span>
+            <span className="font-mono text-xs uppercase tracking-wider" style={{ color: "var(--theme-text-dim)" }}>resultados para</span>
             <span
               className="font-mono text-xs px-3 py-1.5 rounded-lg max-w-sm truncate"
-              style={{ background: "rgba(133,200,255,0.08)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue }}
+              style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue }}
             >
               &ldquo;{result.query}&rdquo;
             </span>
@@ -82,7 +82,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
         <button
           onClick={onNewSearch}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-150 hover:opacity-80"
-          style={{ background: "rgba(133,200,255,0.07)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+          style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
         >
           ← Nueva búsqueda
         </button>
@@ -94,10 +94,10 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
         <section className="mb-10 animate-fade-up" style={{ animationDelay: "0.05s" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch justify-between gap-5 mb-6">
             <div className="flex flex-col justify-center">
-              <p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: "#3d4f6e" }}>Análisis completado</p>
-              <h2 className="font-black leading-tight" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)", color: "#e8eeff" }}>
+              <p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>Análisis completado</p>
+              <h2 className="font-black leading-tight" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)", color: "var(--theme-text-primary)" }}>
                 <span style={{ color: BBVA.sereneBlue }}>{result.total}</span> candidatos{" "}
-                <span style={{ fontSize: "0.6em", color: "#4d6080" }}>encontrados</span>
+                <span style={{ fontSize: "0.6em", color: "var(--theme-text-muted)" }}>encontrados</span>
               </h2>
             </div>
             <div className="flex flex-col gap-2.5 min-w-[300px]">
@@ -106,17 +106,17 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
                 { label: "Top match",          value: `${Math.round((top?.score ?? 0) * 100)}%`, color: BBVA.lime },
                 { label: "Modelo",             value: "text-embed-3",   color: BBVA.purple },
               ].map(s => (
-                <div key={s.label} className="flex items-center justify-between gap-6 px-5 py-4 rounded-xl flex-1" style={{ background: "rgba(10,22,40,0.85)", border: `1px solid ${s.color}28` }}>
-                  <span className="font-mono text-sm" style={{ color: "#3d4f6e" }}>{s.label}</span>
+                <div key={s.label} className="flex items-center justify-between gap-6 px-5 py-4 rounded-xl flex-1" style={{ background: "var(--theme-bg-surface-strong)", border: `1px solid ${s.color}28` }}>
+                  <span className="font-mono text-sm" style={{ color: "var(--theme-text-dim)" }}>{s.label}</span>
                   <span className="font-black text-2xl leading-none" style={{ color: s.color }}>{s.value}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="px-5 py-4 rounded-2xl" style={{ background: "rgba(133,200,255,0.04)", border: "1px solid rgba(133,200,255,0.1)" }}>
-            <p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: "#3d4f6e" }}>Intención semántica detectada</p>
-            <p className="text-sm leading-relaxed" style={{ color: "#8099b8" }}>{result.intencion_detectada}</p>
+          <div className="px-5 py-4 rounded-2xl" style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.1)" }}>
+            <p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>Intención semántica detectada</p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>{result.intencion_detectada}</p>
           </div>
         </section>
 
@@ -127,7 +127,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
               <span className="font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-full font-bold" style={{ background: `${BBVA.lime}15`, color: BBVA.lime, border: `1px solid ${BBVA.lime}35` }}>
                 ★ Mejor match
               </span>
-              <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
+              <div className="flex-1 h-px" style={{ background: "var(--theme-tile-medium)" }} />
             </div>
             <FeaturedCard
               candidate={top}
@@ -143,8 +143,8 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
         {others.length > 0 && (
           <section className="animate-fade-up" style={{ animationDelay: "0.25s" }}>
             <div className="flex items-center gap-3 mb-6 flex-wrap">
-              <span className="font-mono text-xs uppercase tracking-widest font-bold" style={{ color: "#3d4f6e" }}>Otros candidatos</span>
-              <div className="flex-1 h-px hidden sm:block" style={{ background: "rgba(133,200,255,0.07)" }} />
+              <span className="font-mono text-xs uppercase tracking-widest font-bold" style={{ color: "var(--theme-text-dim)" }}>Otros candidatos</span>
+              <div className="flex-1 h-px hidden sm:block" style={{ background: "var(--theme-tile-medium)" }} />
               <div className="flex items-center gap-1.5 flex-wrap">
                 {NIVEL_FILTERS.map(nivel => (
                   <button
@@ -152,9 +152,9 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
                     onClick={() => setFilterNivel(nivel)}
                     className="px-2.5 py-1 rounded-lg font-mono text-[10px] transition-all duration-150"
                     style={{
-                      background: filterNivel === nivel ? "rgba(133,200,255,0.15)" : "rgba(133,200,255,0.04)",
-                      color: filterNivel === nivel ? BBVA.sereneBlue : "#3d4f6e",
-                      border: `1px solid ${filterNivel === nivel ? "rgba(133,200,255,0.35)" : "rgba(133,200,255,0.08)"}`,
+                      background: filterNivel === nivel ? "var(--theme-border-strong)" : "var(--theme-tile-soft)",
+                      color: filterNivel === nivel ? BBVA.sereneBlue : "var(--theme-text-dim)",
+                      border: `1px solid ${filterNivel === nivel ? "var(--theme-border-hover)" : "var(--theme-tile-medium)"}`,
                       cursor: "pointer",
                     }}
                   >
@@ -162,7 +162,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
                   </button>
                 ))}
               </div>
-              <span className="font-mono text-xs" style={{ color: "#1e2d44" }}>{filteredOthers.length} perfiles</span>
+              <span className="font-mono text-xs" style={{ color: "var(--theme-text-faint)" }}>{filteredOthers.length} perfiles</span>
             </div>
 
             {filteredOthers.length > 0 ? (
@@ -181,12 +181,12 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
                 ))}
               </div>
             ) : (
-              <div className="py-12 rounded-2xl flex flex-col items-center gap-3" style={{ background: "rgba(10,22,40,0.5)", border: "1px solid rgba(133,200,255,0.07)" }}>
+              <div className="py-12 rounded-2xl flex flex-col items-center gap-3" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.07)" }}>
                 <span className="font-mono text-2xl" style={{ opacity: 0.3 }}>∅</span>
-                <p className="font-mono text-sm" style={{ color: "#3d4f6e" }}>
+                <p className="font-mono text-sm" style={{ color: "var(--theme-text-dim)" }}>
                   No hay candidatos con nivel <span style={{ color: BBVA.sereneBlue }}>{filterNivel}</span>
                 </p>
-                <button onClick={() => setFilterNivel("Todos")} className="font-mono text-xs underline" style={{ color: "#3d4f6e", cursor: "pointer" }}>
+                <button onClick={() => setFilterNivel("Todos")} className="font-mono text-xs underline" style={{ color: "var(--theme-text-dim)", cursor: "pointer" }}>
                   Ver todos los niveles
                 </button>
               </div>
@@ -257,7 +257,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
     <div
       className="relative rounded-2xl p-7 overflow-hidden transition-all duration-300"
       style={{
-        background: "rgba(10,22,40,0.88)",
+        background: "var(--theme-bg-surface-strong)",
         border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid rgba(133,200,255,0.2)",
         boxShadow: isSelected ? `0 0 60px ${BBVA.lime}14, 0 0 60px rgba(0,19,145,0.18)` : "0 0 60px rgba(0,19,145,0.18)",
       }}
@@ -269,7 +269,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
           onClick={() => onSelect(candidate.id)}
           title={isSelected ? "Quitar del equipo" : "Agregar al equipo"}
           className="absolute top-5 right-5 flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[10px] transition-all duration-200 z-10"
-          style={{ background: isSelected ? `${BBVA.lime}18` : "rgba(133,200,255,0.06)", border: `1px solid ${isSelected ? BBVA.lime + "55" : "rgba(133,200,255,0.14)"}`, color: isSelected ? BBVA.lime : "#3d4f6e", cursor: "pointer" }}
+          style={{ background: isSelected ? `${BBVA.lime}18` : "var(--theme-tile-medium)", border: `1px solid ${isSelected ? BBVA.lime + "55" : "var(--theme-border-default)"}`, color: isSelected ? BBVA.lime : "var(--theme-text-dim)", cursor: "pointer" }}
         >
           {isSelected ? (
             <><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke={BBVA.lime} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>En equipo</>
@@ -289,9 +289,9 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 60%)" }} />
           </div>
           <div>
-            <h3 className="font-black text-2xl leading-tight mb-1" style={{ color: "#e8eeff" }}>{candidate.nombre}</h3>
+            <h3 className="font-black text-2xl leading-tight mb-1" style={{ color: "var(--theme-text-primary)" }}>{candidate.nombre}</h3>
             <p className="text-base mb-1" style={{ color: BBVA.sereneBlue }}>{candidate.rol}</p>
-            <p className="font-mono text-sm" style={{ color: "#3d4f6e" }}>{candidate.squad} · {candidate.ubicacion}</p>
+            <p className="font-mono text-sm" style={{ color: "var(--theme-text-dim)" }}>{candidate.squad} · {candidate.ubicacion}</p>
             <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-1 rounded-lg font-mono text-xs font-bold" style={{ background: "rgba(136,231,131,0.1)", border: `1px solid ${BBVA.lime}35`, color: BBVA.lime }}>
               {candidate.nivel}
             </div>
@@ -299,7 +299,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm leading-relaxed mb-5" style={{ color: "#5a7090" }}>{candidate.bio}</p>
+          <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--theme-text-secondary)" }}>{candidate.bio}</p>
           <div className="flex flex-wrap gap-2">
             {candidate.habilidades.map((skill, i) => {
               const c = SKILL_COLORS[i % SKILL_COLORS.length];
@@ -326,7 +326,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
             <div className="font-black leading-none" style={{ fontSize: 56, color: BBVA.lime, fontFamily: "var(--font-mono)" }}>
               {displayScore}
             </div>
-            <div className="font-mono text-sm mt-1" style={{ color: "#3d4f6e" }}>% match</div>
+            <div className="font-mono text-sm mt-1" style={{ color: "var(--theme-text-dim)" }}>% match</div>
           </div>
           <div className="flex flex-col gap-2 lg:items-stretch">
             <button

@@ -69,15 +69,15 @@ function GapCard({ gap, index }: { gap: Gap; index: number }) {
             >
               {cfg.label}
             </span>
-            <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
+            <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
               {CATEGORY_LABELS[gap.category]}
             </span>
           </div>
-          <p className="font-bold text-sm leading-tight" style={{ color: "#e8eeff" }}>
+          <p className="font-bold text-sm leading-tight" style={{ color: "var(--theme-text-primary)" }}>
             {gap.title}
           </p>
           {!expanded && (
-            <p className="font-mono text-[11px] mt-0.5 truncate" style={{ color: "#6b7fa3" }}>
+            <p className="font-mono text-[11px] mt-0.5 truncate" style={{ color: "var(--theme-text-muted)" }}>
               {gap.detail}
             </p>
           )}
@@ -85,7 +85,7 @@ function GapCard({ gap, index }: { gap: Gap; index: number }) {
 
         <span
           className="flex-shrink-0 font-mono text-[10px] transition-transform"
-          style={{ color: "#3d4f6e", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
+          style={{ color: "var(--theme-text-dim)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
         >
           ▼
         </span>
@@ -101,13 +101,13 @@ function GapCard({ gap, index }: { gap: Gap; index: number }) {
             style={{ overflow: "hidden" }}
           >
             <div className="px-4 pb-4 pl-[3.75rem]">
-              <p className="font-mono text-[11px] leading-relaxed mb-3" style={{ color: "#a8b8d0" }}>
+              <p className="font-mono text-[11px] leading-relaxed mb-3" style={{ color: "var(--theme-text-secondary)" }}>
                 {gap.detail}
               </p>
               {gap.recommendation && (
                 <div
                   className="rounded-lg px-3 py-2 flex items-start gap-2"
-                  style={{ background: "rgba(133,200,255,0.04)", border: "1px solid rgba(133,200,255,0.10)" }}
+                  style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
                 >
                   <span style={{ color: BBVA.sereneBlue, fontSize: 12 }}>→</span>
                   <p className="font-mono text-[11px] leading-relaxed flex-1" style={{ color: BBVA.sereneBlue }}>
@@ -138,8 +138,8 @@ export default function GapAnalysisPanel({ gaps }: GapAnalysisPanelProps) {
           <span style={{ color: BBVA.lime, fontSize: 14 }}>✓</span>
         </div>
         <div>
-          <p className="font-bold text-sm" style={{ color: "#e8eeff" }}>Sin gaps detectados</p>
-          <p className="font-mono text-[11px]" style={{ color: "#6b7fa3" }}>
+          <p className="font-bold text-sm" style={{ color: "var(--theme-text-primary)" }}>Sin gaps detectados</p>
+          <p className="font-mono text-[11px]" style={{ color: "var(--theme-text-muted)" }}>
             El equipo recomendado cumple con cobertura, disponibilidad y balance.
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function GapAnalysisPanel({ gaps }: GapAnalysisPanelProps) {
   );
 
   return (
-    <section className="rounded-2xl p-4" style={{ background: "rgba(10,22,40,0.6)", border: "1px solid rgba(133,200,255,0.10)" }}>
+    <section className="rounded-2xl p-4" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}>
       <header className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <span
@@ -165,7 +165,7 @@ export default function GapAnalysisPanel({ gaps }: GapAnalysisPanelProps) {
           >
             Gap Analysis
           </span>
-          <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+          <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
             análisis automático
           </span>
         </div>

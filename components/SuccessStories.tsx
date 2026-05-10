@@ -56,8 +56,8 @@ export default function SuccessStories() {
         >
           Casos reales
         </span>
-        <div className="flex-1 h-px" style={{ background: "rgba(133,200,255,0.07)" }} />
-        <span className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+        <div className="flex-1 h-px" style={{ background: "var(--theme-tile-medium)" }} />
+        <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
           datos de los últimos 3 meses
         </span>
       </div>
@@ -71,7 +71,7 @@ export default function SuccessStories() {
             transition={{ duration: 0.4, delay: 0.5 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="relative rounded-2xl p-5 overflow-hidden flex flex-col"
             style={{
-              background: "rgba(10,22,40,0.65)",
+              background: "var(--theme-bg-surface-soft)",
               border: `1px solid ${story.domainColor}24`,
               backdropFilter: "blur(12px)",
             }}
@@ -88,12 +88,12 @@ export default function SuccessStories() {
               >
                 {story.code}
               </span>
-              <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "#3d4f6e" }}>
+              <span className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--theme-text-dim)" }}>
                 {story.domain}
               </span>
             </header>
 
-            <h3 className="relative z-10 font-black text-base leading-tight mb-3" style={{ color: "#e8eeff" }}>
+            <h3 className="relative z-10 font-black text-base leading-tight mb-3" style={{ color: "var(--theme-text-primary)" }}>
               {story.title}
             </h3>
 
@@ -106,13 +106,13 @@ export default function SuccessStories() {
               </p>
             </div>
 
-            <p className="relative z-10 text-[12px] leading-relaxed mb-3" style={{ color: "#a8b8d0" }}>
+            <p className="relative z-10 text-[12px] leading-relaxed mb-3" style={{ color: "var(--theme-text-secondary)" }}>
               {story.result}
             </p>
 
             <div
               className="relative z-10 mt-auto rounded-lg px-3 py-2 flex items-start gap-2"
-              style={{ background: "rgba(133,200,255,0.04)", border: "1px solid rgba(133,200,255,0.08)" }}
+              style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.08)" }}
             >
               <span style={{ color: BBVA.sereneBlue, fontSize: 11, lineHeight: "16px" }}>✦</span>
               <p className="font-mono text-[10px] leading-relaxed flex-1" style={{ color: BBVA.sereneBlue }}>

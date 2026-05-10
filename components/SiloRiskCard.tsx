@@ -85,11 +85,11 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
             )}
           </div>
 
-          <h3 className="font-black text-base leading-tight" style={{ color: "#e8eeff" }}>
+          <h3 className="font-black text-base leading-tight" style={{ color: "var(--theme-text-primary)" }}>
             {cat.name}
           </h3>
 
-          <p className="font-mono text-[11px] mt-1 leading-relaxed" style={{ color: "#a8b8d0" }}>
+          <p className="font-mono text-[11px] mt-1 leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
             {cat.description}
           </p>
 
@@ -105,7 +105,7 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
 
         <span
           className="flex-shrink-0 font-mono text-[10px] mt-2 transition-transform"
-          style={{ color: "#3d4f6e", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
+          style={{ color: "var(--theme-text-dim)", transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
         >
           ▼
         </span>
@@ -121,11 +121,11 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             style={{ overflow: "hidden" }}
           >
-            <div className="px-5 pb-5 space-y-4 border-t" style={{ borderColor: "rgba(133,200,255,0.06)" }}>
+            <div className="px-5 pb-5 space-y-4 border-t" style={{ borderColor: "var(--theme-tile-medium)" }}>
 
               {/* Risk factors */}
               <div className="pt-4">
-                <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2.5" style={{ color: "#6b7fa3" }}>
+                <p className="font-mono text-[10px] uppercase tracking-widest font-bold mb-2.5" style={{ color: "var(--theme-text-muted)" }}>
                   Factores de riesgo detectados
                 </p>
                 <div className="space-y-2">
@@ -154,11 +154,11 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
                             >
                               {fcfg.label}
                             </span>
-                            <span className="font-bold text-[12px]" style={{ color: "#e8eeff" }}>
+                            <span className="font-bold text-[12px]" style={{ color: "var(--theme-text-primary)" }}>
                               {RISK_LABEL[f.kind]}
                             </span>
                           </div>
-                          <p className="font-mono text-[11px] leading-relaxed" style={{ color: "#a8b8d0" }}>
+                          <p className="font-mono text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
                             {f.detail}
                           </p>
                         </div>
@@ -193,7 +193,7 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
                       style={{ background: `${BBVA.purple}0d`, border: `1px solid ${BBVA.purple}28` }}
                     >
                       <span style={{ color: BBVA.purple, fontSize: 12, lineHeight: "20px" }}>→</span>
-                      <p className="font-mono text-[11px] leading-relaxed flex-1" style={{ color: "#c8d4ec" }}>
+                      <p className="font-mono text-[11px] leading-relaxed flex-1" style={{ color: "var(--theme-text-secondary)" }}>
                         {s}
                       </p>
                     </motion.div>
@@ -217,10 +217,10 @@ export function SiloRiskCard({ risk, index }: { risk: SiloRisk; index: number })
 }
 
 function QuickStat({ label, value, dangerous }: { label: string; value: string; dangerous?: boolean }) {
-  const color = dangerous ? "#fb923c" : "#a8b8d0";
+  const color = dangerous ? "#fb923c" : "var(--theme-text-secondary)";
   return (
     <span className="inline-flex items-center gap-1 font-mono text-[10px]" style={{ color }}>
-      <span style={{ color: "#3d4f6e" }}>{label}:</span>
+      <span style={{ color: "var(--theme-text-dim)" }}>{label}:</span>
       <span className="font-bold">{value}</span>
     </span>
   );

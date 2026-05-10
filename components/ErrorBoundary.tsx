@@ -37,12 +37,12 @@ export default class ErrorBoundary extends Component<Props, State> {
     return (
       <div
         className="min-h-screen flex items-center justify-center px-6"
-        style={{ background: "#050a14" }}
+        style={{ background: "var(--theme-bg-page)" }}
       >
         <div
           className="max-w-md w-full rounded-2xl p-7 text-center"
           style={{
-            background: "rgba(10,22,40,0.85)",
+            background: "var(--theme-bg-surface-strong)",
             border: "1px solid rgba(248,113,113,0.25)",
             boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
             backdropFilter: "blur(20px)",
@@ -55,19 +55,19 @@ export default class ErrorBoundary extends Component<Props, State> {
             <span style={{ color: "#fca5a5", fontSize: 24 }}>⚠</span>
           </div>
 
-          <h2 className="font-black text-lg mb-2" style={{ color: "#e8eeff" }}>
+          <h2 className="font-black text-lg mb-2" style={{ color: "var(--theme-text-primary)" }}>
             Algo se rompió
           </h2>
-          <p className="font-mono text-xs leading-relaxed mb-5" style={{ color: "#8099b8" }}>
+          <p className="font-mono text-xs leading-relaxed mb-5" style={{ color: "var(--theme-text-secondary)" }}>
             Ocurrió un error inesperado en la aplicación. Puedes intentar volver al inicio o recargar la página.
           </p>
 
           {this.state.error && (
             <div
               className="text-left rounded-lg px-3 py-2 mb-5 overflow-x-auto"
-              style={{ background: "rgba(5,10,20,0.7)", border: "1px solid rgba(248,113,113,0.15)" }}
+              style={{ background: "var(--theme-bg-overlay-soft)", border: "1px solid rgba(248,113,113,0.15)" }}
             >
-              <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3d4f6e" }}>
+              <p className="font-mono text-[10px] uppercase tracking-widest mb-1" style={{ color: "var(--theme-text-dim)" }}>
                 Detalle técnico
               </p>
               <p className="font-mono text-[11px] break-words" style={{ color: "#fca5a5" }}>
@@ -80,7 +80,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             <button
               onClick={this.handleReset}
               className="flex-1 py-2.5 rounded-lg font-mono text-xs font-bold transition-opacity hover:opacity-80"
-              style={{ background: "rgba(133,200,255,0.07)", border: `1px solid ${BBVA.sereneBlue}28`, color: BBVA.sereneBlue, cursor: "pointer" }}
+              style={{ background: "var(--theme-tile-medium)", border: `1px solid ${BBVA.sereneBlue}28`, color: BBVA.sereneBlue, cursor: "pointer" }}
             >
               Volver al inicio
             </button>

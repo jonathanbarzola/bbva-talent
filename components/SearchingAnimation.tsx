@@ -58,7 +58,7 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
   const progressPct = (doneCount / STEPS.length) * 100;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "#050a14" }}>
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "var(--theme-bg-page)" }}>
       {/* Ambient blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div style={{ position:"absolute", top:"-15%", left:"-5%", width:700, height:700, borderRadius:"50%", background:"radial-gradient(circle, rgba(0,19,145,0.2) 0%, transparent 65%)", filter:"blur(60px)", animation:"float 5s ease-in-out infinite" }} />
@@ -70,7 +70,7 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
       <div className="relative z-10 flex flex-col items-center pt-14 pb-10 px-6">
         <div
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-xs mb-6"
-          style={{ background:"rgba(133,200,255,0.06)", border:"1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue }}
+          style={{ background:"var(--theme-tile-medium)", border:"1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue }}
         >
           <span style={{ width:6, height:6, borderRadius:"50%", background: BBVA.sereneBlue, display:"inline-block", animation:"blink 1s ease-in-out infinite" }} />
           Analizando {doneCount} de {STEPS.length} fuentes...
@@ -78,7 +78,7 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
 
         <h2
           className="font-black text-center mb-2"
-          style={{ fontSize:"clamp(1.6rem, 3.5vw, 2.8rem)", color:"#e8eeff", lineHeight:1.15 }}
+          style={{ fontSize:"clamp(1.6rem, 3.5vw, 2.8rem)", color:"var(--theme-text-primary)", lineHeight:1.15 }}
         >
           Buscando tu<br/>
           <span className="text-gradient">talento ideal</span>
@@ -86,10 +86,10 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
 
         <div
           className="mt-5 px-5 py-3 rounded-2xl font-mono text-center max-w-2xl"
-          style={{ background:"rgba(10,22,40,0.8)", border:"1px solid rgba(133,200,255,0.14)" }}
+          style={{ background:"var(--theme-bg-surface-strong)", border:"1px solid rgba(133,200,255,0.14)" }}
         >
-          <p className="text-xs uppercase tracking-widest mb-1" style={{ color:"#3d4f6e" }}>Consulta</p>
-          <p className="text-base font-bold" style={{ color:"#e8eeff" }}>&ldquo;{query}&rdquo;</p>
+          <p className="text-xs uppercase tracking-widest mb-1" style={{ color:"var(--theme-text-dim)" }}>Consulta</p>
+          <p className="text-base font-bold" style={{ color:"var(--theme-text-primary)" }}>&ldquo;{query}&rdquo;</p>
         </div>
       </div>
 
@@ -107,8 +107,8 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
                 key={step.id}
                 className="rounded-2xl p-5 flex flex-col gap-3 transition-all duration-500"
                 style={{
-                  background: isDone ? `${step.color}0f` : isRunning ? `${step.color}0a` : "rgba(10,22,40,0.6)",
-                  border: `1px solid ${isDone || isRunning ? step.color + "40" : "rgba(133,200,255,0.06)"}`,
+                  background: isDone ? `${step.color}0f` : isRunning ? `${step.color}0a` : "var(--theme-bg-surface-soft)",
+                  border: `1px solid ${isDone || isRunning ? step.color + "40" : "var(--theme-tile-medium)"}`,
                   opacity: isPending ? 0.4 : 1,
                   boxShadow: isRunning ? `0 0 30px ${step.color}18` : "none",
                   transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
@@ -120,7 +120,7 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
                     style={{
                       background: isDone || isRunning ? `${step.color}20` : "rgba(255,255,255,0.04)",
                       border: `1px solid ${isDone || isRunning ? step.color + "50" : "rgba(255,255,255,0.06)"}`,
-                      color: isDone || isRunning ? step.color : "#3d4f6e",
+                      color: isDone || isRunning ? step.color : "var(--theme-text-dim)",
                       boxShadow: isRunning ? `0 0 20px ${step.color}44` : "none",
                     }}
                   >
@@ -144,10 +144,10 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
                 </div>
 
                 <div>
-                  <p className="font-bold text-sm mb-1" style={{ color: isDone || isRunning ? "#e8eeff" : "#3d4f6e" }}>
+                  <p className="font-bold text-sm mb-1" style={{ color: isDone || isRunning ? "var(--theme-text-primary)" : "var(--theme-text-dim)" }}>
                     {step.label}
                   </p>
-                  <p className="font-mono leading-snug" style={{ fontSize: 11, color: isDone ? step.color + "cc" : isRunning ? "#4d6080" : "#1e2d44" }}>
+                  <p className="font-mono leading-snug" style={{ fontSize: 11, color: isDone ? step.color + "cc" : isRunning ? "var(--theme-text-muted)" : "var(--theme-text-faint)" }}>
                     {isDone ? "Completado" : isRunning ? step.sublabel : "En espera"}
                   </p>
                 </div>
@@ -160,14 +160,14 @@ export default function SearchingAnimation({ query, onComplete, dataReady }: Pro
       {/* Bottom: progress bar */}
       <div className="relative z-10 px-6 pb-14 max-w-4xl w-full mx-auto">
         <div className="flex justify-between mb-2">
-          <span className="font-mono text-xs" style={{ color:"#3d4f6e" }}>
+          <span className="font-mono text-xs" style={{ color:"var(--theme-text-dim)" }}>
             {doneCount}/{STEPS.length} fuentes procesadas
           </span>
           <span className="font-mono text-xs font-bold" style={{ color: BBVA.sereneBlue }}>
             {Math.round(progressPct)}%
           </span>
         </div>
-        <div className="h-1 rounded-full overflow-hidden" style={{ background:"rgba(133,200,255,0.08)" }}>
+        <div className="h-1 rounded-full overflow-hidden" style={{ background:"var(--theme-tile-medium)" }}>
           <div
             className="h-full rounded-full transition-all duration-700"
             style={{

@@ -70,7 +70,7 @@ function ProfileCard({
   return (
     <div
       className="rounded-2xl p-5"
-      style={{ background: "rgba(10,22,40,0.75)", border: "1px solid rgba(133,200,255,0.10)", backdropFilter: "blur(12px)" }}
+      style={{ background: "var(--theme-bg-surface)", border: "1px solid rgba(133,200,255,0.10)", backdropFilter: "blur(12px)" }}
     >
       {/* Header */}
       <div className="flex items-start gap-3 mb-4">
@@ -83,7 +83,7 @@ function ProfileCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-            <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>{emp.nombre}</h3>
+            <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>{emp.nombre}</h3>
             <span
               className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0"
               style={{ background: `${color}18`, color, border: `1px solid ${color}40` }}
@@ -95,9 +95,9 @@ function ProfileCard({
               <span
                 className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0"
                 style={{
-                  background: isFull ? "rgba(251,146,60,0.12)" : "rgba(133,200,255,0.06)",
+                  background: isFull ? "rgba(251,146,60,0.12)" : "var(--theme-tile-medium)",
                   color: isFull ? "#fb923c" : BBVA.sereneBlue,
-                  border: `1px solid ${isFull ? "rgba(251,146,60,0.35)" : "rgba(133,200,255,0.18)"}`,
+                  border: `1px solid ${isFull ? "rgba(251,146,60,0.35)" : "var(--theme-border-strong)"}`,
                 }}
                 title={isFull ? "Cupo completo · sin mentees disponibles" : `${profile.mentees_actuales} de ${profile.cupo_maximo} mentees activos`}
               >
@@ -106,8 +106,8 @@ function ProfileCard({
               </span>
             )}
           </div>
-          <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>{emp.rol}</p>
-          <p className="font-mono text-[10px] mt-0.5" style={{ color: "#3d4f6e" }}>
+          <p className="text-xs truncate" style={{ color: "var(--theme-text-muted)" }}>{emp.rol}</p>
+          <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--theme-text-dim)" }}>
             {emp.squad} · {profile.disponibilidad_horaria}
           </p>
         </div>
@@ -141,7 +141,7 @@ function ProfileCard({
           );
         })}
         {emp.habilidades.length > 4 && (
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono" style={{ background: "rgba(133,200,255,0.06)", color: "#3d4f6e" }}>
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono" style={{ background: "var(--theme-tile-medium)", color: "var(--theme-text-dim)" }}>
             +{emp.habilidades.length - 4}
           </span>
         )}
@@ -186,8 +186,8 @@ function ProfileCard({
             onClick={() => onConnect(profile)}
             className="flex-1 py-2.5 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2"
             style={{
-              background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "rgba(133,200,255,0.05)",
-              color:      canAfford ? "#fff" : "#3d4f6e",
+              background: canAfford ? "linear-gradient(135deg, #001391, #0020cc)" : "var(--theme-tile-soft)",
+              color:      canAfford ? "#fff" : "var(--theme-text-dim)",
               border:     canAfford ? "none" : "1px solid rgba(133,200,255,0.08)",
               cursor:     canAfford && !loading ? "pointer" : "not-allowed",
               letterSpacing: "0.06em",
@@ -195,13 +195,13 @@ function ProfileCard({
           >
             <span>{loading ? "Conectando..." : profile.tipo === "mentor" ? "Solicitar mentoría" : "Conectar"}</span>
             <span className="opacity-60">·</span>
-            <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "#3d4f6e" }}>{profile.costo_bt} BT</span>
+            <span className="font-mono" style={{ color: canAfford ? BBVA.canary : "var(--theme-text-dim)" }}>{profile.costo_bt} BT</span>
           </button>
         </div>
       )}
 
       {!canAfford && !isFull && (
-        <p className="text-center text-[10px] font-mono mt-1.5" style={{ color: "#3d4f6e" }}>
+        <p className="text-center text-[10px] font-mono mt-1.5" style={{ color: "var(--theme-text-dim)" }}>
           Saldo insuficiente
         </p>
       )}
@@ -237,12 +237,12 @@ function FullCapacityPanel({
           <p className="font-bold text-[12px] leading-tight" style={{ color: "#fb923c" }}>
             Cupo de mentoría completo
           </p>
-          <p className="font-mono text-[11px] leading-relaxed mt-0.5" style={{ color: "#a8b8d0" }}>
-            <span className="font-bold" style={{ color: "#e8eeff" }}>{empleadoNombre.split(" ")[0]}</span>{" "}
+          <p className="font-mono text-[11px] leading-relaxed mt-0.5" style={{ color: "var(--theme-text-secondary)" }}>
+            <span className="font-bold" style={{ color: "var(--theme-text-primary)" }}>{empleadoNombre.split(" ")[0]}</span>{" "}
             ya tiene 2/2 mentees activos. Próxima ventana tentativa:{" "}
             <span className="font-bold" style={{ color: "#fb923c" }}>{dateLabel}</span>
             {weeks > 0 && (
-              <span style={{ color: "#6b7fa3" }}> · en ~{weeks} semana{weeks !== 1 ? "s" : ""}</span>
+              <span style={{ color: "var(--theme-text-muted)" }}> · en ~{weeks} semana{weeks !== 1 ? "s" : ""}</span>
             )}
             .
           </p>
@@ -340,24 +340,24 @@ export default function NetworkingView({ onBack }: Props) {
   const walletCfg = wallet ? BTOKEN_TIER_CONFIG[wallet.tier] : null;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#050a14" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "var(--theme-bg-page)" }}>
 
       {/* Header */}
       <header
         className="flex items-center justify-between px-6 py-4 flex-shrink-0 sticky top-0 z-20"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "rgba(5,10,20,0.95)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-80 transition-opacity"
-            style={{ background: "rgba(133,200,255,0.06)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue }}
+            style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue }}
           >
             ← Volver
           </button>
           <div>
-            <h1 className="font-bold text-base" style={{ color: "#e8eeff" }}>Networking & Mentoría</h1>
-            <p className="font-mono text-[10px]" style={{ color: "#3d4f6e" }}>
+            <h1 className="font-bold text-base" style={{ color: "var(--theme-text-primary)" }}>Networking & Mentoría</h1>
+            <p className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
               Conecta con talento BBVA
             </p>
           </div>
@@ -387,9 +387,9 @@ export default function NetworkingView({ onBack }: Props) {
               onChange={e => setQuery(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl text-sm outline-none transition-all"
               style={{
-                background: "rgba(133,200,255,0.05)",
+                background: "var(--theme-tile-soft)",
                 border: "1px solid rgba(133,200,255,0.12)",
-                color: "#e8eeff",
+                color: "var(--theme-text-primary)",
               }}
             />
           </div>
@@ -400,9 +400,9 @@ export default function NetworkingView({ onBack }: Props) {
                 onClick={() => setFilter(tipo)}
                 className="px-3 py-2 rounded-lg text-xs font-mono font-bold transition-all duration-150"
                 style={{
-                  background: filter === tipo ? "rgba(133,200,255,0.12)" : "rgba(133,200,255,0.04)",
+                  background: filter === tipo ? "var(--theme-border-default)" : "var(--theme-tile-soft)",
                   border: filter === tipo ? "1px solid rgba(133,200,255,0.30)" : "1px solid rgba(133,200,255,0.08)",
-                  color: filter === tipo ? BBVA.sereneBlue : "#3d4f6e",
+                  color: filter === tipo ? BBVA.sereneBlue : "var(--theme-text-dim)",
                 }}
               >
                 {TIPO_LABELS[tipo]}
@@ -415,12 +415,12 @@ export default function NetworkingView({ onBack }: Props) {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl h-64 animate-pulse" style={{ background: "rgba(133,200,255,0.04)" }} />
+              <div key={i} className="rounded-2xl h-64 animate-pulse" style={{ background: "var(--theme-tile-soft)" }} />
             ))}
           </div>
         ) : profiles.length === 0 ? (
           <div className="text-center py-20">
-            <p className="font-mono text-sm" style={{ color: "#3d4f6e" }}>No se encontraron perfiles</p>
+            <p className="font-mono text-sm" style={{ color: "var(--theme-text-dim)" }}>No se encontraron perfiles</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -441,7 +441,7 @@ export default function NetworkingView({ onBack }: Props) {
       {toast && (
         <div
           className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl font-mono text-sm font-bold z-50 transition-all"
-          style={{ background: "rgba(10,22,40,0.95)", border: "1px solid rgba(133,200,255,0.20)", color: BBVA.lime, backdropFilter: "blur(20px)" }}
+          style={{ background: "var(--theme-bg-surface-strong)", border: "1px solid rgba(133,200,255,0.20)", color: BBVA.lime, backdropFilter: "blur(20px)" }}
         >
           {toast}
         </div>

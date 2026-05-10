@@ -101,7 +101,7 @@ function MetricCard({ metric }: { metric: Metric }) {
     <div
       className="relative rounded-xl px-4 py-3 overflow-hidden"
       style={{
-        background: "rgba(10,22,40,0.65)",
+        background: "var(--theme-bg-surface-soft)",
         border: `1px solid ${metric.color}25`,
         backdropFilter: "blur(12px)",
       }}
@@ -115,10 +115,10 @@ function MetricCard({ metric }: { metric: Metric }) {
           {value}
           {metric.suffix && <span className="text-[0.65em] ml-0.5">{metric.suffix}</span>}
         </p>
-        <p className="font-mono text-[10px] uppercase tracking-widest leading-tight" style={{ color: "#a8b8d0" }}>
+        <p className="font-mono text-[10px] uppercase tracking-widest leading-tight" style={{ color: "var(--theme-text-secondary)" }}>
           {metric.label}
         </p>
-        <p className="font-mono text-[10px] leading-tight mt-1" style={{ color: "#3d4f6e" }}>
+        <p className="font-mono text-[10px] leading-tight mt-1" style={{ color: "var(--theme-text-dim)" }}>
           {metric.detail}
         </p>
       </div>

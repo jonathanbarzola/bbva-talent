@@ -93,7 +93,7 @@ function ScoreRing({ score }: { score: number }) {
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="block">
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(133,200,255,0.08)" strokeWidth={stroke} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--theme-tile-medium)" strokeWidth={stroke} />
         <circle
           cx={size/2} cy={size/2} r={r} fill="none" stroke={ringColor}
           strokeWidth={stroke} strokeLinecap="round"
@@ -103,7 +103,7 @@ function ScoreRing({ score }: { score: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ color: ringColor }}>
         <span className="font-mono font-bold leading-none" style={{ fontSize: 14 }}>{pct}</span>
-        <span className="font-mono leading-none" style={{ fontSize: 8, color: "#3d4f6e" }}>match</span>
+        <span className="font-mono leading-none" style={{ fontSize: 8, color: "var(--theme-text-dim)" }}>match</span>
       </div>
     </div>
   );
@@ -117,7 +117,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
     <article
       className="group relative rounded-2xl p-5 transition-all duration-300 cursor-default overflow-hidden"
       style={{
-        background: isSelected ? "rgba(16,32,56,0.88)" : "rgba(10,22,40,0.75)",
+        background: isSelected ? "rgba(16,32,56,0.88)" : "var(--theme-bg-surface)",
         border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid rgba(133,200,255,0.10)",
         backdropFilter: "blur(12px)",
         boxShadow: isSelected ? `0 0 35px ${BBVA.lime}14` : "none",
@@ -147,7 +147,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
         className="absolute top-3 font-mono text-[10px] px-1.5 py-0.5 rounded"
         style={{
           right: onSelect ? "2.75rem" : "0.75rem",
-          background: "rgba(133,200,255,0.06)", color: "#3d4f6e",
+          background: "var(--theme-tile-medium)", color: "var(--theme-text-dim)",
           border: "1px solid rgba(133,200,255,0.08)",
         }}
       >
@@ -161,8 +161,8 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
           title={isSelected ? "Quitar del equipo" : "Agregar al equipo"}
           className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
           style={{
-            background: isSelected ? `${BBVA.lime}22` : "rgba(133,200,255,0.06)",
-            border: `1.5px solid ${isSelected ? BBVA.lime + "aa" : "rgba(133,200,255,0.18)"}`,
+            background: isSelected ? `${BBVA.lime}22` : "var(--theme-tile-medium)",
+            border: `1.5px solid ${isSelected ? BBVA.lime + "aa" : "var(--theme-border-strong)"}`,
             cursor: "pointer",
           }}
         >
@@ -192,12 +192,12 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "#e8eeff" }}>
+            <h3 className="font-bold text-sm leading-tight truncate" style={{ color: "var(--theme-text-primary)" }}>
               {candidate.nombre}
             </h3>
             {candidate.registro && <ContractBadge candidate={candidate} />}
           </div>
-          <p className="text-xs truncate" style={{ color: "#6b7fa3" }}>
+          <p className="text-xs truncate" style={{ color: "var(--theme-text-muted)" }}>
             {candidate.rol_bbva && (
               <span className="font-mono" style={{ color: BBVA.sereneBlue }}>{candidate.rol_bbva}</span>
             )}
@@ -212,7 +212,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
               <span style={{ width: 5, height: 5, borderRadius: "50%", background: nivel.color, display: "inline-block" }} />
               {nivel.label}
             </span>
-            <span className="text-[10px] font-mono" style={{ color: "#3d4f6e" }}>{candidate.squad}</span>
+            <span className="text-[10px] font-mono" style={{ color: "var(--theme-text-dim)" }}>{candidate.squad}</span>
           </div>
           {candidate.disponibilidad && (
             <div className="mt-1.5"><AvailabilityBadge candidate={candidate} /></div>
@@ -232,7 +232,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
       )}
 
       {/* Bio */}
-      <p className="text-xs leading-relaxed mb-4 line-clamp-2" style={{ color: "#4d6080" }}>
+      <p className="text-xs leading-relaxed mb-4 line-clamp-2" style={{ color: "var(--theme-text-muted)" }}>
         {candidate.bio}
       </p>
 
@@ -251,7 +251,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
           );
         })}
         {candidate.habilidades.length > 5 && (
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono" style={{ background: "rgba(133,200,255,0.06)", color: "#3d4f6e" }}>
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono" style={{ background: "var(--theme-tile-medium)", color: "var(--theme-text-dim)" }}>
             +{candidate.habilidades.length - 5}
           </span>
         )}
@@ -283,14 +283,14 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
               <div
                 key={colab.id}
                 className="w-6 h-6 rounded-full border flex items-center justify-center text-[8px] font-bold"
-                style={{ background: `hsl(${210 + i * 30}, 60%, 25%)`, borderColor: "#050a14", color: BBVA.sereneBlue, zIndex: 3 - i }}
+                style={{ background: `hsl(${210 + i * 30}, 60%, 25%)`, borderColor: "var(--theme-bg-page)", color: BBVA.sereneBlue, zIndex: 3 - i }}
                 title={colab.nombre}
               >
                 {colab.nombre.charAt(0)}
               </div>
             ))}
           </div>
-          <span className="text-[10px] font-mono" style={{ color: "#3d4f6e" }}>
+          <span className="text-[10px] font-mono" style={{ color: "var(--theme-text-dim)" }}>
             {candidate.colaboradores.length} colaborador{candidate.colaboradores.length > 1 ? "es" : ""}
           </span>
         </div>
