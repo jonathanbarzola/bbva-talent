@@ -8,6 +8,7 @@ import {
   CANDIDATE_POOL,
 } from "./mock-data";
 import { enrichEmpleado } from "./staffing-mock";
+import { buildEnrichedGraph } from "./graphBuilder";
 import type { EmpleadoResult } from "./types";
 
 // ── Enrich layer ──────────────────────────────────────────────────────────
@@ -78,7 +79,12 @@ export function listAllEmployees(): EmpleadoResult[] {
 export async function getEmployeeGraph(employeeId: string): Promise<GraphResponse> {
   if (IS_MOCK) {
     await delay(400);
-    return getMockGraph(employeeId);
+    // Build dynamically from CANDIDATE_POOL + STAFFING_PROFILES so the graph
+    // reflects current/past projects and current teammates per quarter.
+    // Falls back to the legacy hardcoded MOCK_GRAPH for IDs without staffing
+    // history (kept for backwards compat).
+    const enriched = buildEnrichedGraph(employeeId);
+    return enriched.nodes.length > 1 ? enriched : getMockGraph(employeeId);
   }
   const res = await fetch(`${API_BASE}/employees/${employeeId}/graph`);
   if (!res.ok) throw new Error("No se pudo cargar el grafo del empleado");

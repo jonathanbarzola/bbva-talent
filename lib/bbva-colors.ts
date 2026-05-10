@@ -24,6 +24,9 @@ export const NODE_COLORS: Record<string, string> = {
   habilidad: BBVA.lime,
   proyecto: BBVA.mandarin,
   concepto: BBVA.ice,
+  // ── Enriquecidos con contexto temporal ──
+  "proyecto-actual": BBVA.canary,   // proyecto en el que está participando AHORA
+  teammate: BBVA.purple,            // compañero de proyecto actual (vínculo más fuerte que colaborador)
 };
 
 export const LINK_COLORS: Record<string, string> = {
@@ -31,4 +34,7 @@ export const LINK_COLORS: Record<string, string> = {
   WORKED_ON: BBVA.mandarin,
   COLLABORATES_WITH: BBVA.sereneBlue,
   RELATED_TO: BBVA.ice,
+  // ── Enriquecidos con contexto temporal ──
+  WORKING_ON: BBVA.canary,          // assignment activo en este quarter
+  TEAMMATE_OF: BBVA.purple,         // misma asignación en este quarter
 };

@@ -29,7 +29,8 @@ export default function ConstellationView({ graphData, employee, onBack, onExplo
   const handleNodeClick = useCallback(
     (node: GraphNode) => {
       setSelectedNode(node);
-      if (node.type === "colaborador") {
+      // Both historical collaborators and current teammates link to other employees
+      if (node.type === "colaborador" || node.type === "teammate") {
         const empId = node.id.replace(/^emp_/, "");
         onExploreEmployee(empId);
       }
@@ -41,9 +42,11 @@ export default function ConstellationView({ graphData, employee, onBack, onExplo
   const initials = employee.nombre.split(" ").map(n => n[0]).slice(0, 2).join("");
 
   const nodeStats = {
-    habilidades:   graphData.nodes.filter(n => n.type === "habilidad").length,
-    proyectos:     graphData.nodes.filter(n => n.type === "proyecto").length,
-    colaboradores: graphData.nodes.filter(n => n.type === "colaborador").length,
+    habilidades:       graphData.nodes.filter(n => n.type === "habilidad").length,
+    proyectosActuales: graphData.nodes.filter(n => n.type === "proyecto-actual").length,
+    proyectos:         graphData.nodes.filter(n => n.type === "proyecto").length,
+    teammates:         graphData.nodes.filter(n => n.type === "teammate").length,
+    colaboradores:     graphData.nodes.filter(n => n.type === "colaborador").length,
   };
 
   return (
@@ -78,12 +81,14 @@ export default function ConstellationView({ graphData, employee, onBack, onExplo
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           {[
-            { label: "Skills",    value: nodeStats.habilidades,   color: BBVA.lime     },
-            { label: "Proyectos", value: nodeStats.proyectos,     color: BBVA.mandarin },
-            { label: "Colabs",    value: nodeStats.colaboradores, color: BBVA.sereneBlue },
-          ].map(stat => (
+            { label: "Skills",          value: nodeStats.habilidades,       color: BBVA.lime,       show: true },
+            { label: "Proy. actuales",  value: nodeStats.proyectosActuales, color: BBVA.canary,     show: nodeStats.proyectosActuales > 0 },
+            { label: "Proy. pasados",   value: nodeStats.proyectos,         color: BBVA.mandarin,   show: nodeStats.proyectos > 0 },
+            { label: "Equipo actual",   value: nodeStats.teammates,         color: BBVA.purple,     show: nodeStats.teammates > 0 },
+            { label: "Colabs",          value: nodeStats.colaboradores,     color: BBVA.sereneBlue, show: nodeStats.colaboradores > 0 },
+          ].filter(s => s.show).map(stat => (
             <div key={stat.label} className="hidden sm:flex items-center gap-1.5">
               <span className="font-black font-mono text-sm" style={{ color: stat.color }}>{stat.value}</span>
               <span className="font-mono text-[9px]" style={{ color: "#3d4f6e" }}>{stat.label}</span>
@@ -275,7 +280,7 @@ export default function ConstellationView({ graphData, employee, onBack, onExplo
             className="absolute top-4 right-4 z-10 font-mono text-[9px] uppercase tracking-widest px-2.5 py-1 rounded-full"
             style={{ background: "rgba(5,10,20,0.8)", border: "1px solid rgba(133,200,255,0.08)", color: "#3d4f6e" }}
           >
-            Click en colaborador para explorar su grafo
+            Click en compañero o colaborador para explorar su grafo
           </div>
           <TalentGraph data={graphData} onNodeClick={handleNodeClick} height={undefined} fullscreen />
         </div>

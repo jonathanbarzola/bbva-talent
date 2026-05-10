@@ -22,18 +22,23 @@ interface TalentGraphProps {
 }
 
 const NODE_RADIUS: Record<string, number> = {
-  empleado:    10,
-  colaborador:  8,
-  habilidad:    5,
-  proyecto:     7,
-  concepto:     4,
+  empleado:           10,
+  colaborador:         7,
+  habilidad:           5,
+  proyecto:            7,
+  concepto:            4,
+  // Enriched temporal context — current items get visual emphasis
+  "proyecto-actual":   9,   // bigger than past projects
+  teammate:            8,   // bigger than historical collaborators
 };
 
 const LEGEND_LABELS: Record<string, string> = {
-  empleado:    "Empleado",
-  colaborador: "Colaborador",
-  habilidad:   "Habilidad",
-  proyecto:    "Proyecto",
+  empleado:          "Empleado",
+  colaborador:       "Colaborador histórico",
+  habilidad:         "Habilidad",
+  proyecto:          "Proyecto pasado",
+  "proyecto-actual": "Proyecto actual",
+  teammate:          "Compañero actual",
 };
 
 export default function TalentGraph({ data, onNodeClick, height = 560, fullscreen = false }: TalentGraphProps) {
