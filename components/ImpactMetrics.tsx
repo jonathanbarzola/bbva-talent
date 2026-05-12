@@ -40,28 +40,39 @@ const METRICS: Metric[] = [
 /**
  * Count-up hook that respects session memory.
  * If the user already saw this counter animate in the current session
- * (e.g. they visited home, navigated away, and came back), the value
- * starts at `target` directly to avoid the "everything resets to 0" effect.
+ * (e.g. they visited home, navigated away, and came back), the value jumps
+ * straight to `target` after hydration to avoid the "everything resets to 0"
+ * effect.
+ *
+ * SSR safety: useState ALWAYS starts at 0 so the server-rendered HTML and
+ * the first client render match. The sessionStorage check happens inside
+ * useEffect (post-hydration). Without this rule we get a hydration mismatch
+ * because window/sessionStorage don't exist on the server.
  */
 function useCountUp(target: number, duration = 1400, startDelay = 0, sessionKey?: string): number {
   const storageKey = sessionKey ? `bbva-talent:countup:${sessionKey}:${target}` : null;
-
-  // Read sessionStorage SYNCHRONOUSLY before first paint to avoid flicker
-  const alreadyAnimated = (() => {
-    if (typeof window === "undefined" || !storageKey) return false;
-    try {
-      return window.sessionStorage.getItem(storageKey) === "1";
-    } catch {
-      return false;
-    }
-  })();
-
-  const [value, setValue] = useState(alreadyAnimated ? target : 0);
-  const startedRef = useRef(alreadyAnimated);
+  const [value, setValue] = useState(0);
+  const startedRef = useRef(false);
 
   useEffect(() => {
     if (startedRef.current) return;
     startedRef.current = true;
+
+    // Post-hydration: now it's safe to read sessionStorage. If we already
+    // animated this counter in the session, snap directly to target.
+    const alreadyAnimated = (() => {
+      if (!storageKey) return false;
+      try {
+        return window.sessionStorage.getItem(storageKey) === "1";
+      } catch {
+        return false;
+      }
+    })();
+
+    if (alreadyAnimated) {
+      setValue(target);
+      return;
+    }
 
     let raf = 0;
     const begin = () => {
@@ -75,8 +86,7 @@ function useCountUp(target: number, duration = 1400, startDelay = 0, sessionKey?
         if (progress < 1) {
           raf = requestAnimationFrame(tick);
         } else {
-          // Mark this counter as animated for the rest of the session
-          if (storageKey && typeof window !== "undefined") {
+          if (storageKey) {
             try { window.sessionStorage.setItem(storageKey, "1"); } catch { /* ignore */ }
           }
         }

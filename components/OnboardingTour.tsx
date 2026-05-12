@@ -45,14 +45,29 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
   useLayoutEffect(() => {
     if (!open || !step) return;
 
+    const el = typeof document !== "undefined" ? document.getElementById(step.targetId) : null;
     const update = () => setRect(readRect(step.targetId));
+
+    // Bring the target into view BEFORE measuring — otherwise the spotlight
+    // can land off-screen when the home page grows beyond a single viewport.
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const offscreen = r.top < 80 || r.bottom > window.innerHeight - 80;
+      if (offscreen) {
+        el.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+    }
+
     update();
 
-    const t = setTimeout(update, 80);
+    // Re-measure after smooth-scroll settles (~350ms is enough for the default easing).
+    const t1 = setTimeout(update, 80);
+    const t2 = setTimeout(update, 380);
     window.addEventListener("resize", update);
     window.addEventListener("scroll", update, true);
     return () => {
-      clearTimeout(t);
+      clearTimeout(t1);
+      clearTimeout(t2);
       window.removeEventListener("resize", update);
       window.removeEventListener("scroll", update, true);
     };
@@ -89,12 +104,32 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
 
   if (!open || !step) return null;
 
-  const placement = step.placement ?? (rect && rect.top > 280 ? "top" : "bottom");
+  // Decide placement dynamically — if the requested placement would clip the
+  // tooltip off-screen, flip it. Tooltip height is ~220px (header + body + dots + buttons).
+  const TOOLTIP_H = 220;
+  const TOOLTIP_W = 360;
+  const GAP = 16;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+
+  let placement: "top" | "bottom" = step.placement ?? (rect && rect.top > vh / 2 ? "top" : "bottom");
+  if (rect) {
+    const spaceBelow = vh - (rect.top + rect.height);
+    const spaceAbove = rect.top;
+    if (placement === "bottom" && spaceBelow < TOOLTIP_H + GAP && spaceAbove > spaceBelow) placement = "top";
+    if (placement === "top" && spaceAbove < TOOLTIP_H + GAP && spaceBelow > spaceAbove) placement = "bottom";
+  }
 
   const tooltipStyle: React.CSSProperties = rect
     ? placement === "bottom"
-      ? { top: rect.top + rect.height + 16, left: Math.max(16, Math.min(rect.left + rect.width / 2 - 180, window.innerWidth - 376)) }
-      : { top: Math.max(16, rect.top - 180), left: Math.max(16, Math.min(rect.left + rect.width / 2 - 180, window.innerWidth - 376)) }
+      ? {
+          top: Math.min(rect.top + rect.height + GAP, vh - TOOLTIP_H - GAP),
+          left: Math.max(GAP, Math.min(rect.left + rect.width / 2 - TOOLTIP_W / 2, vw - TOOLTIP_W - GAP)),
+        }
+      : {
+          top: Math.max(GAP, rect.top - TOOLTIP_H - GAP),
+          left: Math.max(GAP, Math.min(rect.left + rect.width / 2 - TOOLTIP_W / 2, vw - TOOLTIP_W - GAP)),
+        }
     : { top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
 
   return (
@@ -110,11 +145,19 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        {/* Backdrop */}
+        {/* Click-capturer — closes the tour on outside click.
+            When a spotlight target is found, this layer stays TRANSPARENT — the
+            spotlight's inverse box-shadow does the dimming. If we tinted it here,
+            it would stack on top of the spotlight cutout and the target would
+            appear dark. When no target is found we fall back to a full backdrop
+            so the tooltip isn't floating over a clear page. */}
         <div
           className="absolute inset-0"
           onClick={handleClose}
-          style={{ background: "var(--theme-bg-modal-backdrop)", backdropFilter: "blur(4px)" }}
+          style={{
+            background: rect ? "transparent" : "var(--theme-bg-modal-backdrop)",
+            backdropFilter: rect ? undefined : "blur(4px)",
+          }}
         />
 
         {/* Spotlight ring around target */}
@@ -131,7 +174,9 @@ export default function OnboardingTour({ steps, open, onClose, onFinish }: Onboa
               width: rect.width + 16,
               height: rect.height + 16,
               border: `2px solid ${BBVA.purple}`,
-              boxShadow: `0 0 0 9999px rgba(5,10,20,0.55), 0 0 60px ${BBVA.purple}66`,
+              // Inverse box-shadow creates a "spotlight" effect — dims everything
+              // OUTSIDE this rect while leaving the target fully visible.
+              boxShadow: `0 0 0 9999px rgba(5,10,20,0.78), 0 0 60px ${BBVA.purple}66`,
             }}
           >
             <motion.span

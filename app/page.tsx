@@ -31,20 +31,32 @@ const DEMO_PROJECT_CODE = "SDA-53021"; // FX Tracker · Pagos Digitales
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     targetId: "onboarding-step-1",
-    title: "Empieza por tu proyecto",
-    body: "Elige cualquiera de los 30 proyectos SDA del banco. Cada uno ya tiene roles definidos — nosotros buscamos las personas.",
+    title: "Por qué importa BBVA Talent",
+    body: "47 equipos formados en 3 días promedio, contra 21 días con el método anterior. Antes de tocar nada, mira el impacto que tiene la herramienta.",
     placement: "bottom",
   },
   {
     targetId: "onboarding-step-2",
-    title: "¿Sin tiempo? Prueba una demo en vivo",
-    body: "Con un click cargamos el caso real del proyecto FX Tracker (Pagos) y vas directo a ver el equipo recomendado. Cero fricción.",
-    placement: "top",
+    title: "Empieza por tu proyecto",
+    body: "Esta es la entrada principal. Elige cualquiera de los 30 proyectos SDA del banco — cada uno ya tiene roles definidos y nosotros buscamos a las personas.",
+    placement: "bottom",
   },
   {
     targetId: "onboarding-step-3",
-    title: "Recomendaciones explicables",
-    body: "Cada candidato viene con Trust Score, EDI, B-Tokens y disponibilidad real. Haz click en 360° para ver su red de colaboradores.",
+    title: "¿Sin tiempo? Prueba una demo en vivo",
+    body: "Con un click cargamos el caso real del proyecto FX Tracker (Pagos Digitales) y vas directo a ver el equipo recomendado. Cero fricción, ideal para evaluar.",
+    placement: "bottom",
+  },
+  {
+    targetId: "onboarding-step-4",
+    title: "Otras formas de buscar",
+    body: "Si ya sabes a quién buscas, usa la búsqueda libre por skill o rol. O explora Networking & Mentores para conectar con referentes internos del banco.",
+    placement: "top",
+  },
+  {
+    targetId: "onboarding-step-5",
+    title: "Valor de negocio cuantificado",
+    body: "Calcula el ahorro real ajustando los parámetros de tu equipo. Cada recomendación de la app viene además con explicación auditable: skills, Trust Score, EDI, B-Tokens y disponibilidad.",
     placement: "top",
   },
 ];
@@ -273,10 +285,12 @@ function HomeView({
         </p>
 
         {/* ── Impact metrics — communicates value before any click ── */}
-        <ImpactMetrics />
+        <div id="onboarding-step-1" className="w-full max-w-2xl">
+          <ImpactMetrics />
+        </div>
 
         {/* ── PRIMARY CTA — Project Composer ── */}
-        <div id="onboarding-step-1" className="w-full max-w-2xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
+        <div id="onboarding-step-2" className="w-full max-w-2xl animate-fade-up" style={{ animationDelay: "0.2s" }}>
           <button
             onClick={onProjectComposer}
             className="group w-full relative overflow-hidden rounded-2xl p-7 text-left transition-all duration-300"
@@ -352,7 +366,7 @@ function HomeView({
 
         {/* ── Demo mode CTA — pre-loads FX Tracker case ── */}
         <button
-          id="onboarding-step-2"
+          id="onboarding-step-3"
           onClick={onDemoMode}
           className="mt-4 group flex items-center gap-2.5 px-4 py-2.5 rounded-xl font-mono text-[12px] font-bold animate-fade-up transition-all duration-200"
           style={{
@@ -391,7 +405,7 @@ function HomeView({
         </div>
 
         {/* ── SECONDARY CTAs ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl animate-fade-up" style={{ animationDelay: "0.32s" }}>
+        <div id="onboarding-step-4" className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl animate-fade-up" style={{ animationDelay: "0.32s" }}>
 
           {/* Buscar perfil / mentor */}
           <div>
@@ -497,10 +511,12 @@ function HomeView({
         <SuccessStories />
 
         {/* ROI Calculator — interactive cost savings */}
-        <RoiCalculator />
+        <div id="onboarding-step-5" className="w-full">
+          <RoiCalculator />
+        </div>
 
         {/* Stats bar */}
-        <div id="onboarding-step-3" className="flex items-center gap-8 mt-14 animate-fade-up" style={{ animationDelay: "0.38s" }}>
+        <div className="flex items-center gap-8 mt-14 animate-fade-up" style={{ animationDelay: "0.38s" }}>
           {[
             { value: "18+", label: "Empleados",  color: BBVA.sereneBlue },
             { value: "10",  label: "Proyectos",  color: BBVA.purple     },
@@ -573,17 +589,32 @@ export default function Page() {
     }
   }, [state.view]);
 
-  const handleTourFinish = useCallback(() => {
+  // Mark the tour as "seen" so the auto-open effect doesn't fire again.
+  // Idempotent — safe to call from both finish and close handlers.
+  const markTourSeen = useCallback(() => {
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(ONBOARDING_KEY, "1");
+      try { window.localStorage.setItem(ONBOARDING_KEY, "1"); } catch { /* ignore */ }
     }
   }, []);
+
+  // Close = "ya lo vi" (Stripe/Linear/Notion convention). If the user wants to
+  // re-watch it, the "Ver tour guiado" button in the header re-opens it via
+  // handleShowTour without checking the flag.
+  const handleTourClose = useCallback(() => {
+    setTourOpen(false);
+    markTourSeen();
+  }, [markTourSeen]);
 
   const handleShowTour = useCallback(() => {
     setTourOpen(true);
   }, []);
 
-  // ── Demo mode / deep-link: pre-load a project and jump to project-results ──
+  // ── Demo mode / deep-link: pre-load a project and jump to project-results.
+  // Mirrors handleSearch's contract: set dataReady=true when the mock fetch
+  // resolves but DO NOT change the view — let SearchingAnimation run its full
+  // 4s "scanning sources" animation and trigger onComplete itself. The switch
+  // in renderView() routes onComplete to project-results when selectedProject
+  // is set. Otherwise the demo would skip the animation entirely.
   const handleLoadProject = useCallback(async (code: string = DEMO_PROJECT_CODE) => {
     try {
       const projects = await getSDAProjects();
@@ -592,9 +623,17 @@ export default function Page() {
         go({ error: `Proyecto ${code} no encontrado` });
         return;
       }
-      go({ view: "searching", query: `Demo · ${demo.nombre}`, dataReady: false, error: null, selectedProject: demo });
+      go({
+        view: "searching",
+        query: `Demo · ${demo.nombre}`,
+        dataReady: false,
+        error: null,
+        selectedProject: demo,
+        projectResult: null,
+        searchResult: null,
+      });
       const result = await getProjectRecommendations(demo);
-      go({ view: "project-results", projectResult: result, dataReady: true });
+      go({ projectResult: result, dataReady: true });
     } catch (e) {
       go({ view: "home", error: (e as Error).message ?? "No se pudo cargar el proyecto" });
     }
@@ -634,10 +673,16 @@ export default function Page() {
   const handleSearchComplete = useCallback(() => {
     if (state.error) {
       go({ view: "home" });
+      return;
+    }
+    // Demo / project-composer flow: selectedProject is set, route to project-results.
+    // Free-form search flow: no selectedProject, route to results.
+    if (state.selectedProject && state.projectResult) {
+      go({ view: "project-results" });
     } else {
       go({ view: "results" });
     }
-  }, [state.error, go]);
+  }, [state.error, state.selectedProject, state.projectResult, go]);
 
   // ── Constellation ───────────────────────────────────────────────────────────
 
@@ -773,8 +818,8 @@ export default function Page() {
         <OnboardingTour
           steps={ONBOARDING_STEPS}
           open={tourOpen}
-          onClose={() => setTourOpen(false)}
-          onFinish={handleTourFinish}
+          onClose={handleTourClose}
+          onFinish={markTourSeen}
         />
       )}
     </>
