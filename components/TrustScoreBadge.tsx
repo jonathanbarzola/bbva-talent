@@ -11,6 +11,10 @@ interface Props {
 export default function TrustScoreBadge({ trust, compact = false }: Props) {
   const cfg = TRUST_TIER_CONFIG[trust.tier];
 
+  // cfg.color is a CSS var — use color-mix to apply alpha instead of hex
+  // concatenation (which only worked when colors were hex strings).
+  const mix = (pct: number) => `color-mix(in srgb, ${cfg.color} ${pct}%, transparent)`;
+
   if (compact) {
     return (
       <div
@@ -20,7 +24,7 @@ export default function TrustScoreBadge({ trust, compact = false }: Props) {
         <span className="font-black font-mono text-xs leading-none" style={{ color: cfg.color }}>
           {trust.overall}
         </span>
-        <span className="font-mono text-[10px]" style={{ color: cfg.color + "99" }}>
+        <span className="font-mono text-[10px]" style={{ color: mix(60) }}>
           {cfg.label}
         </span>
       </div>
@@ -36,7 +40,7 @@ export default function TrustScoreBadge({ trust, compact = false }: Props) {
           </span>
           <div>
             <p className="font-bold text-xs leading-tight" style={{ color: cfg.color }}>{cfg.label}</p>
-            <p className="font-mono text-[10px]" style={{ color: cfg.color + "77" }}>Trust Score</p>
+            <p className="font-mono text-[10px]" style={{ color: mix(47) }}>Trust Score</p>
           </div>
         </div>
       </div>
@@ -53,16 +57,16 @@ export default function TrustScoreBadge({ trust, compact = false }: Props) {
         ).map(({ label, value, weight }) => (
           <div key={label}>
             <div className="flex items-center justify-between mb-0.5">
-              <span className="font-mono text-[10px]" style={{ color: cfg.color + "aa" }}>
+              <span className="font-mono text-[10px]" style={{ color: mix(67) }}>
                 {label}
                 <span className="ml-1 opacity-50">{weight}</span>
               </span>
               <span className="font-mono text-[10px] font-bold" style={{ color: cfg.color }}>{value}</span>
             </div>
-            <div className="h-1 rounded-full overflow-hidden" style={{ background: `${cfg.color}18` }}>
+            <div className="h-1 rounded-full overflow-hidden" style={{ background: mix(10) }}>
               <div
                 className="h-full rounded-full transition-all duration-700"
-                style={{ width: `${value}%`, background: cfg.color + "88" }}
+                style={{ width: `${value}%`, background: mix(53) }}
               />
             </div>
           </div>

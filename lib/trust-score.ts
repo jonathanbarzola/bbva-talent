@@ -67,37 +67,39 @@ export function btokenTierFromBalance(balance: number): BTokenTier {
   return "apprentice";
 }
 
-// Visual config for Trust tier display
+// Visual config for Trust tier display. Colors are CSS vars defined in
+// app/globals.css — they invert between dark (bright pastels) and light
+// (saturated darks) so badges read correctly in both themes.
 export const TRUST_TIER_CONFIG: Record<TrustTier, { label: string; color: string; bg: string; border: string }> = {
   platinum: {
     label: "Platinum",
-    color: "#c0e0ff",
-    bg:    "rgba(192,224,255,0.10)",
-    border:"rgba(192,224,255,0.25)",
+    color: "var(--trust-platinum-color)",
+    bg:    "var(--trust-platinum-bg)",
+    border:"var(--trust-platinum-border)",
   },
   gold: {
     label: "Gold",
-    color: "#FFE761",
-    bg:    "rgba(255,231,97,0.10)",
-    border:"rgba(255,231,97,0.25)",
+    color: "var(--trust-gold-color)",
+    bg:    "var(--trust-gold-bg)",
+    border:"var(--trust-gold-border)",
   },
   silver: {
     label: "Silver",
-    color: "#8BE1E9",
-    bg:    "rgba(139,225,233,0.10)",
-    border:"rgba(139,225,233,0.25)",
+    color: "var(--trust-silver-color)",
+    bg:    "var(--trust-silver-bg)",
+    border:"var(--trust-silver-border)",
   },
   bronze: {
     label: "Bronce",
-    color: "#FFB56B",
-    bg:    "rgba(255,181,107,0.10)",
-    border:"rgba(255,181,107,0.25)",
+    color: "var(--trust-bronze-color)",
+    bg:    "var(--trust-bronze-bg)",
+    border:"var(--trust-bronze-border)",
   },
 };
 
 export const BTOKEN_TIER_CONFIG: Record<BTokenTier, { label: string; color: string; icon: string }> = {
-  platinum: { label: "Platinum", color: "#c0e0ff", icon: "✦✦✦" },
-  gold:     { label: "Gold",     color: "#FFE761", icon: "✦✦"  },
-  silver:   { label: "Silver",   color: "#8BE1E9", icon: "✦"   },
-  apprentice:{ label: "Aprendiz",color: "#6b7fa3", icon: "◇"   },
+  platinum: { label: "Platinum", color: "var(--btoken-platinum-color)",   icon: "✦✦✦" },
+  gold:     { label: "Gold",     color: "var(--btoken-gold-color)",       icon: "✦✦"  },
+  silver:   { label: "Silver",   color: "var(--btoken-silver-color)",     icon: "✦"   },
+  apprentice:{ label: "Aprendiz",color: "var(--btoken-apprentice-color)", icon: "◇"   },
 };

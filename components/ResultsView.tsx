@@ -59,7 +59,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
       {/* Header */}
       <header
         className="relative z-10 sticky top-0 px-6 py-4 flex items-center justify-between"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid var(--theme-border-default)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <div className="flex items-center gap-4">
           <div
@@ -73,7 +73,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
             <span className="font-mono text-xs uppercase tracking-wider" style={{ color: "var(--theme-text-dim)" }}>resultados para</span>
             <span
               className="font-mono text-xs px-3 py-1.5 rounded-lg max-w-sm truncate"
-              style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue }}
+              style={{ background: "var(--theme-tile-medium)", border: "1px solid var(--theme-border-strong)", color: BBVA.sereneBlue }}
             >
               &ldquo;{result.query}&rdquo;
             </span>
@@ -82,7 +82,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
         <button
           onClick={onNewSearch}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-150 hover:opacity-80"
-          style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+          style={{ background: "var(--theme-tile-medium)", border: "1px solid var(--theme-border-strong)", color: BBVA.sereneBlue, cursor: "pointer" }}
         >
           ← Nueva búsqueda
         </button>
@@ -114,7 +114,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
             </div>
           </div>
 
-          <div className="px-5 py-4 rounded-2xl" style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.1)" }}>
+          <div className="px-5 py-4 rounded-2xl" style={{ background: "var(--theme-tile-soft)", border: "1px solid var(--theme-border-default)" }}>
             <p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-dim)" }}>Intención semántica detectada</p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>{result.intencion_detectada}</p>
           </div>
@@ -181,7 +181,7 @@ export default function ResultsView({ result, onViewConstellation, onNewSearch }
                 ))}
               </div>
             ) : (
-              <div className="py-12 rounded-2xl flex flex-col items-center gap-3" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.07)" }}>
+              <div className="py-12 rounded-2xl flex flex-col items-center gap-3" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid var(--theme-border-soft)" }}>
                 <span className="font-mono text-2xl" style={{ opacity: 0.3 }}>∅</span>
                 <p className="font-mono text-sm" style={{ color: "var(--theme-text-dim)" }}>
                   No hay candidatos con nivel <span style={{ color: BBVA.sereneBlue }}>{filterNivel}</span>
@@ -258,7 +258,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
       className="relative rounded-2xl p-7 overflow-hidden transition-all duration-300"
       style={{
         background: "var(--theme-bg-surface-strong)",
-        border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid rgba(133,200,255,0.2)",
+        border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid var(--theme-border-hover)",
         boxShadow: isSelected ? `0 0 60px ${BBVA.lime}14, 0 0 60px rgba(0,19,145,0.18)` : "0 0 60px rgba(0,19,145,0.18)",
       }}
     >
@@ -274,7 +274,7 @@ function FeaturedCard({ candidate, onViewConstellation, isSelected, onSelect, on
           {isSelected ? (
             <><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke={BBVA.lime} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>En equipo</>
           ) : (
-            <><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M4 1V7M1 4H7" stroke="rgba(133,200,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/></svg>Agregar al equipo</>
+            <><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M4 1V7M1 4H7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/></svg>Agregar al equipo</>
           )}
         </button>
       )}

@@ -121,7 +121,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
   return (
     <section
       className="rounded-2xl p-4"
-      style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
+      style={{ background: "var(--theme-bg-surface)", border: "1px solid var(--theme-border-default)", boxShadow: "var(--theme-shadow-card)" }}
     >
       <header className="flex items-center justify-between mb-4 flex-wrap gap-2">
         <div className="flex items-center gap-2">
@@ -179,7 +179,10 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
         {stats.btAvg !== null && btCfg && (
           <div
             className="rounded-xl p-3.5"
-            style={{ background: `${btCfg.color}0c`, border: `1px solid ${btCfg.color}28` }}
+            style={{
+              background: `color-mix(in srgb, ${btCfg.color} 5%, transparent)`,
+              border:    `1px solid color-mix(in srgb, ${btCfg.color} 16%, transparent)`,
+            }}
           >
             <p className="font-mono text-[9px] uppercase tracking-widest mb-1.5" style={{ color: btCfg.color, opacity: 0.85 }}>
               B-Tokens · {btCfg.icon}
@@ -231,7 +234,7 @@ export default function TeamBalancePanel({ team }: TeamBalancePanelProps) {
       </div>
 
       {/* Seniority distribution */}
-      <div className="mt-3 rounded-xl px-4 py-3" style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.08)" }}>
+      <div className="mt-3 rounded-xl px-4 py-3" style={{ background: "var(--theme-tile-soft)", border: "1px solid var(--theme-border-default)" }}>
         <p className="font-mono text-[9px] uppercase tracking-widest mb-2" style={{ color: "var(--theme-text-muted)" }}>
           Distribución de seniority
         </p>

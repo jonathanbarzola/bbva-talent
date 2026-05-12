@@ -116,21 +116,21 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
     <article
       className="group relative rounded-2xl p-5 transition-all duration-300 cursor-default overflow-hidden"
       style={{
-        background: isSelected ? "rgba(16,32,56,0.88)" : "var(--theme-bg-surface)",
-        border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid rgba(133,200,255,0.10)",
+        background: isSelected ? "var(--theme-bg-surface-strong)" : "var(--theme-bg-surface)",
+        border: isSelected ? `1px solid ${BBVA.lime}55` : "1px solid var(--theme-border-default)",
         backdropFilter: "blur(12px)",
         boxShadow: isSelected ? `0 0 35px ${BBVA.lime}14` : "none",
         transition: "all 0.25s cubic-bezier(0.22,1,0.36,1)",
       }}
       onMouseEnter={e => {
         if (!isSelected) {
-          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.28)";
+          (e.currentTarget as HTMLElement).style.border = "1px solid var(--theme-border-hover)";
           (e.currentTarget as HTMLElement).style.boxShadow = "0 0 30px rgba(0,19,145,0.2)";
         }
       }}
       onMouseLeave={e => {
         if (!isSelected) {
-          (e.currentTarget as HTMLElement).style.border = "1px solid rgba(133,200,255,0.10)";
+          (e.currentTarget as HTMLElement).style.border = "1px solid var(--theme-border-default)";
           (e.currentTarget as HTMLElement).style.boxShadow = "none";
         }
       }}
@@ -147,7 +147,7 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
         style={{
           right: onSelect ? "2.75rem" : "0.75rem",
           background: "var(--theme-tile-medium)", color: "var(--theme-text-dim)",
-          border: "1px solid rgba(133,200,255,0.08)",
+          border: "1px solid var(--theme-border-default)",
         }}
       >
         #{String(rank).padStart(2, "0")}
@@ -170,8 +170,8 @@ export default function CandidateCard({ candidate, rank, onViewGraph, isSelected
               <path d="M2 5L4 7L8 3" stroke={BBVA.lime} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           ) : (
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-              <path d="M4 1V7M1 4H7" stroke="rgba(133,200,255,0.4)" strokeWidth="1.5" strokeLinecap="round"/>
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" style={{ color: "var(--theme-text-dim)" }}>
+              <path d="M4 1V7M1 4H7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           )}
         </button>

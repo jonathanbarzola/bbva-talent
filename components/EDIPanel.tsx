@@ -29,42 +29,42 @@ export default function EDIPanel({ edi }: Props) {
   const selfCfg    = RATING_CONFIG[edi.rating];
 
   return (
-    <div className="rounded-xl p-4 space-y-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+    <div className="rounded-xl p-4 space-y-4" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid var(--theme-border-default)" }}>
       <div className="flex items-center justify-between">
-        <p className="font-bold text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+        <p className="font-bold text-xs" style={{ color: "var(--theme-text-secondary)" }}>
           EDI {edi.año}
         </p>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>Auto-eval</span>
+          <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>Auto-eval</span>
           <RatingPip rating={edi.rating} />
         </div>
       </div>
 
       <div className="rounded-lg p-3 space-y-1" style={{ background: `${managerCfg.color}0d`, border: `1px solid ${managerCfg.color}22` }}>
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <span className="font-mono text-[10px]" style={{ color: "var(--theme-text-muted)" }}>
             Manager feedback
           </span>
           <RatingPip rating={edi.manager_rating} />
         </div>
-        <p className="text-xs leading-relaxed italic" style={{ color: "rgba(255,255,255,0.7)" }}>
+        <p className="text-xs leading-relaxed italic" style={{ color: "var(--theme-text-primary)" }}>
           &ldquo;{edi.manager_comment}&rdquo;
         </p>
       </div>
 
       {edi.peer_comments.length > 0 && (
         <div className="space-y-2">
-          <p className="font-mono text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>
+          <p className="font-mono text-[10px]" style={{ color: "var(--theme-text-dim)" }}>
             Peer comments ({edi.peer_comments.length})
           </p>
           {edi.peer_comments.map((pc, i) => (
             <div
               key={i}
               className="rounded-lg p-2.5"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "var(--theme-tile-soft)", border: "1px solid var(--theme-border-soft)" }}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-mono text-[10px] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <span className="font-mono text-[10px] font-bold" style={{ color: "var(--theme-text-secondary)" }}>
                   {pc.autor_nombre}
                 </span>
                 <span
@@ -74,7 +74,7 @@ export default function EDIPanel({ edi }: Props) {
                   {pc.sentiment_score}/100
                 </span>
               </div>
-              <p className="text-[11px] leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <p className="text-[11px] leading-relaxed" style={{ color: "var(--theme-text-secondary)" }}>
                 {pc.comentario}
               </p>
             </div>

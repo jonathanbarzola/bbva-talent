@@ -156,7 +156,7 @@ function CandidateRow({
       <button
         onClick={() => onViewGraph(candidate.id)}
         className="flex-shrink-0 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all duration-150"
-        style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.14)", color: BBVA.sereneBlue, cursor: "pointer" }}
+        style={{ background: "var(--theme-tile-medium)", border: "1px solid var(--theme-border-strong)", color: BBVA.sereneBlue, cursor: "pointer" }}
         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--theme-border-strong)"; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-medium)"; }}
       >
@@ -234,13 +234,13 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
       {/* Header */}
       <header
         className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 sticky top-0 z-20"
-        style={{ borderBottom: "1px solid rgba(133,200,255,0.08)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
+        style={{ borderBottom: "1px solid var(--theme-border-default)", background: "var(--theme-bg-overlay-strong)", backdropFilter: "blur(20px)" }}
       >
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <button
             onClick={onBack}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-80 transition-opacity"
-            style={{ background: "var(--theme-tile-medium)", border: "1px solid rgba(133,200,255,0.12)", color: BBVA.sereneBlue }}
+            style={{ background: "var(--theme-tile-medium)", border: "1px solid var(--theme-border-default)", color: BBVA.sereneBlue }}
           >
             ← Proyectos
           </button>
@@ -319,7 +319,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
         {selectedIds.length === 0 && allCandidates.length > 1 && (
           <div
             className="rounded-xl px-4 py-2.5 flex items-center gap-3"
-            style={{ background: "var(--theme-tile-soft)", border: "1px dashed rgba(133,200,255,0.18)" }}
+            style={{ background: "var(--theme-tile-soft)", border: "1px dashed var(--theme-border-strong)" }}
           >
             <span style={{ color: BBVA.sereneBlue, fontSize: 13 }}>ⓘ</span>
             <p className="font-mono text-[11px]" style={{ color: "var(--theme-text-muted)" }}>
@@ -451,7 +451,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
                     onClick={() => toggleSelect(c.id)}
                     title={`Quitar a ${c.nombre}`}
                     className="group relative w-8 h-8 rounded-lg flex items-center justify-center font-bold text-[10px] flex-shrink-0 transition-all duration-200"
-                    style={{ background: `linear-gradient(135deg, hsl(${215 + i * 28},55%,18%), hsl(${235 + i * 28},55%,28%))`, border: "1px solid rgba(133,200,255,0.22)", color: BBVA.sereneBlue, cursor: "pointer" }}
+                    style={{ background: `linear-gradient(135deg, hsl(${215 + i * 28},55%,18%), hsl(${235 + i * 28},55%,28%))`, border: "1px solid var(--theme-border-hover)", color: BBVA.sereneBlue, cursor: "pointer" }}
                   >
                     {initials}
                     <div className="absolute inset-0 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150" style={{ background: "rgba(220,50,50,0.65)", fontSize: 12, color: "#fff" }}>×</div>
@@ -464,7 +464,7 @@ export default function ProjectResultsView({ project, result, onViewGraph, onBac
               <button
                 onClick={() => setSelectedIds([])}
                 className="px-3 py-2 rounded-lg text-xs font-mono transition-opacity hover:opacity-70"
-                style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.12)", color: "var(--theme-text-dim)", cursor: "pointer" }}
+                style={{ background: "var(--theme-tile-soft)", border: "1px solid var(--theme-border-default)", color: "var(--theme-text-dim)", cursor: "pointer" }}
               >
                 Limpiar
               </button>

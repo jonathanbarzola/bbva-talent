@@ -51,7 +51,7 @@ function GapCard({ gap, index }: { gap: Gap; index: number }) {
         onClick={() => setExpanded(e => !e)}
         className="w-full px-4 py-3 flex items-start gap-3 text-left transition-colors"
         style={{ cursor: "pointer" }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)"; }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--theme-tile-soft)"; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
       >
         <div
@@ -107,7 +107,7 @@ function GapCard({ gap, index }: { gap: Gap; index: number }) {
               {gap.recommendation && (
                 <div
                   className="rounded-lg px-3 py-2 flex items-start gap-2"
-                  style={{ background: "var(--theme-tile-soft)", border: "1px solid rgba(133,200,255,0.10)" }}
+                  style={{ background: "var(--theme-tile-soft)", border: "1px solid var(--theme-border-default)" }}
                 >
                   <span style={{ color: BBVA.sereneBlue, fontSize: 12 }}>→</span>
                   <p className="font-mono text-[11px] leading-relaxed flex-1" style={{ color: BBVA.sereneBlue }}>
@@ -156,7 +156,7 @@ export default function GapAnalysisPanel({ gaps }: GapAnalysisPanelProps) {
   );
 
   return (
-    <section className="rounded-2xl p-4" style={{ background: "var(--theme-bg-surface-soft)", border: "1px solid rgba(133,200,255,0.10)" }}>
+    <section className="rounded-2xl p-4" style={{ background: "var(--theme-bg-surface)", border: "1px solid var(--theme-border-default)", boxShadow: "var(--theme-shadow-card)" }}>
       <header className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <span

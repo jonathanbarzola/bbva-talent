@@ -10,18 +10,20 @@ interface Props {
 
 export default function BTokenBadge({ wallet, compact = false }: Props) {
   const cfg = BTOKEN_TIER_CONFIG[wallet.tier];
+  // cfg.color is a CSS var — color-mix replaces former hex-alpha concat.
+  const mix = (pct: number) => `color-mix(in srgb, ${cfg.color} ${pct}%, transparent)`;
 
   if (compact) {
     return (
       <div
         className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg"
-        style={{ background: `${cfg.color}12`, border: `1px solid ${cfg.color}30` }}
+        style={{ background: mix(7), border: `1px solid ${mix(19)}` }}
       >
         <span className="font-mono text-[10px]" style={{ color: cfg.color }}>{cfg.icon}</span>
         <span className="font-black font-mono text-xs leading-none" style={{ color: cfg.color }}>
           {wallet.balance}
         </span>
-        <span className="font-mono text-[10px]" style={{ color: cfg.color + "99" }}>BT</span>
+        <span className="font-mono text-[10px]" style={{ color: mix(60) }}>BT</span>
       </div>
     );
   }
@@ -31,7 +33,7 @@ export default function BTokenBadge({ wallet, compact = false }: Props) {
   return (
     <div
       className="rounded-xl p-4"
-      style={{ background: `${cfg.color}0d`, border: `1px solid ${cfg.color}28` }}
+      style={{ background: mix(5), border: `1px solid ${mix(16)}` }}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2.5">
@@ -41,7 +43,7 @@ export default function BTokenBadge({ wallet, compact = false }: Props) {
               {wallet.balance}
               <span className="text-xs font-normal ml-1 opacity-60">BT</span>
             </p>
-            <p className="font-bold text-[10px]" style={{ color: cfg.color + "99" }}>
+            <p className="font-bold text-[10px]" style={{ color: mix(60) }}>
               {cfg.label} · B-Tokens
             </p>
           </div>
@@ -54,7 +56,7 @@ export default function BTokenBadge({ wallet, compact = false }: Props) {
             <div key={tx.id} className="flex items-center justify-between">
               <span
                 className="font-mono text-[10px] truncate max-w-[160px]"
-                style={{ color: cfg.color + "88" }}
+                style={{ color: mix(53) }}
                 title={tx.motivo}
               >
                 {tx.motivo}
