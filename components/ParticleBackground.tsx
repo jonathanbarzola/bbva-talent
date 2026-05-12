@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 
 const PARTICLE_COUNT = 65;
 const CONNECTION_DISTANCE = 140;
-const BASE_COLOR = "133,200,255";
+const FALLBACK_COLOR = "133, 200, 255";
+const FALLBACK_ALPHA_MULT = 1;
 
 interface Particle {
   x: number;
@@ -15,8 +16,25 @@ interface Particle {
   alpha: number;
 }
 
+interface ThemeStyle {
+  color: string;
+  alphaMult: number;
+}
+
+// Read theme-driven canvas styling from CSS vars on the document root. Both vars
+// are defined per theme in globals.css; light mode boosts alpha so the dark-blue
+// particles stay visible against the near-white background.
+function readThemeStyle(): ThemeStyle {
+  if (typeof window === "undefined") return { color: FALLBACK_COLOR, alphaMult: FALLBACK_ALPHA_MULT };
+  const root = getComputedStyle(document.documentElement);
+  const color = root.getPropertyValue("--theme-particle-rgb").trim() || FALLBACK_COLOR;
+  const alphaMult = parseFloat(root.getPropertyValue("--theme-particle-alpha").trim()) || FALLBACK_ALPHA_MULT;
+  return { color, alphaMult };
+}
+
 export default function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const styleRef = useRef<ThemeStyle>({ color: FALLBACK_COLOR, alphaMult: FALLBACK_ALPHA_MULT });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,6 +46,14 @@ export default function ParticleBackground() {
     let w = 0;
     let h = 0;
     const particles: Particle[] = [];
+
+    styleRef.current = readThemeStyle();
+
+    // React to theme toggle: when html[data-theme] flips, re-read both CSS vars.
+    const themeObserver = new MutationObserver(() => {
+      styleRef.current = readThemeStyle();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const resize = () => {
       w = canvas.width = canvas.offsetWidth;
@@ -50,6 +76,7 @@ export default function ParticleBackground() {
 
     const tick = () => {
       ctx.clearRect(0, 0, w, h);
+      const { color, alphaMult } = styleRef.current;
 
       for (const p of particles) {
         p.x += p.vx;
@@ -59,7 +86,7 @@ export default function ParticleBackground() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${BASE_COLOR},${p.alpha})`;
+        ctx.fillStyle = `rgba(${color},${Math.min(1, p.alpha * alphaMult)})`;
         ctx.fill();
       }
 
@@ -69,11 +96,11 @@ export default function ParticleBackground() {
           const dy = particles[i].y - particles[j].y;
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < CONNECTION_DISTANCE) {
-            const lineAlpha = (1 - d / CONNECTION_DISTANCE) * 0.11;
+            const lineAlpha = Math.min(1, (1 - d / CONNECTION_DISTANCE) * 0.11 * alphaMult);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${BASE_COLOR},${lineAlpha})`;
+            ctx.strokeStyle = `rgba(${color},${lineAlpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -95,6 +122,7 @@ export default function ParticleBackground() {
     return () => {
       cancelAnimationFrame(animId);
       ro.disconnect();
+      themeObserver.disconnect();
     };
   }, []);
 
