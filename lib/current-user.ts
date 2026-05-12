@@ -4,8 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { CANDIDATE_POOL } from "./mock-data";
 import type { EmpleadoResult, Nivel } from "./types";
 
-const STORAGE_KEY = "bbva-talent:current-user-id";
-const DEFAULT_USER_ID = "emp_001"; // Valentina Ríos · Expert · Pagos Digitales
+// v2 invalidates the previous key — anyone with emp_001 cached from a prior
+// session now falls back to the new DEFAULT_USER_ID (Jonathan).
+const STORAGE_KEY = "bbva-talent:current-user-id-v2";
+const DEFAULT_USER_ID = "emp_jonathan"; // Jonathan Barzola · Analyst · Experiencia Digital
 
 /** Custom event so other CurrentUserSelector instances re-render in sync. */
 const CHANGE_EVENT = "bbva-talent:current-user-changed";

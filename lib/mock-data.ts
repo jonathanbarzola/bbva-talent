@@ -615,6 +615,49 @@ const RAW: Omit<EmpleadoResult, "trust_score">[] = [
     es_mentor: true, disponible_networking: false,
     networking_tags: ["React & Next.js", "Design Systems", "Web Performance"],
   },
+
+  // Default "current user" — Jonathan Barzola, Analyst en Experiencia Digital.
+  // Es el perfil bajo el cual el jurado interactúa con la app por defecto:
+  // junior con buena base, todavía construyendo Trust Score y B-Tokens.
+  {
+    id: "emp_jonathan", nombre: "Jonathan Barzola", email: "j.barzola@bbva.com",
+    rol: "Frontend Engineer", squad: "Experiencia Digital", nivel: "Analyst",
+    ubicacion: "Buenos Aires", años_empresa: 1,
+    bio: "Desarrollador frontend junior con foco en React y TypeScript. Curiosidad por arquitectura, accesibilidad y design systems. En camino a Associate.",
+    score: 0.74, disponibilidad: "disponible",
+    habilidades: [
+      { nombre: "React",           categoria: "Frontend",  score: 0.78 },
+      { nombre: "TypeScript",      categoria: "Lenguaje",  score: 0.75 },
+      { nombre: "Next.js",         categoria: "Framework", score: 0.72 },
+      { nombre: "Tailwind CSS",    categoria: "Frontend",  score: 0.80 },
+      { nombre: "HTML/CSS",        categoria: "Frontend",  score: 0.85 },
+      { nombre: "Git",             categoria: "Tooling",   score: 0.78 },
+    ],
+    proyectos: [
+      { id: "proj_bbva_connect", nombre: "BBVA Connect", dominio: "Experiencia Digital", estado: "En Producción" },
+    ],
+    colaboradores: [
+      { id: "emp_003", nombre: "Camila Orozco",   rol: "Full-Stack Engineer",     weight: 0.82 },
+      { id: "emp_017", nombre: "Tomás Echeverri",  rol: "Frontend Engineer",       weight: 0.78 },
+    ],
+    edi: {
+      año: 2025, rating: 2, manager_rating: 2,
+      manager_comment: "Jonathan tiene una curva de aprendizaje sólida. Hace buenas preguntas, escucha y aplica el feedback. Tiene mucho potencial para crecer hacia Associate en el próximo ciclo.",
+      peer_comments: [
+        { autor_id: "emp_003", autor_nombre: "Camila Orozco",    comentario: "Jonathan es muy buen compañero de pair-programming. Hace preguntas que clarifican incluso para mí. Le falta exposure a sistemas complejos pero va rápido.", sentiment_score: 78 },
+        { autor_id: "emp_017", autor_nombre: "Tomás Echeverri",  comentario: "Aprende rápido el design system y respeta las convenciones del equipo. Buen ojo para detalles de UX.", sentiment_score: 82 },
+      ],
+    },
+    b_tokens: wallet(95, [
+      { id: "j001", tipo: "earned", motivo: "Feedback EDI completado",        cantidad: 30, fecha: "2026-01-12" },
+      { id: "j002", tipo: "earned", motivo: "Conexión de networking",         cantidad: 20, fecha: "2026-02-05" },
+      { id: "j003", tipo: "spent",  motivo: "Solicitud de mentoría",          cantidad: -30, fecha: "2026-03-02", contraparte_nombre: "Tomás Echeverri" },
+      { id: "j004", tipo: "earned", motivo: "Code review reconocido",          cantidad: 15, fecha: "2026-04-10" },
+      { id: "j005", tipo: "earned", motivo: "Onboarding de colega completado", cantidad: 25, fecha: "2026-04-22", contraparte_nombre: "Camila Orozco" },
+    ]),
+    es_mentor: false, disponible_networking: true,
+    networking_tags: ["React", "Frontend", "Aprendizaje continuo"],
+  },
 ];
 
 // ── Augment with calculated trust scores ──────────────────────────────────
